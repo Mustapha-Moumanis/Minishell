@@ -1,8 +1,8 @@
 NAME = minishell
 
-SRCS = main.c check.c
+SRCS = main.c check.c parser.c
 
-UTLS = libft/ft_split.c libft/ft_strlen.c libft/ft_substr.c libft/ft_strdup.c
+UTLS = 
 
 RM = rm -f
 CC = cc

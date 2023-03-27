@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/21 23:32:18 by shilal           ###   ########.fr       */
+/*   Updated: 2023/03/27 15:37:42 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,5 @@
 
 int main(void)
 {
-	char 	*line;
-	//t_list *head;
-
-	while (1)
-	{
-		line = readline("$ ");
-		check(line);
-		free(line);
-	}
+	parser();
 }
