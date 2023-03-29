@@ -2,22 +2,25 @@ NAME = minishell
 
 SRCS = main.c check.c parser.c
 
-UTLS = 
+SRCS := $(addprefix src/, $(SRCS)) 
 
 RM = rm -f
 CC = cc
+
 CFLAGS = -Wall -Wextra -Werror -I /goinfre/shilal/homebrew/Cellar/readline/8.2.1/include -lreadline
+# CFLAGS = -Wall -Wextra -Werror -L ~/goinfre/mmoumani/homebrew/Cellar/readline/8.2.1/readline/lib/libreadline.a -I ~/goinfre/mmoumani/homebrew/Cellar/readline/8.2.1/include -lreadline
 
 all: $(NAME)
 
-$(NAME) : $(SRCS)
-	$(CC) $(CFLAGS) $(UTLS) $(SRCS) -o $(NAME)
+$(NAME) : $(SRCS) 
+	$(MAKE) -C libft all
+	$(CC) $(CFLAGS) libft/libft.a $(SRCS) -o $(NAME)
 
 clean:
-	$(RM) $(NAME)
+	$(RM) $(NAME) libft/*.o
 
 fclean: clean
 
 re: fclean all
 
-.PHONY : clean fclean re bonus all
+.PHONY : clean fclean bonus re all
