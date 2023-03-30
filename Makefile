@@ -4,11 +4,14 @@ SRCS = main.c
 
 PFILES = check.c parser.c
 
+EFILES = main.c
 
 
 SRCS := $(addprefix src/, $(SRCS)) 
 
 PFILES := $(addprefix src/parsing/, $(PFILES)) 
+
+EFILES := $(addprefix src/execution/, $(EFILES))
 
 RM = rm -f
 CC = cc
@@ -19,8 +22,8 @@ CFLAGS = -Wall -Wextra -Werror -I /goinfre/shilal/homebrew/Cellar/readline/8.2.1
 all: $(NAME)
 
 $(NAME) : $(SRCS)
-	$(MAKE) -C libft all
-	$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) -o $(NAME)
+	@$(MAKE) -C libft all
+	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) -o $(NAME)
 
 clean:
 	$(RM) $(NAME) libft/*.o
