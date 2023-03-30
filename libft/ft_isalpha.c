@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/05 13:47:31 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/01 00:02:28 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
-
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+int	ft_isalpha(int c)
+{
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+}

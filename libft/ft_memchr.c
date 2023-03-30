@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/09 20:50:55 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/05 08:34:51 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*p;
+	unsigned char	m;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	p = (unsigned char *)s;
+	m = (unsigned char)c;
+	i = 0;
+	while (i < n)
+	{
+		if (p[i] == m)
+			return (p + i);
+		i++;
+	}
+	return (NULL);
+}

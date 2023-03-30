@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/21 17:50:17 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/04 20:40:11 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	if (count && size > SIZE_MAX / count)
+		return (NULL);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (0);
+	ft_bzero(ptr, count * size);
+	return (ptr);
+}

@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/07 15:46:01 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/05 08:34:29 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*p;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	p = (unsigned char *)b;
+	i = 0;
+	while (len > i)
+	{
+		p[i] = (unsigned char)c;
+		i++;
+	}
+	return (p);
+}

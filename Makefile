@@ -1,8 +1,14 @@
 NAME = minishell
 
-SRCS = main.c check.c parser.c
+SRCS = main.c
+
+PFILES = check.c parser.c
+
+
 
 SRCS := $(addprefix src/, $(SRCS)) 
+
+PFILES := $(addprefix src/parsing/, $(PFILES)) 
 
 RM = rm -f
 CC = cc
@@ -12,14 +18,15 @@ CFLAGS = -Wall -Wextra -Werror -I /goinfre/shilal/homebrew/Cellar/readline/8.2.1
 
 all: $(NAME)
 
-$(NAME) : $(SRCS) 
-	$(MAKE) -C libft all
-	$(CC) $(CFLAGS) libft/libft.a $(SRCS) -o $(NAME)
+$(NAME) : $(SRCS)
+	$(MAKE) -C lib_ft all
+	$(CC) $(CFLAGS) lib_ft/libft.a $(SRCS) $(PFILES) -o $(NAME)
 
 clean:
-	$(RM) $(NAME) libft/*.o
+	$(RM) $(NAME) lib_ft/*.o
 
 fclean: clean
+	$(RM) lib_ft/*.a
 
 re: fclean all
 

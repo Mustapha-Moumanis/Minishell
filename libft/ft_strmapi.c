@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/26 02:32:38 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/06 22:14:39 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	unsigned int	i;
+	unsigned int	len;
+	char			*r;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	if (s == NULL || f == NULL)
+		return (NULL);
+	i = 0;
+	len = ft_strlen(s);
+	r = malloc((len + 1) * sizeof(char));
+	if (!r)
+		return (NULL);
+	while (i < len)
+	{
+		r[i] = f(i, s[i]);
+		i++;
+	}
+	r[i] = '\0';
+	return (r);
+}

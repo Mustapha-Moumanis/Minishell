@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/19 14:53:20 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/29 11:57:34 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/05 16:03:44 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/01 00:02:57 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	check(char *str)
+int	ft_isascii(int c)
 {
-	char	**s;
-	// char	*env;
-
-	s = ft_split(str, ' ');
-	// env = getenv("PATH");
-	// printf("%s\n", env);
-	
-	if (!str)
-	{
-		printf("exit\n");
-		exit(0);
-	}
-	if (ft_strlen(str) > 0)
-		add_history(str);
-	rl_replace_line("\n", 0);
-	rl_on_new_line();
-	return (0);
+	return (c >= 0 && c <= 127);
 }

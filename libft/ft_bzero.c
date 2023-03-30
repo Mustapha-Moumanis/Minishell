@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/09 14:58:37 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/01 00:01:09 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+	char	*b;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	i = 0;
+	b = (char *)s;
+	if (n != 0)
+	{
+		while (i < n)
+		{
+			b[i] = '\0';
+			i++;
+		}
+	}
+}

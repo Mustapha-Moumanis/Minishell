@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/27 19:46:48 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/06 22:13:13 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+void	ft_putnbr_fd(int n, int fd)
+{
+	long	temp;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		temp = (-(long) n);
+	}
+	else
+		temp = n;
+	if (temp < 10)
+		ft_putchar_fd(temp + '0', fd);
+	else
+	{
+		ft_putnbr_fd(temp / 10, fd);
+		ft_putchar_fd(temp % 10 + '0', fd);
+	}
+}

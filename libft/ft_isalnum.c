@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 15:37:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/29 11:53:29 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/05 15:29:47 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/01 00:01:33 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	parser(void)
+int	ft_isalnum(int c)
 {
-	char 	*line;
-
-	while (1)
-	{
-		line = readline("minishell~~> ");
-		check(line);
-		free(line);
-	}
+	return (ft_isdigit(c) || ft_isalpha(c));
 }

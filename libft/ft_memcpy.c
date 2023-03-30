@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/16 17:24:50 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/05 08:06:51 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+	char	*s;
+	char	*d;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	if (!dst && !src)
+		return ("");
+	if (dst == src)
+		return (dst);
+	i = 0;
+	s = (char *)src;
+	d = (char *)dst;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (d);
+}

@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:19:03 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/22 13:04:37 by mmoumani          #+#    #+#             */
+/*   Updated: 2022/11/01 01:19:53 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../lib_ft/libft.h"
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	char	*ptr;
 
-// PARSER :
-
-void	parser(void);
-int	    check(char *str);
-
-#endif
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	ptr = malloc(len1 + len2 + 1);
+	if (!ptr)
+		return (NULL);
+	while (i < len1 + len2)
+	{
+		if (i < len1)
+			ptr[i] = s1[i];
+		else
+			ptr[i] = s2[i - len1];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
