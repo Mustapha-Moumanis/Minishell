@@ -19,14 +19,14 @@ CFLAGS = -Wall -Wextra -Werror -I /goinfre/shilal/homebrew/Cellar/readline/8.2.1
 all: $(NAME)
 
 $(NAME) : $(SRCS)
-	$(MAKE) -C lib_ft all
-	$(CC) $(CFLAGS) lib_ft/libft.a $(SRCS) $(PFILES) -o $(NAME)
+	$(MAKE) -C libft all
+	$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) -o $(NAME)
 
 clean:
-	$(RM) $(NAME) lib_ft/*.o
+	$(RM) $(NAME) libft/*.o
 
 fclean: clean
-	$(RM) lib_ft/*.a
+	$(RM) libft/*.a
 
 re: fclean all
 
