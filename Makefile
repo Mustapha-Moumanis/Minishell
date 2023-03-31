@@ -16,8 +16,8 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror  -I /Users/mmoumani/Desktop/homebrew/Cellar/readline/8.2.1/include \
-								-L /Users/mmoumani/Desktop/homebrew/Cellar/readline/8.2.1/lib -lreadline 
+CFLAGS = -Wall -Wextra -Werror  -lreadline -I /Users/mmoumani/.brew/Cellar/readline/8.2.1/include \
+								-L /Users/mmoumani/.brew/Cellar/readline/8.2.1/lib \
 
 all: $(NAME)
 
