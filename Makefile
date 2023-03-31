@@ -16,7 +16,8 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I /goinfre/shilal/homebrew/Cellar/readline/8.2.1/include -lreadline
+CFLAGS = -Wall -Wextra -Werror  -I /Users/mmoumani/Desktop/homebrew/Cellar/readline/8.2.1/include \
+								-L /Users/mmoumani/Desktop/homebrew/Cellar/readline/8.2.1/lib -lreadline 
 
 all: $(NAME)
 
@@ -32,6 +33,7 @@ clean:
 fclean:
 	@$(RM) $(NAME)
 	@make fclean -C libft
+	@echo "clean all!"
 
 re: fclean all
 

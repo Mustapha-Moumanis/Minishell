@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:53:20 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/31 02:04:51 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/03/31 02:12:28 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	check(char *str)
 		add_history(str);
 
 	s = ft_split(str, ' ');
+	rl_clear_history();
 	rl_on_new_line();
 	return (0); 
 }
