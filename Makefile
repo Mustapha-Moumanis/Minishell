@@ -6,7 +6,6 @@ PFILES = check.c parser.c
 
 EFILES = main.c
 
-
 SRCS := $(addprefix src/, $(SRCS)) 
 
 PFILES := $(addprefix src/parsing/, $(PFILES)) 
@@ -14,23 +13,25 @@ PFILES := $(addprefix src/parsing/, $(PFILES))
 EFILES := $(addprefix src/execution/, $(EFILES))
 
 RM = rm -f
+
 CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -I /goinfre/shilal/homebrew/Cellar/readline/8.2.1/include -lreadline
-# CFLAGS = -Wall -Wextra -Werror -L ~/goinfre/mmoumani/homebrew/Cellar/readline/8.2.1/readline/lib/libreadline.a -I ~/goinfre/mmoumani/homebrew/Cellar/readline/8.2.1/include -lreadline
 
 all: $(NAME)
 
 $(NAME) : $(SRCS) $(PFILES) $(EFILES)
-	@$(MAKE) -C libft all
-	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) -o $(NAME)
+	@make -C libft all
+	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) $(EFILES) -o $(NAME)
+	@echo "Done!"
 
 clean:
-	@$(RM) $(NAME) libft/*.o
+	@make clean -C libft
+	@$(RM) $(NAME)
 	@echo "clean!"
 
 fclean: clean
-	@$(RM) $(NAME) libft/*.a
+	@make fclean -C libft
 
 re: fclean all
 

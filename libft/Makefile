@@ -6,7 +6,7 @@
 #    By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/18 16:37:16 by mmoumani          #+#    #+#              #
-#    Updated: 2023/03/31 00:11:03 by mmoumani         ###   ########.fr        #
+#    Updated: 2023/03/31 01:36:19 by mmoumani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,6 @@ $(BOBJS) : $(BFILES)
 # 	@ranlib $(NAME)
 
 clean:
-	@echo "cleaning OBJS files"
 	@rm -f $(OBJS) $(BOBJS)
 
 fclean: clean
