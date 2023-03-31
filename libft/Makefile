@@ -6,7 +6,7 @@
 #    By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/18 16:37:16 by mmoumani          #+#    #+#              #
-#    Updated: 2023/03/29 11:51:05 by mmoumani         ###   ########.fr        #
+#    Updated: 2023/03/31 00:11:03 by mmoumani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ BOBJS = $(BFILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(BOBJS)
-	@echo "Archive LIBFT OBJS in file.a"
 	@ar rc $(NAME) $(OBJS) $(BOBJS)
 	@ranlib $(NAME)
 

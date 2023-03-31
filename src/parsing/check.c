@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:53:20 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/30 18:13:05 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/03/31 00:07:25 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check(char *str)
 	s = ft_split(str, ' ');
 	// env = getenv("PATH");
 	// printf("%s\n", env);
-	
+
 	if (ft_strlen(str) > 0)
 		add_history(str);
 	// rl_replace_line("\n", 0);
