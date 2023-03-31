@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:53:20 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/31 00:53:53 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/03/31 02:04:51 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,16 @@
 int	check(char *str)
 {
 	char	**s;
-	// char	*env;
 
 	if (!str)
 	{
 		printf("exit\n");
 		exit(0);
 	}
-	s = ft_split(str, ' ');
-	// env = getenv("PATH");
-	// printf("%s\n", env);
-
-	if (ft_strlen(str) > 0) 
+	if (ft_strlen(str) > 0)
 		add_history(str);
-	// rl_replace_line("\n", 0);
+
+	s = ft_split(str, ' ');
 	rl_on_new_line();
-	return (0);
+	return (0); 
 }

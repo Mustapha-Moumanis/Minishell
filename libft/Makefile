@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/18 16:37:16 by mmoumani          #+#    #+#              #
-#    Updated: 2023/03/31 01:36:19 by mmoumani         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = libft.a
 
 FILES = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c \
@@ -35,10 +23,6 @@ $(OBJS) : $(FILES)
 
 $(BOBJS) : $(BFILES)
 	@cc -Wall -Wextra -Werror -c $(BFILES)
-
-# bonus: $(BOBJS)
-# 	ar rc $(NAME) $(BOBJS)
-# 	@ranlib $(NAME)
 
 clean:
 	@rm -f $(OBJS) $(BOBJS)
