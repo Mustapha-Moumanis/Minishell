@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/31 01:40:45 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/03/31 23:12:45 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 int main(void)
 {
-	parser();
+	t_data data;
+
+	data.test = 8454;
+	while (1337)
+	{
+		parser(&data);
+		exuct(&data);
+	}
 }
