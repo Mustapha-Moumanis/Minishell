@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 17:39:17 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/04 23:19:26 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:36:55 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ Token lexer_read_var(Lexer* lexer) {
     int i;
 
 	i = 0;
-    while (lexer->input[lexer->position] != '\"' 
-			|| lexer->input[lexer->position] != '\''
-	 		|| lexer->input[lexer->position] != ' ')
+    while (lexer->input[lexer->position])
 	{
-		lexer->position++;
-        value[i++] = lexer->input[lexer->position];
+		if (ft_whitespace(lexer->input[lexer->position]))
+			break;
+        value[i++] = lexer->input[lexer->position++];
     }
     value[i] = '\0';
 
@@ -79,7 +78,7 @@ int lexer_parsing(t_data *data)
 	while (lexer.position < lexer.size)
 	{
 		token = lexer_next_token(&lexer);
-		if (token.value && token.value[0] != 0)
+		if (token.value[0] != 0)
 			printf("TOKEN VAL : *%s*\n", token.value);
 	}
 	return (0);

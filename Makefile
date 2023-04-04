@@ -1,12 +1,12 @@
 NAME = minishell
 
-SRCS = src/parsing/lexer.c
+SRCS = main.c
 
-PFILES = check.c parser.c
+PFILES = check.c parser.c lexer.c
 
 EFILES = execution.c
 
-# SRCS := $(addprefix src/, $(SRCS)) 
+SRCS := $(addprefix src/, $(SRCS)) 
 
 PFILES := $(addprefix src/parsing/, $(PFILES)) 
 

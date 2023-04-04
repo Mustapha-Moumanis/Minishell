@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/04 22:20:57 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:27:51 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef struct s_lexer {
 void	parser(t_data *data);
 int	    check(t_data *data);
 int		ft_whitespace(int c);
-int     lexer_parsing(t_data *data);
+int		lexer_parsing(t_data *data);
+
 
 
 // EXECUTION :
