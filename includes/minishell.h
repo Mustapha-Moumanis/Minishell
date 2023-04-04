@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/31 23:54:54 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/04 22:20:57 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,45 @@
 #include <string.h>
 #include "../libft/libft.h"
 
+typedef struct s_cmd
+{
+	char	**in_file;
+	char	**out_file;
+	char	**full_cmd;
+	char	**var;
+}       t_cmd;
+
+// DATA :
+
 typedef struct s_data
 {
-    int test;
-}       t_data;
+	t_list	*head;
+	char	**env;
+	char	*input;
+	char	**s;
+	int		s_quote;
+	int		d_quote;
+	int		is_var;
+}			t_data;
 
-// PARSER :
+// PARSING :
+
+typedef struct s_token {
+	char*	value;
+	int		size;
+}			Token;
+
+typedef struct s_lexer {
+	char* 	input;
+	int		size;
+	int 	position;
+}       Lexer;
 
 void	parser(t_data *data);
-int	    check(char *str);
+int	    check(t_data *data);
+int		ft_whitespace(int c);
+int     lexer_parsing(t_data *data);
+
 
 // EXECUTION :
 

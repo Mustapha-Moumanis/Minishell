@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:37:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/03/31 23:53:11 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:26:45 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,17 @@
 
 void	parser(t_data *data)
 {
-	char 	*line;
-	(void)data;
-	line = readline("minishell~~> ");
-	check(line);
-	free(line);
+	data->input = readline("minishell-> ");
+	if (!data->input)
+	{
+		rl_clear_history();
+		printf("exit\n");
+		exit(0);
+	}
+	if (ft_strlen(data->input) > 0)
+		add_history(data->input);
+	// data->s = ft_split(data->input, '|');
+	check(data);
+	// ft_double_free(data->s);
+	free(data->input);
 }

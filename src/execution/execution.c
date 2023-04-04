@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/03/31 23:03:43 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:26:45 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 void	exuct(t_data *data)
 {
-    printf("%d", data->test);
+    if (data->input[0] == '\n')
+        printf("%s\n", data->input);
 }
