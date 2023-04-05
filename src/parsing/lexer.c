@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 17:39:17 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/05 02:54:22 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/05 21:59:15 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,6 @@
 #define PIPE 5
 #define VAR 6
 #define END 7
-
-
-
-// int cat_var(t_data *data, char *str, char c)
-// {
-//    int     i;
-//    int     j;
-
-//    i = 0;
-//    while (str[i] != c)
-//        i++;
-//    if (str[i] == '\0')
-//        return (-1);
-//    data->var = malloc(i);
-//    j = 0;
-//    while (j < i)
-//    {
-//        data->var[j] = str[j];
-//        j++;
-//    }
-//    data->var[j] = '\0';
-//    return (j);
-// }
-
 
 int	ft_whitespace(int c)
 {
@@ -64,7 +40,7 @@ void lexer_skip_whitespace(Lexer* lexer) {
     }
 }
 
-Token lexer_read_var(Lexer* lexer) {
+void	lexer_read_var(Lexer* lexer, Token *token) {
     char* value = malloc(sizeof(char) * lexer->size);
     int i;
 
@@ -77,13 +53,80 @@ Token lexer_read_var(Lexer* lexer) {
     }
     value[i] = '\0';
 
-    Token token;
-	token.type = VAR;
-    token.value = value;
+	token->type = VAR;
+    token->value = value;
 	lexer_skip_whitespace(lexer);
     free(value);
-    return token;
 }
+
+int    cat_var(t_data *data, char *str, char c)
+{
+    int     i;
+    int     j;
+
+    i = 0;
+    while (str[i] != c)
+        i++;
+    if (str[i] == '\0')
+        return (-1);
+    data->var = malloc(i);
+    j = 0;
+    while (j < i)
+    {
+        data->var[j] = str[j];
+        j++;
+    }
+    data->var[j] = '\0';
+    return (j);
+}
+
+// void	lexer_read_var(Lexer* lexer, Token *token) {
+//     char* value = malloc(sizeof(char) * lexer->size);
+//     int i;
+
+// 	i = 0;
+//     while (lexer->input[lexer->position] != '\"')
+// 	{
+//         value[i++] = lexer->input[lexer->position++];
+//     }
+//     value[i] = '\0';
+
+// 	token->type = VAR;
+//     token->value = value;
+// 	lexer_skip_whitespace(lexer);
+//     free(value);
+// }
+
+
+int    cat_var(Token *token, char *str, char c)
+{
+    int     i;
+    int     j;
+    char*   value;
+
+    i = 0;
+    while (str[i] && str[i] != c)
+        i++;
+    if (str[i] == '\0')
+    {
+        token->type = TOKEN_END;
+        token->value = "";
+        return (i);
+    }
+    value = malloc(i);
+    j = 0;
+    while (j < i)
+    {
+        value[j] = str[j];
+        j++;
+    }
+    value[j] = '\0';
+    token->type = TOKEN_VAR;
+    token->value = value;
+    free(value);
+    return (i);
+}
+
 
 Token lexer_next_token(Lexer* lexer) {
 	
@@ -112,7 +155,8 @@ Token lexer_next_token(Lexer* lexer) {
     }
 	else if (c_char && !ft_whitespace(c_char))
 	{
-   		return lexer_read_var(lexer);
+   		lexer_read_var(lexer, &token);
+   		return token;
 	}
 	else {
 		token.type = END;

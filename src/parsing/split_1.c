@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 06:36:16 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/04 22:02:08 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/05 20:32:03 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ struct Token lexer_read_integer(struct Lexer* lexer) {
     char* value = malloc(sizeof(char) * 10);
     int i = 0;
     while (isdigit(lexer_peek(lexer))) {
-        value[i++] = lexer_advance(lexer);
+        value[i++] = lexer_peek(lexer);
+        lexer->position += 1;
     }
     value[i] = '\0';
 
@@ -147,7 +148,7 @@ void token_free(struct Token* token) {
 
 int main() {
     struct Lexer lexer;
-    lexer_init(&lexer, " ");
+    lexer_init(&lexer, "3 + 5 (10 * 2) - 5 / 2");
 
 
     struct Token token;

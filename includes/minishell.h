@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/05 01:05:20 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:40:03 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,22 @@
 #include <string.h>
 #include "../libft/libft.h"
 
+typedef struct s_cmd
+{
+	char	**in_file;
+	char	**out_file;
+	char	**full_cmd;
+	char	**var;
+	struct s_cmd *next;
+}       t_cmd;
+
 // DATA :
 
 typedef struct s_data
 {
-	t_list	*head;
+	t_cmd	*head;
 	char	**env;
 	char	*input;
-	char	**in_file;
-	char	**out_file;
-	char	**cmd;
-	char	**var;
 	char	**s;
 	int		s_quote;
 	int		d_quote;
@@ -42,7 +47,6 @@ typedef struct s_data
 typedef struct s_token {
 	char*	value;
 	int		type;
-	int		size;
 }			Token;
 
 typedef struct s_lexer {
