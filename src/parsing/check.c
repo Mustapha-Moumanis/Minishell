@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:53:20 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/04 22:17:08 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/06 21:18:52 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int	check(t_data *data)
 		printf("Quote not closed !!\n");
 		return (0);
 	}
-	rl_on_new_line();
+	
 	return (1); 
 }

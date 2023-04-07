@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/05 23:40:03 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/06 21:22:10 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,19 @@
 
 typedef struct s_cmd
 {
-	char	**in_file;
-	char	**out_file;
-	char	**full_cmd;
-	char	**var;
-	struct s_cmd *next;
-}       t_cmd;
+	char			**in_file;
+	char			**out_file;
+	char			**full_cmd;
+	char			**var;
+	struct s_cmd	*next;
+}					t_cmd;
+
+// typedef struct s_cmd
+// {
+//     char			*content;
+//     int			type;
+//     struct s_cmd	*next;
+// }       t_cmd;
 
 // DATA :
 
@@ -36,10 +43,6 @@ typedef struct s_data
 	t_cmd	*head;
 	char	**env;
 	char	*input;
-	char	**s;
-	int		s_quote;
-	int		d_quote;
-	int		is_var;
 }			t_data;
 
 // PARSING :
@@ -58,7 +61,7 @@ typedef struct s_lexer {
 void	parser(t_data *data);
 int	    check(t_data *data);
 int		ft_whitespace(int c);
-int		lexer_parsing(t_data *data);
+void	lexer(t_data *data);
 
 
 

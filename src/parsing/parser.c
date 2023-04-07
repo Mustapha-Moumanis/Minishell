@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:37:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/04 18:26:45 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/06 21:19:18 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	parser(t_data *data)
 	}
 	if (ft_strlen(data->input) > 0)
 		add_history(data->input);
-	// data->s = ft_split(data->input, '|');
-	check(data);
-	// ft_double_free(data->s);
+	lexer(data);
 	free(data->input);
 }

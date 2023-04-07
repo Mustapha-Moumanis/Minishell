@@ -5,18 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 17:39:17 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/05 21:59:15 by mmoumani         ###   ########.fr       */
+/*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
+/*   Updated: 2023/04/07 02:51:16 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-#define IN_FILE 1
-#define OUT_FILE 3
-#define PIPE 5
-#define VAR 6
-#define END 7
+// <file1 ls -la | wc -l > file2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+// Define token types as constants
+#define TOKEN_IN_FILE 1
+#define TOKEN_OUT_FILE 2
+#define TOKEN_PIPE 3
+#define TOKEN_COMMAND 4
+#define TOKEN_ERROR 5
+#define TOKEN_END 99
 
 int	ft_whitespace(int c)
 {
@@ -29,158 +38,160 @@ void lexer_init(Lexer* lexer, char* input) {
 	lexer->position = 0;
 }
 
-void token_init(Token* token) {
-	token->type = 0;
-	token->value = "";
-}
-
 void lexer_skip_whitespace(Lexer* lexer) {
-    while (ft_whitespace(lexer->input[lexer->position])) {
+	while (ft_whitespace(lexer->input[lexer->position])) {
 		lexer->position++;
-    }
+	}
 }
 
-void	lexer_read_var(Lexer* lexer, Token *token) {
-    char* value = malloc(sizeof(char) * lexer->size);
-    int i;
+char	*cat_var(char *str, char c)
+{
+	char*   value;
+	int     i;
+	int     j;
 
 	i = 0;
-    while (lexer->input[lexer->position])
+	while (str[i] && str[i] != c)
+		i++;
+	if (str[i] == '\0')
+		return (NULL);
+	value = malloc(sizeof(char) * i);
+	j = 0;
+	while (j < i)
 	{
-		if (ft_whitespace(lexer->input[lexer->position]))
-			break;
-        value[i++] = lexer->input[lexer->position++];
-    }
-    value[i] = '\0';
-
-	token->type = VAR;
-    token->value = value;
-	lexer_skip_whitespace(lexer);
-    free(value);
-}
-
-int    cat_var(t_data *data, char *str, char c)
-{
-    int     i;
-    int     j;
-
-    i = 0;
-    while (str[i] != c)
-        i++;
-    if (str[i] == '\0')
-        return (-1);
-    data->var = malloc(i);
-    j = 0;
-    while (j < i)
-    {
-        data->var[j] = str[j];
-        j++;
-    }
-    data->var[j] = '\0';
-    return (j);
-}
-
-// void	lexer_read_var(Lexer* lexer, Token *token) {
-//     char* value = malloc(sizeof(char) * lexer->size);
-//     int i;
-
-// 	i = 0;
-//     while (lexer->input[lexer->position] != '\"')
-// 	{
-//         value[i++] = lexer->input[lexer->position++];
-//     }
-//     value[i] = '\0';
-
-// 	token->type = VAR;
-//     token->value = value;
-// 	lexer_skip_whitespace(lexer);
-//     free(value);
-// }
-
-
-int    cat_var(Token *token, char *str, char c)
-{
-    int     i;
-    int     j;
-    char*   value;
-
-    i = 0;
-    while (str[i] && str[i] != c)
-        i++;
-    if (str[i] == '\0')
-    {
-        token->type = TOKEN_END;
-        token->value = "";
-        return (i);
-    }
-    value = malloc(i);
-    j = 0;
-    while (j < i)
-    {
-        value[j] = str[j];
-        j++;
-    }
-    value[j] = '\0';
-    token->type = TOKEN_VAR;
-    token->value = value;
-    free(value);
-    return (i);
-}
-
-
-Token lexer_next_token(Lexer* lexer) {
-	
-	lexer_skip_whitespace(lexer);
-    char c_char = lexer->input[lexer->position];
-	// printf("//%d//\n", lexer->position);
-	Token	token;
-	
-    if (c_char == '>') {
-		lexer->position++;
-        token.value = ">";
-		token.type = OUT_FILE;
-    	return token;
-    }
-    else if (c_char == '<') {
-		lexer->position++;
-        token.value = "<";
-		token.type = IN_FILE;
-    	return token;
-    }
-    else if (c_char == '|') {
-		lexer->position++;
-        token.value = "|";
-		token.type = PIPE;
-    	return token;
-    }
-	else if (c_char && !ft_whitespace(c_char))
-	{
-   		lexer_read_var(lexer, &token);
-   		return token;
+		value[j] = str[j];
+		j++;
 	}
-	else {
-		token.type = END;
-		token.value = "";
-	}
+	value[j] = '\0';
+	return (value);
+}
+
+void	lexer_read_cmd_quote(Lexer* lexer, Token *token) 
+{
+	char	c_char = lexer->input[lexer->position - 1];
+	char	*value = cat_var(lexer->input + lexer->position, c_char);
 	lexer->position++;
-    return token;
+	if (value != NULL)
+	{
+		lexer->position += ft_strlen(value);
+		token->value = value;
+		token->type = TOKEN_COMMAND;
+	}
+	else
+	{
+		token->value = NULL;
+		token->type = TOKEN_END;
+	}
+    free(value);
 }
 
-int lexer_parsing(t_data *data)
+char	*cat_var_2(char *str)
+{
+    char	*value;
+    int     i;
+    int     j;
+
+    i = 0;
+    while (str[i] && !(ft_whitespace(str[i])))
+        i++;
+    value = malloc(sizeof(char) * (i + 1));
+    j = -1;
+    while (++j < i)
+        value[j] = str[j];
+    value[j] = '\0';
+	return (value);
+}
+
+void	lexer_read_cmd(Lexer* lexer, Token *token) 
+{
+	char	*value = cat_var_2(lexer->input + lexer->position);
+	if (value != NULL)
+	{
+		lexer->position += ft_strlen(value);
+		token->value = value;
+		token->type = TOKEN_COMMAND;
+	}
+	else
+	{
+		token->value = NULL;
+		token->type = TOKEN_END;
+	}
+    free(value);
+}
+
+void	lexer_check_token(Lexer* lexer, Token *token, char c_char)
+{
+	if (c_char == '\"' || c_char == '\''){
+		lexer->position++;
+		lexer_read_cmd_quote(lexer, token);
+	}
+	else if (c_char == '\0' || c_char == '\n'){
+		token->type = TOKEN_END;
+		token->value = "";
+	}
+	else
+		lexer_read_cmd(lexer, token);		
+}
+
+void	lexer_next_token(Lexer* lexer, Token *token)
+{
+	char c_char = lexer->input[lexer->position];
+	lexer_skip_whitespace(lexer);
+
+	if (c_char == '>')
+	{
+		lexer->position++;
+		lexer_check_token(lexer, token, c_char);
+		token->type = TOKEN_OUT_FILE;
+	}
+    else if (c_char == '<')
+	{
+		lexer->position++;
+		lexer_check_token(lexer, token, c_char);
+		token->type = TOKEN_IN_FILE;
+	}
+	else if (c_char == '|') {
+		lexer->position++;
+		token->value = "|";
+		token->type = TOKEN_PIPE;
+	}
+	else
+		lexer_check_token(lexer, token, c_char);
+	// else if (c_char == '\"' || c_char == '\''){
+	// 	lexer->position++;
+	// 	lexer_read_cmd_quote(lexer, token);
+	// }
+	// else if (c_char == '\0'){
+	// 	token->type = TOKEN_END;
+	// 	token->value = "";
+	// }
+	// else
+	// {
+	// 	lexer_read_cmd(lexer, token);		
+	// }
+        // ft_cmd(lexer, token);
+}
+
+void	lexer(t_data *data)
 {
 	Lexer	lexer;
 	Token	token;
-
+	
 	lexer_init(&lexer, data->input);
-	token_init(&token);
-	lexer.size = ft_strlen(data->input);
-	while (token.type != END)
+	while (token.type != TOKEN_END)
 	{
-		token = lexer_next_token(&lexer);
-		printf("TOKEN VAL : *%s*\n", token.value);
-		printf("TOKEN type : *%d*\n", token.type);
-		// printf("TOKEN exer->position : *%d*\n", lexer.position);
-		// break;
+		lexer_next_token(&lexer, &token);
+		if (token.type == TOKEN_OUT_FILE)
+			printf("TOKEN_OUT_FILE %s\n", token.value);
+		else if (token.type == TOKEN_IN_FILE)
+			printf("TOKEN_IN_FILE %s\n", token.value);
+		else if (token.type == TOKEN_PIPE)
+			printf("TOKEN_PIPE %s\n", token.value);
+		else if (token.type == TOKEN_COMMAND)
+			printf("TOKEN_COMMAND %s\n", token.value);
+		else if (token.type == TOKEN_ERROR)
+			printf("TOKEN_ERROR %s\n", token.value);
+		else if (token.type == TOKEN_END)
+			printf("TOKEN_END\n");
 	}
-	return (0);
 }
