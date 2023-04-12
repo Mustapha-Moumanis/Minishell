@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 23:52:22 by mmoumani          #+#    #+#             */
-/*   Updated: 2022/11/02 18:08:30 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/12 00:25:28 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	ft_lenword(char const *s, char c)
 	return (i);
 }
 
-static void	*ft_free(char **s, int j)
+void	*ft_free(char **s, int j)
 {
 	int	i;
 

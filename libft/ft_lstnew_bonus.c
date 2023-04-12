@@ -6,13 +6,13 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 07:26:28 by mmoumani          #+#    #+#             */
-/*   Updated: 2022/11/06 22:08:31 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/10 22:12:22 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(char *content)
 {
 	t_list	*node;
 

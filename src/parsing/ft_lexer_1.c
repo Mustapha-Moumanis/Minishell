@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:55:38 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/09 08:13:16 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/12 20:54:25 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,9 @@ char	*cat_var(char *str, char c)
 	if (str[i] == '\0')
 		return (NULL);
 	value = malloc(sizeof(char) * i);
-	j = 0;
-	while (j < i)
-	{
+	j = -1;
+	while (++j < i)
 		value[j] = str[j];
-		j++;
-	}
 	value[j] = '\0';
 	return (value);
 }
@@ -50,10 +47,8 @@ void	lexer_read_cmd_quote(t_lexer *lexer, t_token *token)
 	}
 	else
 	{
-		token->value = NULL;
 		token->type = TOKEN_END;
 	}
-	free(value);
 }
 
 char	*cat_var_2(char *str)
@@ -75,6 +70,26 @@ char	*cat_var_2(char *str)
 	return (value);
 }
 
+void	check_lexer_error(t_lexer *lexer)
+{
+	char c;
+	char n_c;
+
+	c = lexer->input[lexer->position];
+	n_c = lexer->input[lexer->position + 1];
+	if (c == 0)
+		ft_putstr_fd("syntax error near unexpected token `newline\'\n", 2);
+	else if (c == '>' && n_c == '>')
+		ft_putstr_fd("syntax error near unexpected token `>>\'\n", 2);
+	else if (c == '>')
+		ft_putstr_fd("syntax error near unexpected token `>\'\n", 2);
+	else if (c == '<' && n_c == '<')
+		ft_putstr_fd("syntax error near unexpected token `<<\'\n", 2);
+	else if (c == '<')
+		ft_putstr_fd("syntax error near unexpected token `<\'\n", 2);
+	lexer->error = 1;
+}
+
 void	lexer_read_cmd(t_lexer *lexer, t_token *token)
 {
 	char	*value;
@@ -88,11 +103,12 @@ void	lexer_read_cmd(t_lexer *lexer, t_token *token)
 	}
 	else
 	{
-		if (lexer->input[lexer->position] == 0)
-			printf("syntax error near unexpected token `newline`\n");
-		else if (lexer->input[lexer->position] == '>')
-			printf("syntax error near unexpected token `>`\n");
-		token->value = NULL;
+		check_lexer_error(lexer);
+		// if (lexer->input[lexer->position] == 0)
+		// 	printf("syntax error near unexpected token `newline`\n");
+		// else if (lexer->input[lexer->position] == '>')
+		// 	printf("syntax error near unexpected token `>`\n");
+		// lexer->error = 1;
 		token->type = TOKEN_END;
 	}
 	free(value);
