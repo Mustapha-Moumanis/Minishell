@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/12 21:01:52 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/14 06:57:19 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,19 @@ typedef struct s_data
 	int		out;
 }			t_data;
 
+typedef struct s_exec
+{
+	int		i;
+	char	*check;
+	char	cd_path[1024];
+	char	last_path[1024];
+	char	old_path[1024];
+	int		len_path;
+	int		pos_path;
+	int		onther;
+	char	**envir;
+}				t_exec;
+
 // PARSING :
 
 void	parser(t_data *data);
@@ -95,6 +108,13 @@ void	ft_lst_clear(t_cmd **lst, void (*del)(char **));
 
 // EXECUTION :
 
-void	exuct(t_data *data);
+void	exuct(t_cmd *cmd, t_data *data, t_exec *val);
+int		ft_strcmp(char *s1, char *s2);
+
+void	export(t_exec *val, t_data *data);
+void	echo(t_exec *val, t_data *data);
+void	env(t_exec *val, t_data *data);
+void	cd(t_exec *val, t_data *data);
+void	pwd(t_exec *val);
 
 #endif

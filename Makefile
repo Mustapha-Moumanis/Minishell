@@ -6,11 +6,15 @@ PFILES = parser.c lexer.c ft_lexer_1.c ft_lst.c append.c
 
 EFILES = execution.c
 
+BUILTINS = echo.c pwd.c env.c cd.c export.c
+
 SRCS := $(addprefix src/, $(SRCS)) 
 
 PFILES := $(addprefix src/parsing/, $(PFILES)) 
 
 EFILES := $(addprefix src/execution/, $(EFILES))
+
+BUILTINS := $(addprefix src/execution/Builtins/, $(BUILTINS))
 
 RM = rm -f
 
@@ -21,9 +25,9 @@ CFLAGS = -Wall -Wextra -Werror  -lreadline -I $(HOME)/.brew/Cellar/readline/8.2.
 
 all: $(NAME)
 
-$(NAME) : $(SRCS) $(PFILES) $(EFILES)
+$(NAME) : $(SRCS) $(PFILES) $(EFILES) $(BUILTINS)
 	@make -C libft
-	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) $(EFILES) -o $(NAME)
+	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) $(EFILES) $(BUILTINS) -o $(NAME)
 	@echo "Done!"
 
 clean:

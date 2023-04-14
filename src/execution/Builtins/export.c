@@ -1,48 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/14 06:33:13 by shilal           ###   ########.fr       */
+/*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
+/*   Updated: 2023/04/14 07:01:24 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-void	ft_double_free(char **s)
+void	sort_env(t_data *data)
 {
 	int	i;
+	int	v;
 
 	i = 0;
-	while (s[i])
-	{
-		free(s[i]);
+	v = 'A';
+	while (data->env[i][0] != v)
 		i++;
-	}
-	free(s);
+	ft_putstr_fd(data->env[i], 1);
 }
 
-
-int	main(int ac, char **av, char **env)
+void	print_export(t_data *data, t_exec *val)
 {
-	t_data	data;
-	t_cmd	cmd;
-	t_exec	val;
+	(void)val;
+	ft_putstr_fd("declare -x ", 1);
+	sort_env(data);
+	ft_putchar_fd('\n', 1);
+}
 
-	(void)ac;
-	(void)av;
-	data = (t_data){0};
-	data.env = env;
-	val.pos_path = 0;
-	val.envir = env;
-	while (1337)
+void	export(t_exec *val, t_data *data)
+{
+	val->i++;
+	if (!data->head->full_cmd[val->i])
 	{
-		parser(&data);
-		exuct(&cmd, &data, &val);
-		ft_lst_clear(&data.head, &ft_double_free);
-		ft_lstclear(&data.cmd_lst, &free);
+		print_export(data, val);
 	}
 }

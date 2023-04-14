@@ -1,48 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/14 06:33:13 by shilal           ###   ########.fr       */
+/*   Created: 2023/04/09 07:28:46 by shilal            #+#    #+#             */
+/*   Updated: 2023/04/14 06:51:25 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-void	ft_double_free(char **s)
+void	env(t_exec *val, t_data *data)
 {
 	int	i;
 
+	val->i++;
 	i = 0;
-	while (s[i])
+	while (data->env[i])
 	{
-		free(s[i]);
+		ft_putstr_fd(data->env[i], 1);
+		ft_putchar_fd('\n', 1);
 		i++;
-	}
-	free(s);
-}
-
-
-int	main(int ac, char **av, char **env)
-{
-	t_data	data;
-	t_cmd	cmd;
-	t_exec	val;
-
-	(void)ac;
-	(void)av;
-	data = (t_data){0};
-	data.env = env;
-	val.pos_path = 0;
-	val.envir = env;
-	while (1337)
-	{
-		parser(&data);
-		exuct(&cmd, &data, &val);
-		ft_lst_clear(&data.head, &ft_double_free);
-		ft_lstclear(&data.cmd_lst, &free);
 	}
 }
