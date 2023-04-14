@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/12 23:57:04 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/14 20:38:09 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ void	check_token(t_data *data)
 
 void	lexer(t_data *data)
 {
+	
 	lexer_init(&data->lexer, data->input);
 	token_init(&data->token);
 	while (data->token.type != TOKEN_END)
@@ -197,6 +198,6 @@ void	lexer(t_data *data)
 		lexer_next_lexer(&data->lexer, &data->token);
 		check_token(data);
 		if (data->lexer.error == 1)
-			printf("free\n");
+			data->error = 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:12:07 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/12 23:51:26 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/14 20:18:32 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,6 @@ void	append_exution_struct(t_data *d)
 {
 	ft_lst_back(&d->head, ft_lst_new(d->in, d->out, list_to_table(&d->cmd_lst)));
 	d->n_cmd = ft_lstsize(d->cmd_lst);
+	ft_lstclear(&d->cmd_lst, &free);
+	init_parssing_data(d);
 }

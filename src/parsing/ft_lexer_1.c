@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:55:38 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/12 20:54:25 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/14 20:34:22 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,6 @@ void	lexer_read_cmd(t_lexer *lexer, t_token *token)
 	else
 	{
 		check_lexer_error(lexer);
-		// if (lexer->input[lexer->position] == 0)
-		// 	printf("syntax error near unexpected token `newline`\n");
-		// else if (lexer->input[lexer->position] == '>')
-		// 	printf("syntax error near unexpected token `>`\n");
-		// lexer->error = 1;
 		token->type = TOKEN_END;
 	}
 	free(value);

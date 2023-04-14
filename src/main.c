@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/14 06:33:13 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/14 20:42:14 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void	ft_double_free(char **s)
 	free(s);
 }
 
+void	init_parssing_data(t_data *data)
+{
+	data->in = 0;
+	data->out = 1;
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -40,8 +45,9 @@ int	main(int ac, char **av, char **env)
 	val.envir = env;
 	while (1337)
 	{
-		parser(&data);
-		exuct(&cmd, &data, &val);
+		init_parssing_data(&data);
+		if (parser(&data) == 0)
+			exuct(&cmd, &data, &val);
 		ft_lst_clear(&data.head, &ft_double_free);
 		ft_lstclear(&data.cmd_lst, &free);
 	}
