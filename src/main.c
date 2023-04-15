@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/15 14:04:56 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/15 14:28:34 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	main(int ac, char **av, char **env)
 	data = (t_data){0};
 	data.env = env;
 	val.pos_path = 0;
-	val.envir = env;
 	while (1337)
 	{
 		init_parssing_data(&data);

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/15 14:22:12 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/15 14:28:22 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_exec
 	int		len_path;
 	int		pos_path;
 	int		onther;
-	char	**envir;
 }				t_exec;
 
 // PARSING :
