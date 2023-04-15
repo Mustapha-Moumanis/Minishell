@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/14 06:48:56 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/15 14:24:58 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ void	add_new_path(t_exec *val, t_data *data)
 	int	i;
 	int	j;
 
-	printf("%s\n", val->last_path);
 	j = -1;
 	i = ft_strlen(val->last_path);
 	val->last_path[i++] = '/';
 	while (data->head->full_cmd[++j])
 		val->last_path[i++] = data->head->full_cmd[val->i][j];
-	printf("%s\n", val->last_path);
 }
 
 void	decrement_path(t_exec *val)

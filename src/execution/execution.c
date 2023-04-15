@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/14 07:00:52 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/15 14:22:25 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	sp_builtins(t_exec *val, t_data *data)
 		if (ft_strcmp(val->check, "echo") == 0)
 			echo(val, data);
 		else if (ft_strcmp(val->check, "pwd") == 0)
-			pwd(val);
+			pwd(val, data);
 		else if (ft_strcmp(val->check, "env") == 0)
 			env(val, data);
 		else

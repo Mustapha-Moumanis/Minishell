@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:32:21 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/14 06:56:17 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/15 14:24:20 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ void	echo(t_exec *val, t_data *data)
 	}
 	while (data->head->full_cmd[val->i])
 	{
-		ft_putstr_fd(data->head->full_cmd[val->i], 1);
-		write(1, " ", 1);
+		ft_putstr_fd(data->head->full_cmd[val->i], data->head->out_file);
 		val->i++;
 	}
 	if (nl == 0)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", data->head->out_file);
 }

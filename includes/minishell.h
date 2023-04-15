@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/14 20:38:27 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/15 14:22:12 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 # include "../libft/libft.h"
 
 // Define token types as constants
-#define TOKEN_IN_FILE 1
-#define TOKEN_OUT_FILE 2
-#define TOKEN_HD 3
-#define TOKEN_PIPE 4
-#define TOKEN_COMMAND 5
-#define TOKEN_APPEND 7
-#define TOKEN_END 99
+# define TOKEN_IN_FILE 1
+# define TOKEN_OUT_FILE 2
+# define TOKEN_HD 3
+# define TOKEN_PIPE 4
+# define TOKEN_COMMAND 5
+# define TOKEN_APPEND 7
+# define TOKEN_END 99
 
 typedef struct s_cmd
 {
@@ -117,6 +117,6 @@ void	export(t_exec *val, t_data *data);
 void	echo(t_exec *val, t_data *data);
 void	env(t_exec *val, t_data *data);
 void	cd(t_exec *val, t_data *data);
-void	pwd(t_exec *val);
+void	pwd(t_exec *val, t_data *data);
 
 #endif

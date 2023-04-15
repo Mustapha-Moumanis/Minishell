@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:55:38 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/14 20:34:22 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/15 14:03:06 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ char	*cat_var(char *str, char c)
 		i++;
 	if (str[i] == '\0')
 		return (NULL);
-	value = malloc(sizeof(char) * i);
+	value = malloc(sizeof(char) * (i + 1));
+	if (!value)
+		return (NULL);
 	j = -1;
 	while (++j < i)
 		value[j] = str[j];
