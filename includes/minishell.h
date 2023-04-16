@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/15 14:28:22 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:06:10 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,8 @@ typedef struct s_data
 {
 	t_cmd	*head;
 	char	*input;
-	int		ac;
-	char	**av;
 	char	**env;
 	int		error;
-	t_lexer	lexer;
-	t_token	token;
 	t_list	*cmd_lst;
 	int		n_cmd;
 	int		in;
@@ -85,7 +81,6 @@ typedef struct s_exec
 // PARSING :
 
 int		parser(t_data *data);
-int		check(t_data *data);
 void	append_exution_struct(t_data *data);
 void	init_parssing_data(t_data *data);
 

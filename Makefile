@@ -22,7 +22,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror  -lreadline -I $(HOME)/.brew/Cellar/readline/8.2.1/include \
 								-L $(HOME)/.brew/Cellar/readline/8.2.1/lib \
-
+# -fsanitize=address -g
 all: $(NAME)
 
 $(NAME) : $(SRCS) $(PFILES) $(EFILES) $(BUILTINS)
