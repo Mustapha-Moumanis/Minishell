@@ -2,7 +2,7 @@ NAME = minishell
 
 SRCS = main.c
 
-PFILES = parser.c lexer.c ft_lexer_1.c ft_lst.c append.c
+PFILES = parser.c lexer.c ft_lexer_1.c ft_lst.c append.c check_file.c
 
 EFILES = execution.c
 

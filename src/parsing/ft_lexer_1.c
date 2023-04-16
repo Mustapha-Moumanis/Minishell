@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:55:38 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/15 20:56:55 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/16 20:30:51 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*cat_var(char *str, char c)
 	j = -1;
 	while (++j < i)
 		value[j] = str[j];
+	if (j == 0)
+		return (NULL);
 	value[j] = '\0';
 	return (value);
 }
@@ -70,6 +72,8 @@ char	*cat_var_2(char *str)
 	j = -1;
 	while (++j < i)
 		value[j] = str[j];
+	if (j == 0)
+		return (NULL);
 	value[j] = '\0';
 	return (value);
 }
@@ -91,6 +95,8 @@ void	check_lexer_error(t_lexer *lexer)
 		ft_putstr_fd("syntax error near unexpected token `<<\'\n", 2);
 	else if (c == '<')
 		ft_putstr_fd("syntax error near unexpected token `<\'\n", 2);
+	else
+		ft_putstr_fd("syntax error\n", 2);
 	lexer->error = 1;
 }
 

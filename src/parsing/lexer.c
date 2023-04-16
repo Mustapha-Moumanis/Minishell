@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/15 15:31:42 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/16 20:18:55 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 // <file1 ls -la | wc -l > file2
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <ctype.h>
+// #include <string.h>
 
 int	ft_whitespace(int c)
 {
@@ -28,9 +28,6 @@ void	lexer_init(t_lexer *lexer, char *input)
 {
 	*lexer = (t_lexer){0};
 	lexer->input = input;
-	// lexer->position = 0;
-	// lexer->in_file = 0;
-	// lexer->error = 0;
 }
 
 void	token_init(t_token *token)
@@ -127,64 +124,34 @@ void	lexer_next_lexer(t_lexer *lexer, t_token *token)
 		lexer_check_token(lexer, token);
 }
 
-void check_in_file(t_data *data, t_lexer *lexer, t_token *token)
-{
-	if (data->in > 2)
-		close(data->in);
-	data->in = open(token->value, O_RDONLY);
-	if (data->in == -1)
-	{
-		ft_putstr_fd(token->value, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		lexer->error = 1;
-		token->type = TOKEN_END;
-	}
-}
-
-void check_out_file(t_data *data, t_lexer *lexer, t_token *token)
-{
-	if (data->out > 2)
-		close(data->out);
-	data->out = open(token->value, O_CREAT, 0644);
-	if (data->out == -1)
-	{
-		ft_putstr_fd(token->value, 2);
-		ft_putstr_fd(" : outfile\n", 2);
-		lexer->error = 1;
-		token->type = TOKEN_END;
-	}
-}
 
 void	check_token(t_data *data, t_lexer *lexer, t_token *token)
 {	
-	if (token->type == TOKEN_OUT_FILE)
+	if (token->type == TOKEN_IN_FILE)
+	{
+		check_in_file(data, lexer, token);
+	}
+	else if (token->type == TOKEN_OUT_FILE)
 	{
 		check_out_file(data, lexer, token);
-		// printf("TOKEN_OUT_FILE %s\n", token->value);
+	}
+	else if (token->type == TOKEN_APPEND)
+	{
+		check_append_file(data, lexer, token);
 	}
 	// if (token->type == TOKEN_HD)
 		// printf("TOKEN_HD %s\n", token->value);
-	if (token->type == TOKEN_IN_FILE)
+	else if (token->type == TOKEN_COMMAND)
 	{
-		// printf("TOKEN_IN_FILE %s\n", token->value);
-		check_in_file(data, lexer, token);
-	}
-	if (token->type == TOKEN_COMMAND)
-	{
-		// printf("TOKEN_COMMAND %s\n", token->value);
 		ft_lstadd_back(&data->cmd_lst, ft_lstnew(ft_strdup(token->value)));
 	}
-	// if (token->type == TOKEN_APPEND)
-		// printf("TOKEN_APPEND %s\n", token->value);
-	if (token->type == TOKEN_PIPE)
+	else if (token->type == TOKEN_PIPE)
 	{
 		append_exution_struct(data);
-		// printf("TOKEN_PIPE %s\n", token->value);
 	}
-	if (token->type == TOKEN_END)
+	else if (token->type == TOKEN_END)
 	{
 		append_exution_struct(data);
-		// printf("TOKEN_END\n");
 	}
 }
 

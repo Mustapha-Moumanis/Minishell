@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/15 15:06:10 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/04/16 20:08:56 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ typedef struct s_exec
 int		parser(t_data *data);
 void	append_exution_struct(t_data *data);
 void	init_parssing_data(t_data *data);
+void	check_in_file(t_data *data, t_lexer *lexer, t_token *token);
+void	check_out_file(t_data *data, t_lexer *lexer, t_token *token);
+void	check_append_file(t_data *data, t_lexer *lexer, t_token *token);
 
 // more function
 
