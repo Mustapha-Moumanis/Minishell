@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:56:13 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/05 16:31:31 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/05 19:10:42 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*name(char *str)
 
 	i = 0;
 	j = -1;
-	while (str[i] != '=')
+	while (str[i] && str[i] != '=')
 		i++;
 	name = malloc(i + 1);
 	if (!name)
