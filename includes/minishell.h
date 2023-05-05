@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/05 13:59:47 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/06 00:03:36 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-
 typedef struct s_export
 {
 	char			*name;
@@ -84,7 +83,6 @@ typedef struct s_export
 	char			*value;
 	struct s_export	*next;
 }					t_export;
-
 
 typedef struct s_exec
 {
@@ -132,19 +130,20 @@ void	ft_lst_clear(t_cmd **lst, void (*del)(char **));
 void	exuct(t_data *data, t_exec *val);
 
 // UTILS :
-
-t_env		*new_env(char *name, char *value);
+void	export_error(char *str);
+void	print_export(t_exec *val, t_data *data);
+t_env	*new_env(char *name, char *value);
 t_export	*new_export(char *name, char *value, char sep);
-void		ft_lenked_list(char **env, t_exec *val);
-int			ft_strcmp(char *s1, char *s2);
-void		str_lowercase(char *str);
-t_env		*ft_lstlast_env(t_env *lst);
-void		add_env(t_env **lst, t_env *new);
+void	ft_lenked_list(char **env, t_exec *val);
+int		ft_strcmp(char *s1, char *s2);
+void	str_lowercase(char *str);
+t_env	*ft_lstlast_env(t_env *lst);
+void	add_env(t_env **lst, t_env *new);
 t_export	*ft_lstlast_export(t_export *lst);
-t_env		*ft_lstlast_env(t_env *lst);
-void		add_export(t_export **lst, t_export *new);
-char		*value(char *str);
-char		*name(char *str);
+t_env	*ft_lstlast_env(t_env *lst);
+void	add_export(t_export **lst, t_export *new);
+char	*value(char *str);
+char	*name(char *str);
 
 //  BUILTINS :
 

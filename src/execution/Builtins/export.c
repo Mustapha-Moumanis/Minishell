@@ -6,74 +6,36 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/05 20:49:25 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/06 00:07:56 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	print_export(t_exec *val, t_data *data)
+void	add_value(t_exec *val, t_data *data, char *n)
 {
+	char		*v;
 	t_export	*tmp;
+	t_env		*env;
 
 	tmp = val->export;
-	while (tmp)
-	{
-		ft_putstr_fd("declare -x ", data->head->out_file);
-		ft_putstr_fd(tmp->name, data->head->out_file);
-		if (tmp->value)
-		{
-			ft_putchar_fd('=', data->head->out_file);
-			ft_putchar_fd(tmp->sep, data->head->out_file);
-			ft_putstr_fd(tmp->value, data->head->out_file);
-			ft_putchar_fd(tmp->sep, data->head->out_file);
-		}
-		ft_putstr_fd("\n", data->head->out_file);
-		tmp = tmp->next;
-	}
-}
-
-void	change_value(t_exec *val, t_data *data, char *n)
-{
-	t_export	*tmp;
-
-	tmp = val->export;
-	while (tmp)
+	env = val->env;
+	v = value(data->head->full_cmd[val->i]);
+	while (tmp && env)
 	{
 		if (ft_strcmp(n, tmp->name) == 0)
 		{
 			free(tmp->value);
-			tmp->value = value(data->head->full_cmd[val->i]);
+			tmp->value = v;
+			env->value = v;
 			free(n);
 			break ;
 		}
 		tmp = tmp->next;
+		env = env->next;
 	}
-}
-
-int	is_cherche(char *str,t_exec *val)
-{
-	t_export	*tmp;
-
-	tmp = val->export;
-	while (tmp)
+	if (!tmp)
 	{
-		if (ft_strcmp(str, tmp->name) == 0)
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-void	add_value(t_exec *val, t_data *data, char *n)
-{
-	char	*v;
-
-	if (is_cherche(n, val))
-		change_value(val, data, n);
-	else
-	{
-		v = value(data->head->full_cmd[val->i]);
 		add_env(&val->env, new_env(n, v));
 		add_export(&val->export, new_export(n, v, '\"'));
 	}
@@ -82,28 +44,29 @@ void	add_value(t_exec *val, t_data *data, char *n)
 void	more_value(t_exec *val, t_data *data, char *n)
 {
 	t_export	*tmp;
-	char 		*str;
-	char 		*str2;
-	int 		i;
+	t_env		*env;
+	char		*str;
+	char		*v;
 
 	tmp = val->export;
-	i = 0;
-	while (tmp)
+	env = val->env;
+	while (tmp && env)
 	{
 		if (ft_strcmp(n, tmp->name) == 0)
 		{
-			str2 = value(data->head->full_cmd[val->i]);
-			str = ft_strjoin(tmp->value, str2);
+			v = value(data->head->full_cmd[val->i]);
+			str = ft_strjoin(tmp->value, v);
+			env->value = str;
 			free(tmp->value);
 			tmp->value = str;
-			free(str2);
+			free(v);
 			free(n);
-			i = 1;
 			break ;
 		}
 		tmp = tmp->next;
+		env = env->next;
 	}
-	if (i == 0)
+	if (!tmp)
 		add_value(val, data, n);
 }
 
@@ -116,16 +79,42 @@ int	all_iscorect(char *str)
 		return (0);
 	while (str[++j])
 	{
-		if (!ft_isalnum(str[j]) && (str[j] == '+' && str[j + 1]))
+		printf("*%c*\n", str[j]);
+		if (!ft_isalnum(str[j]) || (str[j] == '+' && str[j + 1]))
 			return (0);
 	}
 	return (1);
 }
 
+int	export_(t_exec *val, t_data *data)
+{
+	char	*n;
+
+	n = name(data->head->full_cmd[val->i]);
+	if (!all_iscorect(n))
+	{
+		export_error(data->head->full_cmd[val->i]);
+		free(n);
+		return (1);
+	}
+	else if (ft_strchr(data->head->full_cmd[val->i], '='))
+	{
+		if (n[ft_strlen(n) - 1] == '+')
+		{
+			more_value(val, data, ft_strtrim(n, "+"));
+			free(n);
+		}
+		else
+			add_value(val, data, n);
+	}
+	else
+		add_export(&val->export, new_export(n, NULL, '\0'));
+	return (0);
+}
+
 void	export(t_exec *val, t_data *data)
 {
 	int		j;
-	char 	*n;
 
 	val->i++;
 	j = -1;
@@ -135,27 +124,8 @@ void	export(t_exec *val, t_data *data)
 	{
 		while (data->head->full_cmd[val->i])
 		{
-			n = name(data->head->full_cmd[val->i]);
-			if (!all_iscorect(n))
-			{
-				ft_putstr_fd("bash: export: ", 2);
-				ft_putstr_fd(data->head->full_cmd[val->i], 2);
-				ft_putstr_fd(": not a valid identifier\n", 2);
-				free(n);
+			if (export_(val, data) == 1)
 				break ;
-			}
-			else if (ft_strchr(data->head->full_cmd[val->i], '='))
-			{
-				if (n[ft_strlen(n) - 1] == '+')
-				{
-					more_value(val, data, ft_strtrim(n, "+"));
-					free(n);	
-				}
-				else
-					add_value(val, data, n);
-			}
-			else
-				add_export(&val->export, new_export(n, NULL, '\0'));
 			val->i++;
 		}
 	}
