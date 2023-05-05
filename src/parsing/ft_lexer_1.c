@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:55:38 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/16 20:30:51 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:40:11 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	lexer_read_cmd_quote(t_lexer *lexer, t_token *token)
 		lexer->position += ft_strlen(value);
 		token->value = value;
 		token->type = TOKEN_COMMAND;
-		free(value);
+		// free(value);
 	}
 	else
 	{
@@ -110,7 +110,7 @@ void	lexer_read_cmd(t_lexer *lexer, t_token *token)
 		lexer->position += ft_strlen(value);
 		token->value = value;
 		token->type = TOKEN_COMMAND;
-		free(value);
+		// free(value);
 	}
 	else
 	{

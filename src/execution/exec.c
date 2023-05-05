@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/09 07:28:46 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/03 18:18:36 by shilal           ###   ########.fr       */
+/*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
+/*   Updated: 2023/05/02 13:57:19 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	env(t_exec *val, t_data *data)
+void	ecx(char **av, char **en)
 {
-	t_env	*tmp;
+	char	*str;
+	int		i;
+	char	*env;
+	char	**s;
+	char	*cmd;
 
-	val->i++;
-	if (!data->head->full_cmd[val->i])
+	i = 0;
+	env = getenv("PATH");
+	s = ft_split(env, ':');
+	cmd = ft_strjoin("/", av[0]);
+	while (s[i])
 	{
-		tmp = val->env;
-		while (tmp)
-		{
-			ft_putstr_fd(tmp->name, data->head->out_file);
-			ft_putchar_fd('=', data->head->out_file);
-			ft_putendl_fd(tmp->value, data->head->out_file);
-			tmp = tmp->next;
-		}
+		str = ft_strjoin(s[i], cmd);
+		if (access(str, R_OK) == 0)
+			break;
+		i++;
 	}
-	else
-		ft_putendl_fd("Error", 2);
+	execve(str, av, en);
 }

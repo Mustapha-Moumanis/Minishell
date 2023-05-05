@@ -4,7 +4,7 @@ SRCS = main.c
 
 PFILES = parser.c lexer.c ft_lexer_1.c ft_lst.c append.c check_file.c
 
-EFILES = execution.c
+EFILES = execution.c utils_exec.c builtins_utils.c
 
 BUILTINS = echo.c pwd.c env.c cd.c export.c
 
@@ -20,7 +20,7 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror  -lreadline -I $(HOME)/.brew/Cellar/readline/8.2.1/include \
+CFLAGS = -Wall -Wextra -Werror -lreadline -I $(HOME)/.brew/Cellar/readline/8.2.1/include \
 								-L $(HOME)/.brew/Cellar/readline/8.2.1/lib \
 # -fsanitize=address -g
 all: $(NAME)

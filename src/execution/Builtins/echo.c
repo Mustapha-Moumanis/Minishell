@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:32:21 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/03 21:32:08 by shilal           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:41:36 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,21 @@ void	echo(t_exec *val, t_data *data)
 
 	val->i++;
 	nl = 0;
-	if (strcmp(data->head->full_cmd[val->i], "-n") == 0)
+	if (data->head->full_cmd[val->i])
 	{
-		n_line(data->head->full_cmd, val);
-		nl = 1;
+		if (strcmp(data->head->full_cmd[val->i], "-n") == 0)
+		{
+			n_line(data->head->full_cmd, val);
+			nl = 1;
+		}
+		while (data->head->full_cmd[val->i])
+		{
+			ft_putstr_fd(data->head->full_cmd[val->i], data->head->out_file);
+			val->i++;
+		}
+		if (nl == 0)
+			ft_putstr_fd("\n", data->head->out_file);
 	}
-	while (data->head->full_cmd[val->i])
-	{
-		ft_putstr_fd(data->head->full_cmd[val->i], data->head->out_file);
-		val->i++;
-	}
-	if (nl == 0)
+	else
 		ft_putstr_fd("\n", data->head->out_file);
 }

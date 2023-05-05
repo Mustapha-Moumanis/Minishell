@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/16 20:18:55 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:43:30 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void	check_token(t_data *data, t_lexer *lexer, t_token *token)
 	else if (token->type == TOKEN_COMMAND)
 	{
 		ft_lstadd_back(&data->cmd_lst, ft_lstnew(ft_strdup(token->value)));
+		free(token->value);
 	}
 	else if (token->type == TOKEN_PIPE)
 	{

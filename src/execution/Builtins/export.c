@@ -6,37 +6,115 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/14 07:01:24 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/05 16:16:43 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	sort_env(t_data *data)
+void	print_export(t_exec *val, t_data *data)
 {
-	int	i;
-	int	v;
+	t_export	*tmp;
 
-	i = 0;
-	v = 'A';
-	while (data->env[i][0] != v)
-		i++;
-	ft_putstr_fd(data->env[i], 1);
+	tmp = val->export;
+	while (tmp)
+	{
+		ft_putstr_fd("declare -x ", data->head->out_file);
+		ft_putstr_fd(tmp->name, data->head->out_file);
+		if (tmp->value)
+		{
+			ft_putchar_fd('=', data->head->out_file);
+			ft_putchar_fd(tmp->sep, data->head->out_file);
+			ft_putstr_fd(tmp->value, data->head->out_file);
+			ft_putchar_fd(tmp->sep, data->head->out_file);
+		}
+		ft_putstr_fd("\n", data->head->out_file);
+		tmp = tmp->next;
+	}
 }
 
-void	print_export(t_data *data, t_exec *val)
+void	more_value(t_exec *val, t_data *data, char *n)
 {
-	(void)val;
-	ft_putstr_fd("declare -x ", 1);
-	sort_env(data);
-	ft_putchar_fd('\n', 1);
+	t_export	*tmp;
+
+	tmp = val->export;
+	while (tmp)
+	{
+		if (ft_strcmp(n, tmp->name) == 0)
+		{
+			tmp->value = ft_strjoin(value(data->head->full_cmd[val->i]), tmp->value);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	change_value(t_exec *val, t_data *data, char *n)
+{
+	t_export	*tmp;
+
+	tmp = val->export;
+	while (tmp)
+	{
+		if (ft_strcmp(n, tmp->name) == 0)
+		{
+			tmp->value = value(data->head->full_cmd[val->i]);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+}
+
+int	is_cherche(char *str,t_exec *val)
+{
+	t_export	*tmp;
+
+	tmp = val->export;
+	while (tmp)
+	{
+		if (ft_strcmp(str, tmp->name) == 0)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	add_value(t_exec *val, t_data *data)
+{
+	char 	*n;
+	char	*v;
+
+	n = name(data->head->full_cmd[val->i]);
+	if (n[ft_strlen(n) - 1] == '+')
+		more_value(val, data, ft_strtrim(n, "+"));
+	else if (is_cherche(n, val))
+		change_value(val, data, n);
+	else
+	{
+		if (ft_strchr(data->head->full_cmd[val->i], '='))
+		{
+			v = value(data->head->full_cmd[val->i]);
+			if (!v)
+				ft_putendl_fd("error", data->head->out_file);
+			add_env(&val->env, new_env(n, v));
+			add_export(&val->export, new_export(n, v, '\"'));
+		}
+		else
+			add_export(&val->export, new_export(n, NULL, ' '));
+	}
 }
 
 void	export(t_exec *val, t_data *data)
 {
 	val->i++;
 	if (!data->head->full_cmd[val->i])
+		print_export(val, data);
+	else
 	{
-		print_export(data, val);
+		while (data->head->full_cmd[val->i])
+		{
+			add_value(val, data);
+			val->i++;
+		}
 	}
 }

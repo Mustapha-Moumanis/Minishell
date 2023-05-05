@@ -6,36 +6,11 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/15 14:22:25 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/05 16:35:00 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s1)
-		return (-1);
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
-
-void	str_lowercase(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		str[i] = ft_tolower(str[i]);
-}
 
 void	sp_builtins(t_exec *val, t_data *data)
 {
@@ -68,9 +43,8 @@ void	builtins(t_exec *val, t_data *data)
 		sp_builtins(val, data);
 }
 
-void	exuct(t_cmd *cmd, t_data *data, t_exec *val)
+void	exuct(t_data *data, t_exec *val)
 {
-	(void)cmd;
 	val->onther = 0;
 	val->i = 0;
 	builtins(val, data);
