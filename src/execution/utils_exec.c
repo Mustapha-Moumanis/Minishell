@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:56:13 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/05 19:10:42 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/08 05:28:11 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*name(char *str)
 {
 	char	*name;
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = -1;
@@ -34,9 +34,9 @@ char	*name(char *str)
 char	*value(char *str)
 {
 	char	*value;
-	int 	i;
-	int 	j;
-	int 	f;
+	int		i;
+	int		j;
+	int		f;
 
 	i = 0;
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/06 00:03:36 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/08 08:43:31 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/readline.h>
 # include <stdlib.h>
 # include <string.h>
+# include <signal.h>
+#include <sys/wait.h>
 # include <errno.h>
 # include "../libft/libft.h"
 
@@ -128,8 +130,14 @@ void	ft_lst_clear(t_cmd **lst, void (*del)(char **));
 // EXECUTION :
 
 void	exuct(t_data *data, t_exec *val);
+void	comand_pipe(t_data *data, t_exec *val, int size, int pe[2]);
+void	ecx(char **av, char **en);
+void	builtins(t_exec *val, t_data *data);
+void	sp_builtins(t_exec *val, t_data *data);
 
 // UTILS :
+void	change_path(t_exec *val, char *str, char *value);
+void	decrement_path(t_exec *val);
 void	export_error(char *str);
 void	print_export(t_exec *val, t_data *data);
 t_env	*new_env(char *name, char *value);
@@ -144,6 +152,7 @@ t_env	*ft_lstlast_env(t_env *lst);
 void	add_export(t_export **lst, t_export *new);
 char	*value(char *str);
 char	*name(char *str);
+int	ft_lstsize_h(t_cmd *lst);
 
 //  BUILTINS :
 

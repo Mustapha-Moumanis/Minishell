@@ -4,7 +4,7 @@ SRCS = main.c
 
 PFILES = parser.c lexer.c ft_lexer_1.c ft_lst.c append.c check_file.c
 
-EFILES = execution.c utils_exec.c builtins_utils.c
+EFILES = execution.c utils_exec.c builtins_utils.c exec.c
 
 BUILTINS = echo.c pwd.c env.c cd.c export.c utils_export.c
 

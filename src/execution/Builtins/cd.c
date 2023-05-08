@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/04/15 14:24:58 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/08 05:01:41 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,15 @@ void	parent_dir(t_exec *val, t_data *data)
 	}
 	else if (val->pos_path != 0)
 	{
+		val->pos_path += 1;
 		add_new_path(val, data);
 		decrement_path(val);
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: ", 2);
 		ft_putstr_fd("cannot access parent directories: ", 2);
 		ft_putstr_fd("No such file or directory\n", 2);
 	}
+	change_path(val, "OLDPWD", val->cd_path);
+	change_path(val, "PWD", val->last_path);
 }
 
 void	cd(t_exec *val, t_data *data)
@@ -75,8 +78,10 @@ void	cd(t_exec *val, t_data *data)
 				cd_error(data->head->full_cmd[val->i]);
 			else
 			{
+				change_path(val, "OLDPWD", val->cd_path);
 				getcwd(val->last_path, 1024);
 				getcwd(val->old_path, 1024);
+				change_path(val, "PWD", val->last_path);
 			}
 		}
 		else if (chdir(val->old_path) == 0)

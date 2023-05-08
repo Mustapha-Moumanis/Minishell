@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/05 16:35:00 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/08 08:58:59 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sp_builtins(t_exec *val, t_data *data)
 		else if (ft_strcmp(val->check, "env") == 0)
 			env(val, data);
 		else
-			val->onther = 1;
+			ecx(data->head->full_cmd, data->env);
 	}
 }
 
@@ -45,9 +45,29 @@ void	builtins(t_exec *val, t_data *data)
 
 void	exuct(t_data *data, t_exec *val)
 {
-	val->onther = 0;
-	val->i = 0;
-	builtins(val, data);
-	if (val->onther == 1)
-		printf("Onther command\n");
+	int	pe[2];
+	int	size;
+	int	frk;
+	int	stat;
+
+	if (pipe(pe) != 0)
+		printf("Error\n");
+	size = ft_lstsize_h(data->head);
+	while (data->head)
+	{
+		val->onther = 0;
+		val->i = 0;
+		frk = fork();
+		if (frk == 0)
+		{
+			if (size - 1 > 0)
+			{
+				
+			}
+			comand_pipe(data, val, size - 1, pe);
+			
+		}
+		waitpid(frk, &stat, 0);
+		data->head = data->head->next;
+	}
 }

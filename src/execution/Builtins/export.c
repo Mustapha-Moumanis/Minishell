@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/06 00:07:56 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/08 00:32:33 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,8 @@ int	all_iscorect(char *str)
 	if (ft_isdigit(str[0]))
 		return (0);
 	while (str[++j])
-	{
-		printf("*%c*\n", str[j]);
 		if (!ft_isalnum(str[j]) || (str[j] == '+' && str[j + 1]))
 			return (0);
-	}
 	return (1);
 }
 

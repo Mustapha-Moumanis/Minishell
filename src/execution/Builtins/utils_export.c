@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:59:36 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/06 00:00:32 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/08 05:29:02 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ void	export_error(char *str)
 	ft_putstr_fd("bash: export: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": not a valid identifier\n", 2);
+}
+
+void	add_export(t_export **lst, t_export *new)
+{
+	if (!(*lst))
+		*lst = new;
+	else
+		ft_lstlast_export(*lst)->next = new;
 }

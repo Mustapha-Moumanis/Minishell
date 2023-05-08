@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 14:04:39 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/03 15:43:56 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/08 05:26:10 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,4 @@ t_export	*ft_lstlast_export(t_export *lst)
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
-}
-
-void	add_export(t_export **lst, t_export *new)
-{
-	if (!(*lst))
-		*lst = new;
-	else
-		ft_lstlast_export(*lst)->next = new;
 }
