@@ -6,11 +6,13 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/08 08:58:59 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/10 05:07:09 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	init_pipes(int size, int **pe);
 
 void	sp_builtins(t_exec *val, t_data *data)
 {
@@ -31,6 +33,8 @@ void	sp_builtins(t_exec *val, t_data *data)
 
 void	builtins(t_exec *val, t_data *data)
 {
+	val->onther = 0;
+	val->i = 0;
 	if (ft_strcmp(data->head->full_cmd[val->i], "cd") == 0)
 		cd(val, data);
 	else if (ft_strcmp(data->head->full_cmd[val->i], "export") == 0)
@@ -45,29 +49,33 @@ void	builtins(t_exec *val, t_data *data)
 
 void	exuct(t_data *data, t_exec *val)
 {
-	int	pe[2];
-	int	size;
-	int	frk;
-	int	stat;
+	int	*pe;
+	int	fr;
+	int	i;
 
-	if (pipe(pe) != 0)
-		printf("Error\n");
-	size = ft_lstsize_h(data->head);
-	while (data->head)
+	val->size = ft_lstsize_h(data->head) - 1;
+	i = val->size;
+	pe = (int *)malloc(2 * sizeof(int));
+	pipe(pe);
+	fr = fork();
+	if (fr == 0)
 	{
-		val->onther = 0;
-		val->i = 0;
-		frk = fork();
-		if (frk == 0)
-		{
-			if (size - 1 > 0)
-			{
-				
-			}
-			comand_pipe(data, val, size - 1, pe);
-			
-		}
-		waitpid(frk, &stat, 0);
-		data->head = data->head->next;
+		if (val->size == 0)
+			builtins(val, data);
+		close(pe[0]);
+		dup2(pe[1], data->head->out_file);
+		builtins(val, data);
 	}
+	waitpid(fr, NULL, 0);
+	data->head = data->head->next;
+	fr = fork();
+	if (fr == 0)
+	{
+		close(pe[1]);
+		dup2(pe[0], data->head->in_file);
+		builtins(val, data);
+	}
+	close(pe[0]);
+	close(pe[1]);
+	waitpid(fr, NULL, 0);
 }

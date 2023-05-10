@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/08 08:43:31 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/09 01:42:03 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd
 	int				in_file;
 	int				out_file;
 	char			**full_cmd;
+	char			p;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -89,6 +90,7 @@ typedef struct s_export
 typedef struct s_exec
 {
 	int			i;
+	int			size;
 	char		*check;
 	char		cd_path[1024];
 	char		last_path[1024];
@@ -130,7 +132,7 @@ void	ft_lst_clear(t_cmd **lst, void (*del)(char **));
 // EXECUTION :
 
 void	exuct(t_data *data, t_exec *val);
-void	comand_pipe(t_data *data, t_exec *val, int size, int pe[2]);
+void	comand_pipe(t_data *data, t_exec *val, int size, int **pe);
 void	ecx(char **av, char **en);
 void	builtins(t_exec *val, t_data *data);
 void	sp_builtins(t_exec *val, t_data *data);
