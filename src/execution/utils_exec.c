@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:56:13 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/08 05:28:11 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/16 17:02:38 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,21 @@ char	*value(char *str)
 
 void	ft_lenked_list(char **env, t_exec *val)
 {
-	int	i;
+	char	*n;
+	char	*v;
+	int		i;
 
 	i = -1;
 	val->env = NULL;
 	val->export = NULL;
 	while (env[++i])
 	{
-		add_env(&val->env, new_env(name(env[i]), value(env[i])));
-		add_export(&val->export, new_export(name(env[i]), value(env[i]), '\"'));
+		n = name(env[i]);
+		v = value(env[i]);
+		add_env(&val->env, new_env(n, v));
+		add_export(&val->export, new_export(n, v, '\"'));
 	}
+	val->n_env = list_to_table_h(&val->env);
 }
 
 int	ft_strcmp(char *s1, char *s2)

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/10 05:10:31 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/16 17:06:40 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,6 @@ void	ecx(char **av, char **en)
 	perror("error");
 }
 
-
-int	ft_lstsize_h(t_cmd *lst)
-{
-	int	i;
-
-	if (!lst)
-		return (0);
-	i = 1;
-	while (lst->next)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
-
 void	init_pipes(int size, int **pe)
 {
 	int	i;
@@ -65,30 +49,3 @@ void	init_pipes(int size, int **pe)
 }
 
 // --fonction for generate the pipes-- //
-
-void	ecxute_command(t_data *data, t_exec *val)
-{
-	int	**pe;
-	int	fr;
-	int	i;
-
-	i = val->size;
-	init_pipes(val->size, pe);
-	while (data->head)
-	{
-		fr = fork();
-		if (fr == 0)
-		{
-			if (val->size == 0)
-				builtins(val, data);
-			close(pe[val->size - i][0]);
-			dup2(pe[val->size - i][1], data->head->out_file);
-			builtins(val, data);
-		}
-		waitpid(fr, NULL, 0);
-		data->head = data->head->next;
-		i--;
-	}
-	ft_close_all(pe);
-	waitpid(fr, NULL, 0);
-}

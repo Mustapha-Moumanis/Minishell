@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/09 01:42:03 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/16 15:37:22 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ typedef struct s_exec
 	int			len_path;
 	int			pos_path;
 	int			onther;
+	char		**n_env;
+	t_cmd		*tmp;
 	t_env		*env;
 	t_export	*export;
 }				t_exec;
@@ -132,16 +134,16 @@ void	ft_lst_clear(t_cmd **lst, void (*del)(char **));
 // EXECUTION :
 
 void	exuct(t_data *data, t_exec *val);
-void	comand_pipe(t_data *data, t_exec *val, int size, int **pe);
 void	ecx(char **av, char **en);
-void	builtins(t_exec *val, t_data *data);
-void	sp_builtins(t_exec *val, t_data *data);
+void	builtins(t_exec *val);
+void	sp_builtins(t_exec *val);
 
 // UTILS :
+int	add_value_export(t_exec *val, char *n, char *v);
 void	change_path(t_exec *val, char *str, char *value);
 void	decrement_path(t_exec *val);
 void	export_error(char *str);
-void	print_export(t_exec *val, t_data *data);
+void	print_export(t_exec *val);
 t_env	*new_env(char *name, char *value);
 t_export	*new_export(char *name, char *value, char sep);
 void	ft_lenked_list(char **env, t_exec *val);
@@ -155,13 +157,15 @@ void	add_export(t_export **lst, t_export *new);
 char	*value(char *str);
 char	*name(char *str);
 int	ft_lstsize_h(t_cmd *lst);
+char	**list_to_table_h(t_env **lst);
 
 //  BUILTINS :
 
-void	export(t_exec *val, t_data *data);
-void	echo(t_exec *val, t_data *data);
-void	env(t_exec *val, t_data *data);
-void	cd(t_exec *val, t_data *data);
-void	pwd(t_exec *val, t_data *data);
+void	export(t_exec *val);
+void	echo(t_exec *val);
+void	env(t_exec *val);
+void	cd(t_exec *val);
+void	pwd(t_exec *val);
+void	unset(t_exec *val);
 
 #endif

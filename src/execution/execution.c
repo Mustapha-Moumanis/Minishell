@@ -6,76 +6,54 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/10 05:07:09 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/16 17:06:53 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init_pipes(int size, int **pe);
-
-void	sp_builtins(t_exec *val, t_data *data)
+void	sp_builtins(t_exec *val)
 {
-	val->check = data->head->full_cmd[0];
+	val->check = val->tmp->full_cmd[0];
 	if (val->check)
 	{
 		str_lowercase(val->check);
 		if (ft_strcmp(val->check, "echo") == 0)
-			echo(val, data);
+			echo(val);
 		else if (ft_strcmp(val->check, "pwd") == 0)
-			pwd(val, data);
+			pwd(val);
 		else if (ft_strcmp(val->check, "env") == 0)
-			env(val, data);
+			env(val);
 		else
-			ecx(data->head->full_cmd, data->env);
+			val->onther = 1;
 	}
 }
 
-void	builtins(t_exec *val, t_data *data)
+void	builtins(t_exec *val)
 {
 	val->onther = 0;
 	val->i = 0;
-	if (ft_strcmp(data->head->full_cmd[val->i], "cd") == 0)
-		cd(val, data);
-	else if (ft_strcmp(data->head->full_cmd[val->i], "export") == 0)
-		export(val, data);
-	else if (ft_strcmp(data->head->full_cmd[val->i], "unset") == 0)
-		echo(val, data);
-	else if (ft_strcmp(data->head->full_cmd[val->i], "exit") == 0)
-		echo(val, data);
+	if (ft_strcmp(val->tmp->full_cmd[val->i], "cd") == 0)
+		cd(val);
+	else if (ft_strcmp(val->tmp->full_cmd[val->i], "export") == 0)
+		export(val);
+	else if (ft_strcmp(val->tmp->full_cmd[val->i], "unset") == 0)
+		unset(val);
+	else if (ft_strcmp(val->tmp->full_cmd[val->i], "exit") == 0)
+		echo(val);
 	else
-		sp_builtins(val, data);
+		sp_builtins(val);
 }
 
 void	exuct(t_data *data, t_exec *val)
 {
-	int	*pe;
-	int	fr;
-	int	i;
-
-	val->size = ft_lstsize_h(data->head) - 1;
-	i = val->size;
-	pe = (int *)malloc(2 * sizeof(int));
-	pipe(pe);
-	fr = fork();
-	if (fr == 0)
+	val->tmp = data->head;
+	val->size = ft_lstsize_h(val->tmp);
+	while (val->tmp)
 	{
-		if (val->size == 0)
-			builtins(val, data);
-		close(pe[0]);
-		dup2(pe[1], data->head->out_file);
-		builtins(val, data);
+		builtins(val);
+		if (val->onther != 0)
+			printf("not_builtins\n");
+		val->tmp = val->tmp->next;
 	}
-	waitpid(fr, NULL, 0);
-	data->head = data->head->next;
-	fr = fork();
-	if (fr == 0)
-	{
-		close(pe[1]);
-		dup2(pe[0], data->head->in_file);
-		builtins(val, data);
-	}
-	close(pe[0]);
-	close(pe[1]);
-	waitpid(fr, NULL, 0);
 }

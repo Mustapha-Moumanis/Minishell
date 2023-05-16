@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 14:04:39 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/08 05:26:10 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/16 12:15:56 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,6 @@ t_env	*ft_lstlast_env(t_env *lst)
 	return (lst);
 }
 
-void	add_env(t_env **lst, t_env *new)
-{
-	if (!(*lst))
-		*lst = new;
-	else
-		ft_lstlast_env(*lst)->next = new;
-}
-
 t_export	*ft_lstlast_export(t_export *lst)
 {
 	if (!lst)
@@ -63,4 +55,19 @@ t_export	*ft_lstlast_export(t_export *lst)
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
+}
+
+int	ft_lstsize_h(t_cmd *lst)
+{
+	int	i;
+
+	if (!lst)
+		return (0);
+	i = 1;
+	while (lst->next)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
