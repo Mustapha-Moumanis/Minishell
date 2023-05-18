@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 07:19:55 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/13 23:03:46 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/18 09:11:56 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	change_path(t_exec *val, char *str, char *value)
 {
 	t_export	*tmp;
 	t_env		*env;
+	char		*s;
 
 	tmp = val->export;
 	env = val->env;
@@ -24,9 +25,9 @@ void	change_path(t_exec *val, char *str, char *value)
 		if (!ft_strcmp(tmp->name, str))
 		{
 			free(tmp->value);
-			free(env->value);
-			tmp->value = ft_strdup(value);
-			env->value = ft_strdup(value);
+			s = ft_strdup(value);
+			tmp->value = s;
+			env->value = s;
 			break ;
 		}
 		tmp = tmp->next;

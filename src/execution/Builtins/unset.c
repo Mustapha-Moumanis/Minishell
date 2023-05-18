@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/16 17:00:24 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/18 09:22:06 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	**list_to_table_h(t_env **lst)
 		s = ft_strjoin(tmp->name, "=");
 		cmd[++i] = ft_strjoin(s, tmp->value);
 		free(s);
-		printf("%s\n", cmd[i]);
 		tmp = tmp->next;
 	}
 	return (cmd);

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/16 15:37:22 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/18 15:21:31 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <signal.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 # include <errno.h>
 # include "../libft/libft.h"
 
@@ -91,6 +91,9 @@ typedef struct s_exec
 {
 	int			i;
 	int			size;
+	int			n_p;
+	int			fork;
+	int			**pe;
 	char		*check;
 	char		cd_path[1024];
 	char		last_path[1024];
@@ -133,31 +136,35 @@ void	ft_lst_clear(t_cmd **lst, void (*del)(char **));
 
 // EXECUTION :
 
-void	exuct(t_data *data, t_exec *val);
-void	ecx(char **av, char **en);
-void	builtins(t_exec *val);
-void	sp_builtins(t_exec *val);
+int		exuct(t_data *data, t_exec *val);
+int		ecx(t_exec *val, char *path);
+int		builtins(t_exec *val);
+int		sp_builtins(t_exec *val);
 
 // UTILS :
-int	add_value_export(t_exec *val, char *n, char *v);
+t_export *new_export(char *name, char *value, char sep);
+int		add_value_export(t_exec *val, char *n, char *v);
 void	change_path(t_exec *val, char *str, char *value);
 void	decrement_path(t_exec *val);
 void	export_error(char *str);
 void	print_export(t_exec *val);
 t_env	*new_env(char *name, char *value);
-t_export	*new_export(char *name, char *value, char sep);
 void	ft_lenked_list(char **env, t_exec *val);
 int		ft_strcmp(char *s1, char *s2);
 void	str_lowercase(char *str);
 t_env	*ft_lstlast_env(t_env *lst);
 void	add_env(t_env **lst, t_env *new);
-t_export	*ft_lstlast_export(t_export *lst);
+t_export *ft_lstlast_export(t_export *lst);
 t_env	*ft_lstlast_env(t_env *lst);
 void	add_export(t_export **lst, t_export *new);
 char	*value(char *str);
 char	*name(char *str);
-int	ft_lstsize_h(t_cmd *lst);
+int		ft_lstsize_h(t_cmd *lst);
 char	**list_to_table_h(t_env **lst);
+int		exc_comande(t_exec *val);
+int		init_pipes(int size, int **pe);
+int		ft_error(char *str);
+char	*get_path(t_env *env);
 
 //  BUILTINS :
 

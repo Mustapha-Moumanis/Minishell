@@ -6,11 +6,18 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/16 15:42:42 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/18 10:54:54 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	ft_error(char *str)
+{
+	ft_putendl_fd("Error", 2);
+	ft_putstr_fd(str, 2);
+	return (2);
+}
 
 void	ft_double_free(char **s)
 {
