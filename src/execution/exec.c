@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/18 15:31:25 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/20 14:22:00 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,14 @@ int	ecx(t_exec *val, char *path)
 		i++;
 	}
 	execve(str, val->tmp->full_cmd, val->n_env);
+	perror("Error");
 	return (0);
 }
 
 int	first_cmd(t_exec *val)
 {
+	if (val->tmp->out_file == 1)
+		val->tmp->out_file = val->pe[val->n_p][1];
 	if (builtins(val) == 1)
 	{
 		val->fork = fork();
@@ -56,8 +59,7 @@ int	first_cmd(t_exec *val)
 			return (ft_error("fork fail\n"));
 		else if (val->fork == 0)
 		{
-			if (val->tmp->in_file != 0)
-				dup2(val->tmp->in_file, 0);
+			dup2(val->tmp->in_file, 0);
 			if (val->tmp->out_file != 1)
 				dup2(val->tmp->out_file, 1);
 			else
@@ -80,12 +82,11 @@ int	last_cmd(t_exec *val)
 			return (ft_error("fork fail\n"));
 		if (val->fork == 0)
 		{
+			dup2(val->tmp->out_file, 1);
 			if (val->tmp->in_file != 0)
 				dup2(val->tmp->in_file, 0);
 			else
 				dup2(val->pe[val->n_p][0], 0);
-			if (val->tmp->out_file != 1)
-				dup2(val->tmp->out_file, 1);
 			ecx(val, get_path(val->env));
 		}
 		waitpid(val->fork, NULL, 0);

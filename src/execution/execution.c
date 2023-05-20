@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/18 15:16:42 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/19 10:27:52 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	sp_builtins(t_exec *val)
 int	builtins(t_exec *val)
 {
 	int	i;
-
+	
 	val->onther = 0;
 	val->i = 0;
 	if (ft_strcmp(val->tmp->full_cmd[val->i], "cd") == 0)

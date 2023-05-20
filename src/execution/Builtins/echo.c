@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:32:21 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/11 06:19:08 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/20 14:23:39 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	n_line(char **str, t_exec *n)
 {	
-	while (strcmp(str[n->i], "-n") == 0)
+	while (str[n->i] && strcmp(str[n->i], "-n") == 0)
 		n->i++;
 }
 
