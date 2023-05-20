@@ -3,45 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 20:12:07 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/19 12:07:03 by shilal           ###   ########.fr       */
+/*   Created: 2023/05/19 16:04:49 by mmoumani          #+#    #+#             */
+/*   Updated: 2023/05/19 17:22:08 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**list_to_table(t_list **lst)
+char	**change_to_table(t_list **lst)
 {
-	t_list	*tmp;
 	char	**cmd;
-	int		len;
+	t_list	*tmp;
 	int		i;
-	int		j;
 
-	tmp = *lst;
-	len = ft_lstsize(*lst);
-	i = -1;
-	cmd = ft_calloc((len + 1), sizeof(char *));
+	i = 0;
+	cmd = malloc(sizeof(char *) * (ft_lstsize(*lst) + 1));
 	if (!cmd)
 		return (NULL);
+	tmp = *lst;
 	while (tmp)
 	{
-		j = -1;
-		cmd[++i] = ft_calloc(ft_strlen(tmp->content) + 1, sizeof(char));
-		if (!cmd[i])
-			return (ft_free(cmd, i));
-		while (tmp->content[++j])
-			cmd[i][j] = tmp->content[j];
+		cmd[i++] = ft_strdup(tmp->content);
 		tmp = tmp->next;
 	}
+	cmd[i] = NULL;
 	return (cmd);
 }
 
 void	append_exution_struct(t_data *d)
 {
-	ft_lst_back(&d->head, ft_lst_new(d->in, d->out, list_to_table(&d->cmd_lst)));
+	ft_cmd_back(&d->head, ft_new_cmd(d->in, d->out, change_to_table(&d->cmd_lst)));
 	d->n_cmd = ft_lstsize(d->cmd_lst);
 	ft_lstclear(&d->cmd_lst, &free);
 	init_parssing_data(d);

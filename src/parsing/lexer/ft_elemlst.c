@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst.c                                           :+:      :+:    :+:   */
+/*   ft_elemlst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 21:41:45 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/04/12 01:03:25 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/20 14:42:34 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-t_cmd	*ft_lst_new(int in_file, int out_file, char **full_cmd)
+t_elem	*new_elem(char *content, int len, enum e_type type, enum e_state state)
 {
-	t_cmd	*node;
+	t_elem	*node;
 
-	node = malloc(sizeof(t_cmd));
+	node = malloc(sizeof(t_elem));
 	if (!node)
 		return (NULL);
-	node->in_file = in_file;
-	node->out_file = out_file;
-	node->full_cmd = full_cmd;
+	node->content = content;
+	node->len = len;
+	node->type = type;
+	node->state = state;
 	node->next = NULL;
 	return (node);
 }
 
-t_cmd	*ft_lst_last(t_cmd *lst)
+t_elem	*ft_last_elem(t_elem *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -35,34 +36,33 @@ t_cmd	*ft_lst_last(t_cmd *lst)
 	return (lst);
 }
 
-
-void	ft_lst_back(t_cmd **lst, t_cmd *new)
+void	addback_elem(t_elem **lst, t_elem *new)
 {
 	if (!(*lst))
 		*lst = new;
 	else
-		ft_lst_last(*lst)->next = new;
+		ft_last_elem(*lst)->next = new;
 }
 
-void	ft_lst_delone(t_cmd *lst, void (*del)(char **))
+void	ft_delone_elem(t_elem *lst, void (*del)(void *))
 {
 	if (lst && del)
 	{
-		del(lst->full_cmd);
+		del(lst->content);
 		free(lst);
 	}
 }
 
-void	ft_lst_clear(t_cmd **lst, void (*del)(char **))
+void	ft_clear_elems(t_elem **lst, void (*del)(void *))
 {
-	t_cmd	*tmp;
+	t_elem	*tmp;
 
 	if (lst && del)
 	{
 		while (*lst)
 		{
 			tmp = (*lst)->next;
-			ft_lst_delone(*lst, del);
+			ft_delone_elem(*lst, del);
 			*lst = tmp;
 		}
 	}

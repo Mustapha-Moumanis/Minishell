@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/19 10:27:52 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/20 15:08:17 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,13 @@ int	exuct(t_data *data, t_exec *val)
 				ecx(val, get_path(val->env));
 			}
 			waitpid(fr, NULL, 0);
+			printf("hfifdf;fg\n");
 		}
 	}
 	else
+	{
+		printf("hfifdf;fg\n");
 		return (exc_comande(val));
+	}
 	return (0);
 }

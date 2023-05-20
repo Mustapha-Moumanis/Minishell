@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/18 15:21:31 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/20 14:45:46 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,65 @@
 # include <errno.h>
 # include "../libft/libft.h"
 
-// Define token types as constants
-# define TOKEN_IN_FILE 1
-# define TOKEN_OUT_FILE 2
-# define TOKEN_HD 3
-# define TOKEN_PIPE 4
-# define TOKEN_COMMAND 5
-# define TOKEN_APPEND 7
-# define TOKEN_END 99
-
 typedef struct s_cmd
 {
 	int				in_file;
 	int				out_file;
 	char			**full_cmd;
-	char			p;
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef struct s_token
+// lexer 2 function
+
+enum e_type
 {
-	char	*value;
-	int		size;
-	int		type;
-}			t_token;
+	WORD = -1,
+	WHITE_SPACE = ' ',
+	NEW_LINE = '\n',
+	QOUTE = '\'',
+	DQUOTE = '\"',
+	ESCAPE = '\\',
+	ENV = '$',
+	EXIT_STATUS,
+	PIPE_LINE = '|',
+	REDIR_IN = '<',
+	REDIR_OUT = '>',
+	HERE_DOC,
+	DREDIR_OUT,
+	OR,
+	AND,
+};
+
+enum e_state
+{
+	IN_DQUOTE,
+	IN_QUOTE,
+	GENERAL,
+};
+
+typedef struct s_elem
+{
+	char			*content;
+	int				len;
+	enum e_type		type;
+	enum e_state	state;
+	struct s_elem	*next;
+}					t_elem;
 
 typedef struct s_lexer
 {
 	char	*input;
-	int		error;
-	int		in_file;
+	int		len;
 	int		position;
 }			t_lexer;
+
+typedef struct s_token
+{
+	char			*value;
+	int				len;
+	enum e_type		type;
+	enum e_state	state;
+}			t_token;
 
 // DATA :
 
@@ -63,11 +90,12 @@ typedef struct s_data
 	t_cmd	*head;
 	char	*input;
 	char	**env;
-	int		error;
 	t_list	*cmd_lst;
 	int		n_cmd;
 	int		in;
 	int		out;
+	t_elem	*elem;
+	int		error;
 }			t_data;
 
 // Data of execution part :
@@ -107,32 +135,54 @@ typedef struct s_exec
 	t_export	*export;
 }				t_exec;
 
+// PARSING : --------------------------
+
+// More function
+void	syntax_errors(t_data *data);
+void	skeap_space(t_elem	**t);
+
+// pars
+int		parsing(t_data *data, t_elem *lex);
+char	*parce_qoute(t_elem **lex, enum e_type type);
+char	*parse_word(t_elem **lex);
+char	*parse_env(t_elem **lex);
+char	*parse_cmd(t_elem **lex);
+
 // PARSING :
 
 int		parser(t_data *data);
 void	append_exution_struct(t_data *data);
 void	init_parssing_data(t_data *data);
-void	check_in_file(t_data *data, t_lexer *lexer, t_token *token);
-void	check_out_file(t_data *data, t_lexer *lexer, t_token *token);
-void	check_append_file(t_data *data, t_lexer *lexer, t_token *token);
+
+void	in_file(t_data *data, char *value);
+void	out_file(t_data *data, char *value);
+void	dout_file(t_data *data, char *value);
 
 // more function
 
+int		is_red(int c);
 int		ft_whitespace(int c);
+int		ft_quote(int c);
 void	ft_double_free(char **s);
 
 // lexer function
 
 void	lexer(t_data *data);
-void	lexer_read_cmd_quote(t_lexer *lexer, t_token *token);
-void	lexer_read_cmd(t_lexer *lexer, t_token *token);
 
-// linkedlist function
+// element function
 
-t_cmd	*ft_lst_new(int in_file, int out_file, char **full_cmd);
-t_cmd	*ft_lst_last(t_cmd *lst);
-void	ft_lst_back(t_cmd **lst, t_cmd *new);
-void	ft_lst_clear(t_cmd **lst, void (*del)(char **));
+t_elem	*new_elem(char *content, int len, enum e_type type, enum e_state state);
+t_elem	*ft_last_elem(t_elem *lst);
+void	addback_elem(t_elem **lst, t_elem *new);
+void	ft_delone_elem(t_elem *lst, void (*del)(void *));
+void	ft_clear_elems(t_elem **lst, void (*del)(void *));
+
+// cmd linkedlist function
+
+t_cmd	*ft_new_cmd(int in_file, int out_file, char **full_cmd);
+t_cmd	*ft_last_cmd(t_cmd *lst);
+void	ft_cmd_back(t_cmd **lst, t_cmd *new);
+void	ft_cmd_clear(t_cmd **lst, void (*del)(char **));
 
 // EXECUTION :
 

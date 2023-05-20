@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/20 14:22:00 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/20 15:09:08 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ int	ecx(t_exec *val, char *path)
 		str = ft_strjoin(s[i], cmd);
 		if (access(str, R_OK) == 0)
 			break ;
+		free(str);
 		i++;
 	}
+	ft_double_free(s);
+	free(cmd);
 	execve(str, val->tmp->full_cmd, val->n_env);
 	perror("Error");
+	exit(1);
 	return (0);
 }
 

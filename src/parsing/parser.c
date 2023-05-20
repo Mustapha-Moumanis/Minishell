@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:37:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/03 21:21:37 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/20 14:42:28 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	parser(t_data *data)
 {
-	data->input = readline("minishell-> ");
+	data->input = readline("minishell : ");
 	if (!data->input)
 	{
 		rl_clear_history();
@@ -24,6 +24,10 @@ int	parser(t_data *data)
 	if (ft_strlen(data->input) > 0)
 		add_history(data->input);
 	lexer(data);
+	syntax_errors(data);
+	if (data->error == 0)
+		parsing(data, data->elem);
+	ft_clear_elems(&data->elem, &free);
 	free(data->input);
 	return (data->error);
 }
