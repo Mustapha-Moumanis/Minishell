@@ -6,11 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 05:43:09 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/18 20:22:50 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/21 12:18:40 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	skeap_space(t_elem **t)
 {
@@ -30,7 +30,7 @@ void	check_redirec(t_data *data, t_elem **t)
 {
 	(*t) = (*t)->next;
 	skeap_space(t);
-	if ((*t) && ((*t)->type == '|' || is_red((*t)->type)))
+	if ((*t) && ((*t)->type == '|' || is_red((*t)->type) || (*t)->type == OR))
 		data->error = print_synerror((*t)->content);
 	else if (!(*t))
 		data->error = print_synerror("newline");
@@ -78,7 +78,7 @@ void	syntax_errors(t_data *data)
 			{
 				if (t->type == OR)
 					data->error = print_synerror("||");
-				if (is_red(t->type))
+				if (is_red(t->type) || t->type == '|')
 					check_redirec(data, &t);
 				if (t && ft_quote(t->type))
 					check_quote(data, &t);

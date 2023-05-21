@@ -6,11 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:04:49 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/19 17:22:08 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/21 11:27:58 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 char	**change_to_table(t_list **lst)
 {

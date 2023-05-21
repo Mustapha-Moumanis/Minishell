@@ -6,11 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 21:41:45 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/19 15:58:20 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/21 11:28:02 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 t_cmd	*ft_new_cmd(int in_file, int out_file, char **full_cmd)
 {

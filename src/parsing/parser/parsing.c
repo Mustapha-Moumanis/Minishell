@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/20 14:43:28 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/21 13:09:34 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 char	*change_content(t_data *data)
 {
@@ -20,37 +20,6 @@ char	*change_content(t_data *data)
 	free(data->cmd_lst->next);
 	data->cmd_lst->next = NULL;
 	return (str);
-}
-
-void	echo_cmd(t_data *data, t_elem **lex)
-{
-	char	*str;
-	char	*tmp;
-	char	*cmd;
-
-	str = NULL;
-	skeap_space(lex);
-	if (ft_strcmp(data->cmd_lst->next->content, "-n"))
-		str = change_content(data);
-	while (*lex && !((*lex)->type == '|' && (*lex)->state == GENERAL))
-	{
-		if (!str)
-			str = ft_strdup("");
-		tmp = str;
-		cmd = parse_cmd(lex);
-		if (!cmd)
-		{
-			cmd = ft_strdup(" ");
-			while (*lex && (*lex)->next && (ft_whitespace((*lex)->type)) && (ft_whitespace((*lex)->next->type)))
-				(*lex) = (*lex)->next;
-		}
-		str = ft_strjoin(tmp, cmd);
-		free(tmp);
-		free(cmd);
-		if (*lex)
-			(*lex) = (*lex)->next;
-	}
-	ft_lstadd_back(&data->cmd_lst, ft_lstnew(str));
 }
 
 char	*collecting_cmd(t_data *data, t_elem **lex, char *str)

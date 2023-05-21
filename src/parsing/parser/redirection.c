@@ -6,11 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:32:50 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/19 17:11:14 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/21 11:28:12 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	in_file(t_data *data, char *value)
 {

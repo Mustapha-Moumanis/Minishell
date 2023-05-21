@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/20 14:43:01 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/21 12:02:39 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,19 @@ void	token_init(t_token *token)
 	token->state = GENERAL;
 }
 
-char	*cat_var(char *str)
+char	*cat_var(char *str, int nb)
 {
 	char	*value;
 	int		i;
 	int		j;
 
 	i = 0;
-	while (str[i] && !special_char(str[i]) && !ft_whitespace(str[i]))
-		i++;
+	if (nb)
+		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+			i++;
+	else
+		while (str[i] && !special_char(str[i]) && !ft_whitespace(str[i]))
+			i++;
 	value = malloc(sizeof(char) * (i + 1));
 	if (!value)
 		return (NULL);
@@ -70,7 +74,7 @@ void	get_word(t_lexer *lexer, t_token *token)
 {
 	char	*value;
 
-	value = cat_var(lexer->input + lexer->position);
+	value = cat_var(lexer->input + lexer->position, 0);
 	lexer->position += ft_strlen(value);
 	token->value = value;
 	token->len = ft_strlen(token->value);
@@ -84,7 +88,7 @@ void	get_env(t_lexer *lexer, t_token *token)
 	char	*value;
 
 	c_char = lexer->input[lexer->position];
-	str = cat_var(lexer->input + lexer->position + 1);
+	str = cat_var(lexer->input + lexer->position + 1, 1);
 	value = ft_strjoin("$", str);
 	if (lexer->input[lexer->position + 1] == '$')
 	{
