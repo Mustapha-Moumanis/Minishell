@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/18 09:22:06 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/22 17:36:35 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ char	**list_to_table_h(t_env **lst)
 
 void	ft_remove_exp(t_exec *val, char *str)
 {
-	t_export	*t_exp;
-	t_export	*tmp;
+	t_exprt	*t_exp;
+	t_exprt	*tmp;
 
 	t_exp = val->export;
 	tmp = t_exp;

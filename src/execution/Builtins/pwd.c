@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 07:19:55 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/18 09:11:56 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/22 17:36:35 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	change_path(t_exec *val, char *str, char *value)
 {
-	t_export	*tmp;
+	t_exprt	*tmp;
 	t_env		*env;
 	char		*s;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:59:36 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/16 17:06:19 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/22 17:36:35 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_export(t_exec *val)
 {
-	t_export	*tmp;
+	t_exprt	*tmp;
 
 	tmp = val->export;
 	while (tmp)
@@ -40,7 +40,7 @@ void	export_error(char *str)
 	ft_putstr_fd(": not a valid identifier\n", 2);
 }
 
-void	add_export(t_export **lst, t_export *new)
+void	add_export(t_exprt **lst, t_exprt *new)
 {
 	if (!(*lst))
 		*lst = new;

@@ -15,14 +15,13 @@ BOBJS = $(BFILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(BOBJS)
+	@echo "Archive OBJS file in libft.a"
 	@ar rc $(NAME) $(OBJS) $(BOBJS)
 	@ranlib $(NAME)
 
-$(OBJS) : $(FILES)
-	@cc -Wall -Wextra -Werror -c $(FILES)
-
-$(BOBJS) : $(BFILES)
-	@cc -Wall -Wextra -Werror -c $(BFILES)
+%.o: %.c
+	@echo cc -Wall -Wextra -Werror -c $< -o $@
+	@cc -Wall -Wextra -Werror -c $< -o $@
 
 clean:
 	@rm -f $(OBJS) $(BOBJS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/16 15:43:39 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/22 17:38:23 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	add_value(t_exec *val, char *n)
 {
 	int			j;
 	char		*v;
-	t_export	*tmp;
+	t_exprt	*tmp;
 
 	tmp = val->export;
 	v = value(val->tmp->full_cmd[val->i]);
@@ -43,10 +43,10 @@ void	add_value(t_exec *val, char *n)
 
 void	more_value(t_exec *val, char *n)
 {
-	t_export	*tmp;
+	t_exprt	*tmp;
 	t_env		*env;
 	char		*str;
-	char		*v;
+	char		*v; 
 
 	tmp = val->export;
 	env = val->env;

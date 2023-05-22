@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 14:04:39 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/18 06:27:10 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/22 17:36:35 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ t_env	*new_env(char *name, char *value)
 	return (node);
 }
 
-t_export	*new_export(char *name, char *value, char sep)
+t_exprt	*new_export(char *name, char *value, char sep)
 {
-	t_export	*node;
+	t_exprt	*node;
 
-	node = malloc(sizeof(t_export));
+	node = malloc(sizeof(t_exprt));
 	if (!node)
 		return (NULL);
 	node->name = name;
@@ -48,7 +48,7 @@ t_env	*ft_lstlast_env(t_env *lst)
 	return (lst);
 }
 
-t_export	*ft_lstlast_export(t_export *lst)
+t_exprt	*ft_lstlast_export(t_exprt *lst)
 {
 	if (!lst)
 		return (NULL);
