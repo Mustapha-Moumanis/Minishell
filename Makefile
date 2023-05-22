@@ -1,9 +1,6 @@
 NAME = minishell
 
-# SRCS = main.c
-
-# PFILES = parser.c lexer/lexer.c lexer/ft_elemlst.c lexer/syntax_errors.c parser/parsing.c parser/parse_utils.c parser/redirection.c parser/cmd_lst.c parser/append.c
-PFILES = parser.c $(addprefix lexer/, lexer.c ft_elemlst.c syntax_errors.c) $(addprefix parser/, parsing.c parse_utils.c redirection.c cmd_lst.c append.c)
+PFILES = parser.c $(addprefix lexer/, lexer.c lexer_utils_1.c lexer_utils_2.c ft_elemlst.c syntax_errors.c more_functions.c) $(addprefix parser/, parsing.c parse_utils.c redirection.c cmd_lst.c append.c)
 
 EFILES = execution.c utils_2.c utils_1.c exec.c
 

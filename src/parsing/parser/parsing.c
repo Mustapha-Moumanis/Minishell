@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 13:09:34 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:13:17 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*collecting_cmd(t_data *data, t_elem **lex, char *str)
 	skeap_space(lex);
 	while (*lex && !ft_whitespace((*lex)->type))
 	{
-		cmd = parse_cmd(lex);
+		cmd = parse_cmd(data, lex);
 		tmp = str;
 		str = ft_strjoin(tmp, cmd);
 		free(tmp);
@@ -40,7 +40,7 @@ char	*collecting_cmd(t_data *data, t_elem **lex, char *str)
 		{
 			ft_lstadd_back(&data->cmd_lst, ft_lstnew(str));
 			str = NULL;
-			break; 
+			break ;
 		}
 		(*lex) = (*lex)->next;
 	}
@@ -70,7 +70,7 @@ void	simple_cmd(t_data *data, t_elem **lex)
 	str = NULL;
 	while (*lex && !((*lex)->type == '|' && (*lex)->state == GENERAL))
 	{
-		if (is_red((*lex)->type))
+		if (is_red((*lex)->type) && !data->file_error)
 			get_red(data, lex, (*lex)->type, str);
 		else
 		{
@@ -98,7 +98,10 @@ int	parsing(t_data *data, t_elem *lex)
 	{
 		simple_cmd(data, &lex);
 		if (!lex || lex->type == PIPE_LINE)
+		{
 			append_exution_struct(data);
+			data->file_error = 0;
+		}
 		if (lex)
 			lex = lex->next;
 	}

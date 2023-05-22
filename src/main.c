@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/20 14:52:17 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/22 14:24:41 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	init_parssing_data(t_data *data)
 {
 	data->in = 0;
 	data->out = 1;
+	data->file_error = 0;
 }
 
 int	main(int ac, char **av, char **env)
@@ -49,6 +50,7 @@ int	main(int ac, char **av, char **env)
 	data.env = env;
 	val.pos_path = 0;
 	ft_lenked_list(data.env, &val);
+	data.n_env = val.env;
 	while (1337)
 	{
 		init_parssing_data(&data);

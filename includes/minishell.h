@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/20 14:45:46 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/22 14:19:14 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,17 @@ typedef struct s_token
 
 typedef struct s_data
 {
-	t_cmd	*head;
-	char	*input;
-	char	**env;
-	t_list	*cmd_lst;
-	int		n_cmd;
-	int		in;
-	int		out;
-	t_elem	*elem;
-	int		error;
+	t_cmd			*head;
+	char			*input;
+	char			**env;
+	t_list			*cmd_lst;
+	int				n_cmd;
+	int				in;
+	int				out;
+	t_elem			*elem;
+	int				error;
+	int				file_error;
+	struct s_env	*n_env;
 }			t_data;
 
 // Data of execution part :
@@ -113,7 +115,7 @@ typedef struct s_export
 	char			sep;
 	char			*value;
 	struct s_export	*next;
-}					t_export;
+}					t_exprt;
 
 typedef struct s_exec
 {
@@ -132,7 +134,7 @@ typedef struct s_exec
 	char		**n_env;
 	t_cmd		*tmp;
 	t_env		*env;
-	t_export	*export;
+	t_exprt	*export;
 }				t_exec;
 
 // PARSING : --------------------------
@@ -141,14 +143,13 @@ typedef struct s_exec
 void	syntax_errors(t_data *data);
 void	skeap_space(t_elem	**t);
 
-// pars
-int		parsing(t_data *data, t_elem *lex);
-char	*parce_qoute(t_elem **lex, enum e_type type);
-char	*parse_word(t_elem **lex);
-char	*parse_env(t_elem **lex);
-char	*parse_cmd(t_elem **lex);
-
 // PARSING :
+
+int		parsing(t_data *data, t_elem *lex);
+char	*parce_qoute(t_data *data, t_elem **lex, enum e_type type);
+char	*parse_word(t_elem **lex);
+char	*parse_env(t_data *data, t_elem **lex);
+char	*parse_cmd(t_data *data, t_elem **lex);
 
 int		parser(t_data *data);
 void	append_exution_struct(t_data *data);
@@ -163,11 +164,20 @@ void	dout_file(t_data *data, char *value);
 int		is_red(int c);
 int		ft_whitespace(int c);
 int		ft_quote(int c);
+int		special_char(char c);
+char	*cat_var(char *str, int nb);
 void	ft_double_free(char **s);
+void	get_word(t_lexer *lexer, t_token *token);
+void	get_env(t_lexer *lexer, t_token *token);
+int		initial_token(t_token *token, char c);
 
 // lexer function
 
 void	lexer(t_data *data);
+void	get_whitespace(t_lexer *lexer, t_token *token, char c);
+void	get_pip(t_lexer *lexer, t_token *token);
+void	get_infile_herdok(t_lexer *lexer, t_token *token);
+void	get_outfile_append(t_lexer *lexer, t_token *token);
 
 // element function
 
@@ -177,7 +187,7 @@ void	addback_elem(t_elem **lst, t_elem *new);
 void	ft_delone_elem(t_elem *lst, void (*del)(void *));
 void	ft_clear_elems(t_elem **lst, void (*del)(void *));
 
-// cmd linkedlist function
+// cmd function
 
 t_cmd	*ft_new_cmd(int in_file, int out_file, char **full_cmd);
 t_cmd	*ft_last_cmd(t_cmd *lst);
@@ -192,7 +202,6 @@ int		builtins(t_exec *val);
 int		sp_builtins(t_exec *val);
 
 // UTILS :
-t_export *new_export(char *name, char *value, char sep);
 int		add_value_export(t_exec *val, char *n, char *v);
 void	change_path(t_exec *val, char *str, char *value);
 void	decrement_path(t_exec *val);
@@ -204,9 +213,8 @@ int		ft_strcmp(char *s1, char *s2);
 void	str_lowercase(char *str);
 t_env	*ft_lstlast_env(t_env *lst);
 void	add_env(t_env **lst, t_env *new);
-t_export *ft_lstlast_export(t_export *lst);
 t_env	*ft_lstlast_env(t_env *lst);
-void	add_export(t_export **lst, t_export *new);
+void	add_export(t_exprt **lst, t_exprt *new);
 char	*value(char *str);
 char	*name(char *str);
 int		ft_lstsize_h(t_cmd *lst);
@@ -215,6 +223,8 @@ int		exc_comande(t_exec *val);
 int		init_pipes(int size, int **pe);
 int		ft_error(char *str);
 char	*get_path(t_env *env);
+t_exprt	*new_export(char *name, char *value, char sep);
+t_exprt	*ft_lstlast_export(t_exprt *lst);
 
 //  BUILTINS :
 

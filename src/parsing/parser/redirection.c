@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:32:50 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 11:28:12 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:12:17 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	in_file(t_data *data, char *value)
 		ft_putstr_fd(value, 2);
 		ft_putstr_fd(" : ", 2);
 		ft_putendl_fd(strerror(errno), 2);
-		data->error = 1;
+		data->file_error = 1;
 	}
 }
 
@@ -36,7 +36,7 @@ void	out_file(t_data *data, char *value)
 		ft_putstr_fd(value, 2);
 		ft_putstr_fd(" : ", 2);
 		ft_putendl_fd(strerror(errno), 2);
-		data->error = 1;
+		data->file_error = 1;
 	}
 }
 
@@ -50,6 +50,6 @@ void	dout_file(t_data *data, char *value)
 		ft_putstr_fd(value, 2);
 		ft_putstr_fd(" : ", 2);
 		ft_putendl_fd(strerror(errno), 2);
-		data->error = 1;
+		data->file_error = 1;
 	}
 }

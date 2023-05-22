@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 21:41:45 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 11:28:02 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:01:13 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_cmd	*ft_last_cmd(t_cmd *lst)
 		lst = lst->next;
 	return (lst);
 }
-
 
 void	ft_cmd_back(t_cmd **lst, t_cmd *new)
 {
