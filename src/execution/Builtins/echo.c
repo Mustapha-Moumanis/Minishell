@@ -6,15 +6,31 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:32:21 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/21 15:26:24 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/23 15:59:42 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+int	str_is_n(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	n_line(char **str, t_exec *n)
-{	
-	while (str[n->i] && strcmp(str[n->i], "-n") == 0)
+{
+	while (str[n->i] && str_is_n(str[n->i]))
 		n->i++;
 }
 
@@ -26,7 +42,7 @@ void	echo(t_exec *val)
 	nl = 0;
 	if (val->tmp->full_cmd[val->i])
 	{
-		if (strcmp(val->tmp->full_cmd[val->i], "-n") == 0)
+		if (str_is_n(val->tmp->full_cmd[val->i]))
 		{
 			n_line(val->tmp->full_cmd, val);
 			nl = 1;
@@ -34,7 +50,8 @@ void	echo(t_exec *val)
 		while (val->tmp->full_cmd[val->i])
 		{
 			ft_putstr_fd(val->tmp->full_cmd[val->i], val->tmp->out_file);
-			ft_putstr_fd(" ", val->tmp->out_file);
+			if (val->tmp->full_cmd[val->i + 1])
+				ft_putstr_fd(" ", val->tmp->out_file);
 			val->i++;
 		}
 		if (nl == 0)

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/23 14:20:00 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/23 16:00:27 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ typedef struct s_exec
 	char		**n_env;
 	t_cmd		*tmp;
 	t_env		*env;
-	t_exprt	*export;
+	t_exprt		*export;
 }				t_exec;
 
 // PARSING : --------------------------
