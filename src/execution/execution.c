@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 11:26:47 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:07:20 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	ft_free_pipes(int **pipe, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		free(pipe[i++]);
+	}
+	free(pipe);
+	return (2);
+}
 
 int	init_pipes(int size, int **pe)
 {
@@ -59,15 +72,20 @@ int	sp_builtins(t_exec *val)
 
 int	builtins(t_exec *val)
 {
-	int	i;
-	
+	int		i;
+
 	val->onther = 0;
 	val->i = 0;
-	if (ft_strcmp(val->tmp->full_cmd[val->i], "cd") == 0)
-		cd(val);
+	if ((ft_strcmp(val->tmp->full_cmd[val->i], "cd") == 0))
+	{
+		if (val->tmp->next)
+			val->i++;
+		else
+			cd(val);
+	}
 	else if (ft_strcmp(val->tmp->full_cmd[val->i], "export") == 0)
 		export(val);
-	else if (ft_strcmp(val->tmp->full_cmd[val->i], "unset") == 0)
+	else if ((ft_strcmp(val->tmp->full_cmd[val->i], "unset") == 0))
 		unset(val);
 	else if (ft_strcmp(val->tmp->full_cmd[val->i], "exit") == 0)
 		echo(val);
@@ -91,7 +109,9 @@ int	exuct(t_data *data, t_exec *val)
 		if (builtins(val) == 1)
 		{
 			fr = fork();
-			if (fr == 0)
+			if (fr == -1)
+				return (ft_error("fork fail\n"));
+			else if (fr == 0)
 			{
 				if (val->tmp->in_file != 0)
 					dup2(val->tmp->in_file, 0);
@@ -103,6 +123,6 @@ int	exuct(t_data *data, t_exec *val)
 		}
 	}
 	else
-		return (exc_comande(val));
+		return (exc_comande(val), ft_free_pipes(val->pe, val->size - 1));
 	return (0);
 }

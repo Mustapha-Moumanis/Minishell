@@ -6,51 +6,11 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/20 15:09:08 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/23 11:00:35 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*get_path(t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->name, "PATH"))
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-int	ecx(t_exec *val, char *path)
-{
-	char	*str;
-	int		i;
-	char	**s;
-	char	*cmd;
-
-	i = 0;
-	s = ft_split(path, ':');
-	cmd = ft_strjoin("/", val->tmp->full_cmd[0]);
-	while (s[i])
-	{
-		str = ft_strjoin(s[i], cmd);
-		if (access(str, R_OK) == 0)
-			break ;
-		free(str);
-		i++;
-	}
-	ft_double_free(s);
-	free(cmd);
-	execve(str, val->tmp->full_cmd, val->n_env);
-	perror("Error");
-	exit(1);
-	return (0);
-}
 
 int	first_cmd(t_exec *val)
 {
@@ -70,7 +30,6 @@ int	first_cmd(t_exec *val)
 				dup2(val->pe[val->n_p][1], 1);
 			ecx(val, get_path(val->env));
 		}
-		waitpid(val->fork, NULL, 0);
 	}
 	close(val->pe[val->n_p][1]);
 	val->tmp = val->tmp->next;
@@ -79,6 +38,9 @@ int	first_cmd(t_exec *val)
 
 int	last_cmd(t_exec *val)
 {
+	int	i;
+
+	i = 0;
 	if (builtins(val) == 1)
 	{
 		val->fork = fork();
@@ -93,7 +55,8 @@ int	last_cmd(t_exec *val)
 				dup2(val->pe[val->n_p][0], 0);
 			ecx(val, get_path(val->env));
 		}
-		waitpid(val->fork, NULL, 0);
+		while (wait(NULL) > 0)
+			i++;
 	}
 	close(val->pe[val->n_p][0]);
 	return (0);
@@ -119,7 +82,6 @@ int	other_commands(t_exec *val)
 					dup2(val->pe[val->n_p + 1][1], 1);
 				ecx(val, get_path(val->env));
 			}
-			waitpid(val->fork, NULL, 0);
 		}
 		close(val->pe[val->n_p][0]);
 		close(val->pe[val->n_p + 1][1]);
@@ -127,19 +89,6 @@ int	other_commands(t_exec *val)
 		val->n_p++;
 	}
 	return (0);
-}
-
-int	ft_free_pipes(int **pipe, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		free(pipe[i++]);
-	}
-	free(pipe);
-	return (2);
 }
 
 int	exc_comande(t_exec *val)
@@ -158,10 +107,15 @@ int	exc_comande(t_exec *val)
 	}
 	else
 	{
-		first_cmd(val);
-		other_commands(val);
-		last_cmd(val);
-		ft_free_pipes(val->pe, val->size - 1);
+		if (first_cmd(val) != 2)
+		{
+			if (other_commands(val) != 2)
+			{
+				if (last_cmd(val) != 2)
+					return (0);
+			}
+		}
+		return (2);
 	}
 	return (0);
 }

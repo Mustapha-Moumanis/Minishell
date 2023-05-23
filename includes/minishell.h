@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/22 14:19:14 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:56:45 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ int		builtins(t_exec *val);
 int		sp_builtins(t_exec *val);
 
 // UTILS :
+int		ft_free_pipes(int **pipe, int size);
 int		add_value_export(t_exec *val, char *n, char *v);
 void	change_path(t_exec *val, char *str, char *value);
 void	decrement_path(t_exec *val);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/22 17:36:35 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:58:50 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,18 @@ void	unset(t_exec *val)
 	char		*str;
 
 	val->i++;
-	while (val->tmp->full_cmd[val->i])
+	if (!val->tmp->next)
 	{
-		str = val->tmp->full_cmd[val->i];
-		ft_remove_exp(val, str);
-		if (ft_remove_env(val, str))
+		while (val->tmp->full_cmd[val->i])
 		{
-			ft_double_free(val->n_env);
-			val->n_env = list_to_table_h(&val->env);
+			str = val->tmp->full_cmd[val->i];
+			ft_remove_exp(val, str);
+			if (ft_remove_env(val, str))
+			{
+				ft_double_free(val->n_env);
+				val->n_env = list_to_table_h(&val->env);
+			}
+			val->i++;
 		}
-		val->i++;
 	}
 }
