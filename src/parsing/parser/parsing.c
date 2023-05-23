@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 19:13:17 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:45:16 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*collecting_cmd(t_data *data, t_elem **lex, char *str)
 	char	*tmp;
 
 	skeap_space(lex);
-	while (*lex && !ft_whitespace((*lex)->type))
+	while (*lex && !ft_whitespace((*lex)->type) && (*lex)->type != '|')
 	{
 		cmd = parse_cmd(data, lex);
 		tmp = str;
@@ -78,12 +78,15 @@ void	simple_cmd(t_data *data, t_elem **lex)
 				str = ft_strdup("");
 			if (!(ft_whitespace((*lex)->type) && (*lex)->state == GENERAL))
 				str = collecting_cmd(data, lex, str);
-			if ((str && (!(*lex) || ft_whitespace((*lex)->type))))
+			if ((str && (!(*lex) || ft_whitespace((*lex)->type)))
+				|| (*lex)->type == '|')
 			{
 				ft_lstadd_back(&data->cmd_lst, ft_lstnew(str));
 				str = NULL;
 			}
 		}
+		if ((*lex) && (*lex)->type == '|')
+			break ;
 		if (*lex)
 			(*lex) = (*lex)->next;
 	}
