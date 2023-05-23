@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:23:24 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 13:28:51 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:07:02 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,13 @@ char	*cat_var(char *str, int nb)
 
 	i = 0;
 	if (nb)
-		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-			i++;
+	{
+		if (ft_isdigit(str[0]))
+			i = 1;
+		else
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+				i++;
+	}
 	else
 		while (str[i] && !special_char(str[i]) && !ft_whitespace(str[i]))
 			i++;
