@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/23 11:00:35 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/23 11:26:58 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	last_cmd(t_exec *val)
 				dup2(val->pe[val->n_p][0], 0);
 			ecx(val, get_path(val->env));
 		}
-		while (wait(NULL) > 0)
-			i++;
 	}
+	while (wait(NULL) > 0)
+		i++;
 	close(val->pe[val->n_p][0]);
 	return (0);
 }

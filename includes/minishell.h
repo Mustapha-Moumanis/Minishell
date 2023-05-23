@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/23 10:56:45 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/23 14:20:00 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,95 +145,99 @@ void	skeap_space(t_elem	**t);
 
 // PARSING :
 
-int		parsing(t_data *data, t_elem *lex);
 char	*parce_qoute(t_data *data, t_elem **lex, enum e_type type);
-char	*parse_word(t_elem **lex);
-char	*parse_env(t_data *data, t_elem **lex);
 char	*parse_cmd(t_data *data, t_elem **lex);
+char	*parse_env(t_data *data, t_elem **lex);
+int		parsing(t_data *data, t_elem *lex);
+char	*parse_word(t_elem **lex);
 
-int		parser(t_data *data);
 void	append_exution_struct(t_data *data);
 void	init_parssing_data(t_data *data);
+int		parser(t_data *data);
 
-void	in_file(t_data *data, char *value);
-void	out_file(t_data *data, char *value);
 void	dout_file(t_data *data, char *value);
+void	out_file(t_data *data, char *value);
+void	in_file(t_data *data, char *value);
 
 // more function
 
-int		is_red(int c);
-int		ft_whitespace(int c);
-int		ft_quote(int c);
-int		special_char(char c);
-char	*cat_var(char *str, int nb);
-void	ft_double_free(char **s);
 void	get_word(t_lexer *lexer, t_token *token);
 void	get_env(t_lexer *lexer, t_token *token);
 int		initial_token(t_token *token, char c);
+char	*cat_var(char *str, int nb);
+void	ft_double_free(char **s);
+int		ft_whitespace(int c);
+int		special_char(char c);
+int		ft_quote(int c);
+int		is_red(int c);
 
 // lexer function
 
-void	lexer(t_data *data);
 void	get_whitespace(t_lexer *lexer, t_token *token, char c);
-void	get_pip(t_lexer *lexer, t_token *token);
-void	get_infile_herdok(t_lexer *lexer, t_token *token);
 void	get_outfile_append(t_lexer *lexer, t_token *token);
+void	get_infile_herdok(t_lexer *lexer, t_token *token);
+void	get_pip(t_lexer *lexer, t_token *token);
+void	lexer(t_data *data);
 
 // element function
 
 t_elem	*new_elem(char *content, int len, enum e_type type, enum e_state state);
-t_elem	*ft_last_elem(t_elem *lst);
-void	addback_elem(t_elem **lst, t_elem *new);
-void	ft_delone_elem(t_elem *lst, void (*del)(void *));
 void	ft_clear_elems(t_elem **lst, void (*del)(void *));
+void	ft_delone_elem(t_elem *lst, void (*del)(void *));
+void	addback_elem(t_elem **lst, t_elem *new);
+t_elem	*ft_last_elem(t_elem *lst);
 
 // cmd function
 
 t_cmd	*ft_new_cmd(int in_file, int out_file, char **full_cmd);
-t_cmd	*ft_last_cmd(t_cmd *lst);
-void	ft_cmd_back(t_cmd **lst, t_cmd *new);
 void	ft_cmd_clear(t_cmd **lst, void (*del)(char **));
+void	ft_cmd_back(t_cmd **lst, t_cmd *new);
+t_cmd	*ft_last_cmd(t_cmd *lst);
 
 // EXECUTION :
 
 int		exuct(t_data *data, t_exec *val);
-int		ecx(t_exec *val, char *path);
-int		builtins(t_exec *val);
+void	ecx(t_exec *val, char *path);
 int		sp_builtins(t_exec *val);
+int		builtins(t_exec *val);
 
-// UTILS :
-int		ft_free_pipes(int **pipe, int size);
-int		add_value_export(t_exec *val, char *n, char *v);
-void	change_path(t_exec *val, char *str, char *value);
-void	decrement_path(t_exec *val);
-void	export_error(char *str);
-void	print_export(t_exec *val);
-t_env	*new_env(char *name, char *value);
+// UTILS EXECUTION :
 void	ft_lenked_list(char **env, t_exec *val);
+int		ft_free_pipes(int **pipe, int size);
+int		init_pipes(int size, int **pe);
+char	**list_to_table_h(t_env **lst);
 int		ft_strcmp(char *s1, char *s2);
 void	str_lowercase(char *str);
-t_env	*ft_lstlast_env(t_env *lst);
-void	add_env(t_env **lst, t_env *new);
-t_env	*ft_lstlast_env(t_env *lst);
-void	add_export(t_exprt **lst, t_exprt *new);
-char	*value(char *str);
-char	*name(char *str);
 int		ft_lstsize_h(t_cmd *lst);
-char	**list_to_table_h(t_env **lst);
 int		exc_comande(t_exec *val);
-int		init_pipes(int size, int **pe);
-int		ft_error(char *str);
 char	*get_path(t_env *env);
-t_exprt	*new_export(char *name, char *value, char sep);
-t_exprt	*ft_lstlast_export(t_exprt *lst);
+int		ft_error(char *str);
 
 //  BUILTINS :
 
+void	ft_exit(t_exec *val);
 void	export(t_exec *val);
+void	unset(t_exec *val);
 void	echo(t_exec *val);
+void	pwd(t_exec *val);
 void	env(t_exec *val);
 void	cd(t_exec *val);
-void	pwd(t_exec *val);
-void	unset(t_exec *val);
+
+// UTILS BUILTINS :
+
+void	change_path(t_exec *val, char *str, char *value);
+int		add_value_export(t_exec *val, char *n, char *v);
+t_exprt	*new_export(char *name, char *value, char sep);
+void	add_export(t_exprt **lst, t_exprt *new);
+t_env	*new_env(char *name, char *value);
+void	add_env(t_env **lst, t_env *new);
+t_exprt	*ft_lstlast_export(t_exprt *lst);
+t_env	*ft_lstlast_env(t_env *lst);
+t_env	*ft_lstlast_env(t_env *lst);
+void	decrement_path(t_exec *val);
+void	print_export(t_exec *val);
+void	export_error(char *str);
+char	*value(char *str);
+char	*name(char *str);
 
 #endif

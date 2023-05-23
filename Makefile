@@ -4,7 +4,7 @@ PFILES = parser.c $(addprefix lexer/, lexer.c lexer_utils_1.c lexer_utils_2.c ft
 
 EFILES = execution.c utils_2.c utils_1.c utils_3.c exec.c
 
-BUILTINS = echo.c pwd.c env.c cd.c export.c utils_export.c unset.c
+BUILTINS = echo.c pwd.c env.c cd.c export.c utils_export.c unset.c exit.c
 
 SRCS = $(addprefix src/, main.c)
 
