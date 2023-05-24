@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/23 14:13:49 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/23 11:01:51 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_path(t_env *env)
 	return (NULL);
 }
 
-char	*check_cmd(t_exec *val, char *path)
+int	ecx(t_exec *val, char *path)
 {
 	char	*str;
 	int		i;
@@ -50,22 +50,11 @@ char	*check_cmd(t_exec *val, char *path)
 	{
 		ft_putstr_fd(val->tmp->full_cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
-		return (NULL);
+		exit(1);
+		return (2);
 	}
-	return (str);
-}
-
-void	ecx(t_exec *val, char *path)
-{
-	char	*str;
-
-	if (access(val->tmp->full_cmd[val->i], R_OK) == 0)
-		str = val->tmp->full_cmd[val->i];
-	else
-		str = check_cmd(val, path);
-	if (!str)
-		exit (1);
 	execve(str, val->tmp->full_cmd, val->n_env);
 	ft_putendl_fd(strerror(errno), 2);
 	exit(1);
+	return (0);
 }

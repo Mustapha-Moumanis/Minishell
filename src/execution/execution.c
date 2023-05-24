@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/23 11:34:48 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/23 10:07:20 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	builtins(t_exec *val)
 	else if ((ft_strcmp(val->tmp->full_cmd[val->i], "unset") == 0))
 		unset(val);
 	else if (ft_strcmp(val->tmp->full_cmd[val->i], "exit") == 0)
-		ft_exit(val);
+		echo(val);
 	else
 	{
 		i = sp_builtins(val);

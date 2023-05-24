@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 05:43:09 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 12:18:40 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:04:47 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,19 @@ int	print_synerror(char *content)
 	return (1);
 }
 
-void	check_redirec(t_data *data, t_elem **t)
+void	check_redirec_pipe(t_data *data, t_elem **t, enum e_type type)
 {
 	(*t) = (*t)->next;
 	skeap_space(t);
-	if ((*t) && ((*t)->type == '|' || is_red((*t)->type) || (*t)->type == OR))
-		data->error = print_synerror((*t)->content);
-	else if (!(*t))
+	if (*t)
+	{
+		if (is_red(type)
+			&& ((*t)->type == '|' || is_red((*t)->type) || (*t)->type == OR))
+			data->error = print_synerror((*t)->content);
+		else if (type == '|' && ((*t)->type == '|' || (*t)->type == OR))
+			data->error = print_synerror((*t)->content);
+	}
+	else
 		data->error = print_synerror("newline");
 }
 
@@ -79,7 +85,7 @@ void	syntax_errors(t_data *data)
 				if (t->type == OR)
 					data->error = print_synerror("||");
 				if (is_red(t->type) || t->type == '|')
-					check_redirec(data, &t);
+					check_redirec_pipe(data, &t, t->type);
 				if (t && ft_quote(t->type))
 					check_quote(data, &t);
 			}

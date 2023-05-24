@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 10:51:44 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 18:03:56 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:13:17 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char	*parse_cmd(t_data *data, t_elem **lex)
 	cmd = NULL;
 	if ((*lex))
 	{
-		if ((*lex)->type == WORD || (*lex)->type == EXIT_STATUS)
+		if ((*lex)->type == WORD || (*lex)->type == EXIT_STATUS
+			|| (*lex)->type == ESCAPE)
 			cmd = parse_word(lex);
 		else if ((*lex)->type == DQUOTE || (*lex)->type == QOUTE)
 			cmd = parce_qoute(data, lex, (*lex)->type);

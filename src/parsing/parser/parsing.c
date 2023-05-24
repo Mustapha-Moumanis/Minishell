@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/23 11:45:16 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:10:36 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	get_red(t_data *data, t_elem **lex, enum e_type type, char	*str)
 		out_file(data, str);
 	else if (type == DREDIR_OUT)
 		dout_file(data, str);
+	else if (type == HERE_DOC)
+		her_doc(data, lex, str);
 	free(str);
 }
 

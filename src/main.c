@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/23 11:46:31 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:13:11 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int	main(int ac, char **av, char **env)
 		init_parssing_data(&data);
 		data.error = 0;
 		if (parser(&data) == 0)
+		{
 			exuct(&data, &val);
+		}
 		ft_cmd_clear(&data.head, &ft_double_free);
 		ft_lstclear(&data.cmd_lst, &free);
 	}
