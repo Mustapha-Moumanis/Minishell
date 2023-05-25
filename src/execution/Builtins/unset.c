@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/23 10:58:50 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/24 14:04:09 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	unset(t_exec *val)
 	char		*str;
 
 	val->i++;
-	if (!val->tmp->next)
+	if (!val->tmp->next || val->tmp->in_file != 0)
 	{
 		while (val->tmp->full_cmd[val->i])
 		{

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/23 11:01:32 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/25 19:27:28 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	add_value(t_exec *val, char *n)
 	}
 }
 
-void	more_value(t_exec *val, char *n)
+int	more_value(t_exec *val, char *n)
 {
 	t_exprt		*tmp;
 	t_env		*env;
@@ -52,7 +52,7 @@ void	more_value(t_exec *val, char *n)
 	env = val->env;
 	while (tmp && env)
 	{
-		if (ft_strcmp(n, tmp->name) == 0)
+		if (ft_strcmp(tmp->name, n) == 0)
 		{
 			v = value(val->tmp->full_cmd[val->i]);
 			str = ft_strjoin(tmp->value, v);
@@ -61,44 +61,53 @@ void	more_value(t_exec *val, char *n)
 			tmp->value = str;
 			free(v);
 			free(n);
-			break ;
+			return (1);
 		}
 		tmp = tmp->next;
 		env = env->next;
 	}
-	if (!tmp)
-		add_value(val, n);
+	return (0);
 }
 
-int	all_iscorect(char *str)
+int	all_iscorect(t_exec *val, char *str)
 {
 	int	j;
+	int	len;
 
 	j = -1;
+	len = ft_strlen(str);
+	if (len == 0)
+		return (free(str), export_error(val->tmp->full_cmd[val->i]));
 	if (ft_isdigit(str[0]))
-		return (0);
-	while (str[++j])
-		if (!ft_isalnum(str[j]) && (str[j] == '+' && str[j + 1]))
-			return (0);
+		return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	if (str[len - 1] == '+')
+		len -= 1;
+	while (++j < len)
+	{
+		if (!ft_isalnum(str[j]) && str[j] != '_')
+			return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	}
 	return (1);
 }
 
 int	export_(t_exec *val)
 {
 	char	*n;
+	char	*trim;
 
 	n = name(val->tmp->full_cmd[val->i]);
-	if (!all_iscorect(n))
+	if (!all_iscorect(val, n))
 	{
-		export_error(val->tmp->full_cmd[val->i]);
-		free(n);
-		return (1);
+		exit_status = 1;
+		return (0);
 	}
 	else if (ft_strchr(val->tmp->full_cmd[val->i], '='))
 	{
 		if (n[ft_strlen(n) - 1] == '+')
 		{
-			more_value(val, ft_strtrim(n, "+"));
+			trim = ft_strtrim(n, "+");
+			if (!more_value(val, trim))
+				add_value(val, trim);
 			free(n);
 		}
 		else
@@ -119,13 +128,15 @@ void	export(t_exec *val)
 		print_export(val);
 	else if (val->tmp->full_cmd[val->i] && !val->tmp->next)
 	{
-		while (val->tmp->full_cmd[val->i])
+		if (val->tmp->in_file == 0)
 		{
-			if (export_(val) == 1)
-				break ;
-			val->i++;
+			while (val->tmp->full_cmd[val->i])
+			{
+				export_(val);
+				val->i++;
+			}
+			ft_double_free(val->n_env);
+			val->n_env = list_to_table_h(&val->env);
 		}
-		ft_double_free(val->n_env);
-		val->n_env = list_to_table_h(&val->env);
 	}
 }

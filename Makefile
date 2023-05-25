@@ -2,9 +2,9 @@ NAME = minishell
 
 PFILES = parser.c $(addprefix lexer/, lexer.c lexer_utils_1.c lexer_utils_2.c ft_elemlst.c syntax_errors.c more_functions.c) $(addprefix parser/, parsing.c parse_utils.c redirection.c her_doc.c cmd_lst.c append.c)
 
-EFILES = execution.c utils_2.c utils_1.c utils_3.c exec.c
+EFILES = execution.c utils.c utils_builtins.c utils_exc.c exc_cmds.c signal.c error.c
 
-BUILTINS = echo.c pwd.c env.c cd.c export.c utils_export.c unset.c
+BUILTINS = echo.c pwd.c env.c cd.c export.c utils_export.c unset.c exit.c
 
 SRCS = $(addprefix src/, main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c )
 

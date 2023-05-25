@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/24 13:11:36 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:51:03 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include "../src/get_next_line/get_next_line.h"
+
+int	exit_status;
 
 typedef struct s_cmd
 {
@@ -121,6 +123,8 @@ typedef struct s_export
 typedef struct s_exec
 {
 	int			i;
+	int			j;
+	int			status_exit;
 	int			size;
 	int			n_p;
 	int			fork;
@@ -135,7 +139,7 @@ typedef struct s_exec
 	char		**n_env;
 	t_cmd		*tmp;
 	t_env		*env;
-	t_exprt	*export;
+	t_exprt		*export;
 }				t_exec;
 
 // PARSING : --------------------------
@@ -198,44 +202,55 @@ void	ft_cmd_clear(t_cmd **lst, void (*del)(char **));
 
 // EXECUTION :
 
-int		exuct(t_data *data, t_exec *val);
-int		ecx(t_exec *val, char *path);
-int		builtins(t_exec *val);
+void    exuct(t_data *data, t_exec *val);
+void	ecx(t_exec *val, char *path);
 int		sp_builtins(t_exec *val);
+int		builtins(t_exec *val);
 
-// UTILS :
-int		ft_free_pipes(int **pipe, int size);
-int		add_value_export(t_exec *val, char *n, char *v);
-void	change_path(t_exec *val, char *str, char *value);
-void	decrement_path(t_exec *val);
-void	export_error(char *str);
-void	print_export(t_exec *val);
-t_env	*new_env(char *name, char *value);
+// UTILS EXECUTION :
 void	ft_lenked_list(char **env, t_exec *val);
+void    ft_free_pipes(int **pipe, int size);
+char	*get_path(t_env *env, char *str);
+int		init_pipes(int size, int **pe);
+char	**list_to_table_h(t_env **lst);
 int		ft_strcmp(char *s1, char *s2);
 void	str_lowercase(char *str);
-t_env	*ft_lstlast_env(t_env *lst);
-void	add_env(t_env **lst, t_env *new);
-t_env	*ft_lstlast_env(t_env *lst);
-void	add_export(t_exprt **lst, t_exprt *new);
-char	*value(char *str);
-char	*name(char *str);
 int		ft_lstsize_h(t_cmd *lst);
-char	**list_to_table_h(t_env **lst);
 int		exc_comande(t_exec *val);
-int		init_pipes(int size, int **pe);
-int		ft_error(char *str);
-char	*get_path(t_env *env);
-t_exprt	*new_export(char *name, char *value, char sep);
-t_exprt	*ft_lstlast_export(t_exprt *lst);
+int		one_cmd(t_exec *val);
+void	dup_fd(t_exec *val);
+void	wait_procces(void);
+void	catch_signal(void);
 
 //  BUILTINS :
 
+void	ft_exit(t_exec *val);
 void	export(t_exec *val);
-void	echo(t_exec *val);
-void	env(t_exec *val);
-void	cd(t_exec *val);
-void	pwd(t_exec *val);
 void	unset(t_exec *val);
+void	echo(t_exec *val);
+void	pwd(t_exec *val);
+void	env(t_exec *val);
+int		cd(t_exec *val);
+
+// UTILS BUILTINS :
+
+void	change_path(t_exec *val, char *str, char *value);
+int		add_value_export(t_exec *val, char *n, char *v);
+t_exprt	*new_export(char *name, char *value, char sep);
+void	add_export(t_exprt **lst, t_exprt *new);
+t_env	*new_env(char *name, char *value);
+void	add_env(t_env **lst, t_env *new);
+t_exprt	*ft_lstlast_export(t_exprt *lst);
+t_env	*ft_lstlast_env(t_env *lst);
+t_env	*ft_lstlast_env(t_env *lst);
+void	decrement_path(t_exec *val);
+void	print_export(t_exec *val);
+char	*value(char *str);
+char	*name(char *str);
+
+// error :
+int		export_error(char *str);
+int		cd_error(char *obt, char *s);
+int		ft_error(char *str);
 
 #endif

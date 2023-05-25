@@ -6,13 +6,13 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/23 10:07:20 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/25 19:33:39 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_free_pipes(int **pipe, int size)
+void	ft_free_pipes(int **pipe, int size)
 {
 	int	i;
 
@@ -22,7 +22,6 @@ int	ft_free_pipes(int **pipe, int size)
 		free(pipe[i++]);
 	}
 	free(pipe);
-	return (2);
 }
 
 int	init_pipes(int size, int **pe)
@@ -58,7 +57,7 @@ int	sp_builtins(t_exec *val)
 	{
 		str_lowercase(val->check);
 		if (ft_strcmp(val->check, "echo") == 0)
-			echo(val);
+			return (echo(val), 3);
 		else if (ft_strcmp(val->check, "pwd") == 0)
 			pwd(val);
 		else if (ft_strcmp(val->check, "env") == 0)
@@ -78,17 +77,16 @@ int	builtins(t_exec *val)
 	val->i = 0;
 	if ((ft_strcmp(val->tmp->full_cmd[val->i], "cd") == 0))
 	{
-		if (val->tmp->next)
-			val->i++;
-		else
-			cd(val);
+		val->i++;
+		if (!val->tmp->next || val->tmp->in_file == 0)
+			return (cd(val));
 	}
 	else if (ft_strcmp(val->tmp->full_cmd[val->i], "export") == 0)
-		export(val);
+		return (export(val), 3);
 	else if ((ft_strcmp(val->tmp->full_cmd[val->i], "unset") == 0))
-		unset(val);
+		return (unset(val), 3);
 	else if (ft_strcmp(val->tmp->full_cmd[val->i], "exit") == 0)
-		echo(val);
+		return (ft_exit(val), 3);
 	else
 	{
 		i = sp_builtins(val);
@@ -98,31 +96,27 @@ int	builtins(t_exec *val)
 	return (0);
 }
 
-int	exuct(t_data *data, t_exec *val)
+void	exuct(t_data *data, t_exec *val)
 {
-	int	fr;
+	int	check;
 
+	check = 0;
 	val->tmp = data->head;
 	val->size = ft_lstsize_h(val->tmp);
 	if (val->size == 1)
 	{
-		if (builtins(val) == 1)
+		if (val->tmp->in_file == -1)
+			exit_status = 1;
+		else
 		{
-			fr = fork();
-			if (fr == -1)
-				return (ft_error("fork fail\n"));
-			else if (fr == 0)
-			{
-				if (val->tmp->in_file != 0)
-					dup2(val->tmp->in_file, 0);
-				if (val->tmp->out_file != 1)
-					dup2(val->tmp->out_file, 1);
-				ecx(val, get_path(val->env));
-			}
-			waitpid(fr, NULL, 0);
+			if (one_cmd(val) == 2)
+				exit_status = 1;
 		}
 	}
 	else
-		return (exc_comande(val), ft_free_pipes(val->pe, val->size - 1));
-	return (0);
+	{
+		if (exc_comande(val) == 2)
+			exit_status = 1;
+		ft_free_pipes(val->pe, val->size - 1);
+	}
 }

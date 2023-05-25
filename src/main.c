@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/24 15:13:11 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:52:18 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_error(char *str)
-{
-	ft_putendl_fd("Error", 2);
-	ft_putstr_fd(str, 2);
-	return (2);
-}
 
 void	ft_double_free(char **s)
 {
@@ -47,18 +40,17 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	data = (t_data){0};
-	data.env = env;
+	ft_lenked_list(env, &val);
 	val.pos_path = 0;
-	ft_lenked_list(data.env, &val);
 	data.n_env = val.env;
+	exit_status = 0;
 	while (1337)
 	{
+		//catch_signal();
 		init_parssing_data(&data);
 		data.error = 0;
 		if (parser(&data) == 0)
-		{
 			exuct(&data, &val);
-		}
 		ft_cmd_clear(&data.head, &ft_double_free);
 		ft_lstclear(&data.cmd_lst, &free);
 	}
