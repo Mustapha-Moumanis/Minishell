@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/24 15:10:36 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:48:36 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,18 @@ void	get_red(t_data *data, t_elem **lex, enum e_type type, char	*str)
 		ft_lstadd_back(&data->cmd_lst, ft_lstnew(str));
 	str = ft_strdup("");
 	(*lex) = (*lex)->next;
-	str = collecting_cmd(data, lex, str);
-	if (type == REDIR_IN)
-		in_file(data, str);
-	else if (type == REDIR_OUT)
-		out_file(data, str);
-	else if (type == DREDIR_OUT)
-		dout_file(data, str);
-	else if (type == HERE_DOC)
-		her_doc(data, lex, str);
+	if (type == HERE_DOC)
+		her_doc(data, lex);
+	else
+	{
+		str = collecting_cmd(data, lex, str);
+		if (type == REDIR_IN)
+			in_file(data, str);
+		else if (type == REDIR_OUT)
+			out_file(data, str);
+		else if (type == DREDIR_OUT)
+			dout_file(data, str);
+	}
 	free(str);
 }
 
@@ -72,7 +75,7 @@ void	simple_cmd(t_data *data, t_elem **lex)
 	str = NULL;
 	while (*lex && !((*lex)->type == '|' && (*lex)->state == GENERAL))
 	{
-		if (is_red((*lex)->type) && !data->file_error)
+		if ((*lex)->type == HERE_DOC || (is_red((*lex)->type) && !data->file_error))
 			get_red(data, lex, (*lex)->type, str);
 		else
 		{

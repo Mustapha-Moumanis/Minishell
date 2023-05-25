@@ -6,13 +6,13 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 10:51:44 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/24 15:13:17 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:59:48 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	*parce_qoute(t_data *data, t_elem **lex, enum e_type type)
+char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type)
 {
 	char	*s;
 	char	*tmp;
@@ -82,7 +82,7 @@ char	*parse_cmd(t_data *data, t_elem **lex)
 			|| (*lex)->type == ESCAPE)
 			cmd = parse_word(lex);
 		else if ((*lex)->type == DQUOTE || (*lex)->type == QOUTE)
-			cmd = parce_qoute(data, lex, (*lex)->type);
+			cmd = parse_qoute(data, lex, (*lex)->type);
 		else if ((*lex)->type == ENV)
 			cmd = parse_env(data, lex);
 	}

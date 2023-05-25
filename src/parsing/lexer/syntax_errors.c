@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 05:43:09 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/24 14:04:47 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:27:33 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	check_quote(t_data *data, t_elem **t)
 void	syntax_errors(t_data *data)
 {
 	t_elem	*t;
+	int		count;
 
+	count = 0;
 	if (data->elem)
 	{
 		t = data->elem;
@@ -84,6 +86,8 @@ void	syntax_errors(t_data *data)
 			{
 				if (t->type == OR)
 					data->error = print_synerror("||");
+				if (t && t->type == HERE_DOC)
+					count++;
 				if (is_red(t->type) || t->type == '|')
 					check_redirec_pipe(data, &t, t->type);
 				if (t && ft_quote(t->type))
@@ -91,6 +95,11 @@ void	syntax_errors(t_data *data)
 			}
 			if (t)
 				t = t->next;
+		}
+		if (count > 16)
+		{
+			ft_putendl_fd("Error: maximum here-document count exceeded", 2);
+			exit(2);
 		}
 	}
 }

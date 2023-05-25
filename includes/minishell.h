@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 20:14:13 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/25 22:52:51 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include "../libft/libft.h"
-# include "../src/get_next_line/get_next_line.h"
+# include "../src/here_doc/get_next_line/get_next_line.h"
 
 int	exit_status;
 
@@ -92,9 +92,7 @@ typedef struct s_data
 {
 	t_cmd			*head;
 	char			*input;
-	char			**env;
 	t_list			*cmd_lst;
-	int				n_cmd;
 	int				in;
 	int				out;
 	t_elem			*elem;
@@ -151,7 +149,7 @@ void	skeap_space(t_elem	**t);
 // PARSING :
 
 int		parsing(t_data *data, t_elem *lex);
-char	*parce_qoute(t_data *data, t_elem **lex, enum e_type type);
+char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type);
 char	*parse_word(t_elem **lex);
 char	*parse_env(t_data *data, t_elem **lex);
 char	*parse_cmd(t_data *data, t_elem **lex);
@@ -163,7 +161,11 @@ void	init_parssing_data(t_data *data);
 void	in_file(t_data *data, char *value);
 void	out_file(t_data *data, char *value);
 void	dout_file(t_data *data, char *value);
-int		her_doc(t_data *data, t_elem **lex, char *value);
+
+// HERE DOC
+
+int		her_doc(t_data *data, t_elem **lex);
+char	*update_line(t_data *last_data, char *str);
 
 // more function
 

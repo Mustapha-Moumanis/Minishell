@@ -6,12 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 23:51:24 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/23 18:13:05 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:39:07 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "../../includes/minishell.h"
 
 size_t	ft_strlen(const char *str)
 {
