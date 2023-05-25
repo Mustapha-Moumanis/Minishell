@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 19:51:03 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/25 20:14:13 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ char	*get_path(t_env *env, char *str);
 int		init_pipes(int size, int **pe);
 char	**list_to_table_h(t_env **lst);
 int		ft_strcmp(char *s1, char *s2);
+void	ft_add_shlvl(t_exec *val);
 void	str_lowercase(char *str);
 int		ft_lstsize_h(t_cmd *lst);
 int		exc_comande(t_exec *val);

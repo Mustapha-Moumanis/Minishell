@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 19:36:48 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/25 20:29:09 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,31 @@ void	dup_fd(t_exec *val)
 		dup2(val->pe[val->n_p + 1][1], 1);
 }
 
-void	wait_procces(void)
+void	ft_add_shlvl(t_exec *val)
 {
-	int	st;
+	t_exprt	*tmp;
+	char	*str;
+	t_env	*env;
+	int		j;
 
-	while (wait(&st) > 0)
+	tmp =  val->export;
+	env = val->env;
+	while (tmp && env)
 	{
-		if (WEXITSTATUS(st))
-			exit_status = WEXITSTATUS(st);
+		if (!ft_strcmp(tmp->name , "SHLVL"))
+		{
+			j = ft_atoi(tmp->value) + 1;
+			free(tmp->value);
+			str = ft_strdup(ft_itoa(j));
+			tmp->value = str;
+			env->value = str;
+			break ;
+		}
+		tmp = tmp->next;
+		env = env->next;
 	}
+	ft_double_free(val->n_env);
+	val->n_env = list_to_table_h(&val->env);
 }
 
 char	*get_path(t_env *env, char *str)
@@ -65,14 +81,15 @@ char	*check_cmd(t_exec *val, char *path)
 		free(str);
 		i++;
 	}
-	ft_double_free(s);
 	free(cmd);
 	if (!s[i] || val->tmp->full_cmd[0][0] == '\0')
 	{
 		ft_putstr_fd(val->tmp->full_cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
+		ft_double_free(s);
 		return (NULL);
 	}
+	ft_double_free(s);
 	return (str);
 }
 
