@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/25 13:48:36 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:18:33 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ char	*collecting_cmd(t_data *data, t_elem **lex, char *str)
 		if ((*lex)->type != ENV)
 			free(cmd);
 		if (str && (*lex)->next && is_red((*lex)->next->type))
-		{
-			ft_lstadd_back(&data->cmd_lst, ft_lstnew(str));
-			str = NULL;
 			break ;
-		}
 		(*lex) = (*lex)->next;
 	}
 	return (str);
@@ -75,7 +71,7 @@ void	simple_cmd(t_data *data, t_elem **lex)
 	str = NULL;
 	while (*lex && !((*lex)->type == '|' && (*lex)->state == GENERAL))
 	{
-		if ((*lex)->type == HERE_DOC || (is_red((*lex)->type) && !data->file_error))
+		if (is_red((*lex)->type))
 			get_red(data, lex, (*lex)->type, str);
 		else
 		{
@@ -113,5 +109,7 @@ int	parsing(t_data *data, t_elem *lex)
 		if (lex)
 			lex = lex->next;
 	}
+	print_error(data->save_error);
+	ft_lstclear(&data->save_error, &free);
 	return (0);
 }

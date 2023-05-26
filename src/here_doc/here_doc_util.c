@@ -6,65 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:25:19 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/25 22:38:07 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:27:00 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char *get_type(int type)
-{
-	switch (type)
-	{
-		case WORD: return "WORD";
-		case WHITE_SPACE: return "WHITE_SPACE";
-		case NEW_LINE: return "NEW_LINE";
-		case QOUTE: return "QOUTE";
-		case DQUOTE: return "DQUOTE";
-		case ESCAPE: return "ESCAPE";
-		case ENV: return "ENV";
-		case PIPE_LINE: return "PIPE_LINE";
-		case OR: return "OR";
-		case REDIR_IN: return "REDIR_IN";
-		case REDIR_OUT: return "REDIR_OUT";
-		case HERE_DOC: return "HERE_DOC";
-		case DREDIR_OUT: return "DREDIR_OUT";
-	}
-	return "NOT STRINGABLE";
-}
-
-char *get_state(int state)
-{
-	switch (state)
-	{
-		case IN_DQUOTE: return "IN_DQUOTE";
-		case IN_QUOTE: return "IN_QUOTE";
-		case GENERAL: return "GENERAL";
-	}
-	return "STATE INVALIDE";
-}
-
-void	print_list(t_elem **lst)
-{
-	t_elem	*tmp;
-
-	if (lst)
-	{
-		printf("+---------+---------------------+-------+-----------------+----------------+\n");
-		printf("|  index  |       content       |  len  |      state      |      type      |\n");
-		printf("+---------+---------------------+-------+-----------------+----------------+\n");
-
-		tmp = *lst;
-		int index = 1;
-		while (tmp)
-		{
-			printf("|%9d|%14s%7s|%4d%3s|%17s|%16s|\n", index, tmp->content, " ", tmp->len, " ", get_state(tmp->state), get_type(tmp->type));
-			index++;
-			tmp = tmp->next;
-		}
-		printf("+---------+---------------------+-------+-----------------+----------------+\n");
-	}
-}
 
 char	*parse_line(t_data *data, t_elem *elem, char *str)
 {
@@ -75,11 +21,6 @@ char	*parse_line(t_data *data, t_elem *elem, char *str)
 	{
 		if (elem->type == WORD || elem->type == 37 || elem->type == '\\')
 			cmd = parse_word(&elem);
-		// else if (elem->type == DQUOTE || elem->type == QOUTE)
-		// {
-		// 	cmd = parse_qoute(data, &elem, elem->type);
-		// 	data->error = 1;
-		// }
 		else if (elem->type == ENV)
 			cmd = parse_env(data, &elem);
 		else
@@ -110,4 +51,59 @@ char	*update_line(t_data *last_data, char *str)
 	line = parse_line(&data, data.elem, ft_strdup(""));
 	ft_clear_elems(&data.elem, &free);
 	return (line);
+}
+
+char	*get_qoute_delimiter(t_elem **lex, enum e_type type)
+{
+	char	*s;
+	char	*tmp;
+
+	*lex = (*lex)->next;
+	s = NULL;
+	while (*lex)
+	{
+		if (!s)
+			s = ft_strdup("");
+		if ((*lex)->next && (*lex)->type == type && (*lex)->next->type == type)
+			(*lex) = (*lex)->next;
+		else if ((*lex)->type != type)
+		{
+			tmp = s;
+			s = ft_strjoin(tmp, (*lex)->content);
+			free(tmp);
+		}
+		else
+			break ;
+		if (*lex)
+			*lex = (*lex)->next;
+	}
+	return (s);
+}
+
+char	*get_delimiter(t_elem **lex, int *is)
+{
+	char	*str;
+	char	*tmp;
+	char	*tmp2;
+
+	skeap_space(lex);
+	str = ft_strdup("");
+	while (*lex && !ft_whitespace((*lex)->type) && (*lex)->type != '|')
+	{
+		tmp = str;
+		if ((*lex)->type == DQUOTE || (*lex)->type == QOUTE)
+		{
+			tmp2 = get_qoute_delimiter(lex, (*lex)->type);
+			str = ft_strjoin(tmp, tmp2);
+			free(tmp2);
+			*is = 1;
+		}
+		else
+			str = ft_strjoin(tmp, (*lex)->content);
+		free(tmp);
+		if ((*lex)->next && is_red((*lex)->next->type))
+			break ;
+		(*lex) = (*lex)->next;
+	}
+	return (str);
 }

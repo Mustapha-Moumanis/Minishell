@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 05:43:09 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/25 22:27:33 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:58:04 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,23 @@ int	print_synerror(char *content)
 
 void	check_redirec_pipe(t_data *data, t_elem **t, enum e_type type)
 {
-	(*t) = (*t)->next;
-	skeap_space(t);
-	if (*t)
-	{
-		if (is_red(type)
-			&& ((*t)->type == '|' || is_red((*t)->type) || (*t)->type == OR))
-			data->error = print_synerror((*t)->content);
-		else if (type == '|' && ((*t)->type == '|' || (*t)->type == OR))
-			data->error = print_synerror((*t)->content);
-	}
+	if (type == OR)
+		data->error = print_synerror("||");
 	else
-		data->error = print_synerror("newline");
+	{
+		(*t) = (*t)->next;
+		skeap_space(t);
+		if (*t)
+		{
+			if (is_red(type) && ((*t)->type == '|'
+					|| is_red((*t)->type) || (*t)->type == OR))
+				data->error = print_synerror((*t)->content);
+			else if (type == '|' && ((*t)->type == '|' || (*t)->type == OR))
+				data->error = print_synerror((*t)->content);
+		}
+		else
+			data->error = print_synerror("newline");
+	}
 }
 
 void	check_quote(t_data *data, t_elem **t)
@@ -68,15 +73,10 @@ void	check_quote(t_data *data, t_elem **t)
 	}
 }
 
-void	syntax_errors(t_data *data)
+void	syntax_errors(t_data *data, t_elem	*t, int count)
 {
-	t_elem	*t;
-	int		count;
-
-	count = 0;
-	if (data->elem)
+	if (t)
 	{
-		t = data->elem;
 		skeap_space(&t);
 		if (t && t->type == '|')
 			data->error = print_synerror("|");
@@ -84,11 +84,9 @@ void	syntax_errors(t_data *data)
 		{
 			if (t->state == GENERAL)
 			{
-				if (t->type == OR)
-					data->error = print_synerror("||");
 				if (t && t->type == HERE_DOC)
 					count++;
-				if (is_red(t->type) || t->type == '|')
+				if (is_red(t->type) || t->type == '|' || t->type == OR)
 					check_redirec_pipe(data, &t, t->type);
 				if (t && ft_quote(t->type))
 					check_quote(data, &t);

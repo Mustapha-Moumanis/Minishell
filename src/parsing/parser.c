@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:21:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 12:21:13 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:47:58 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parser(t_data *data)
 	if (ft_strlen(data->input) > 0)
 		add_history(data->input);
 	lexer(data);
-	syntax_errors(data);
+	syntax_errors(data, data->elem, 0);
 	if (data->error == 0)
 		parsing(data, data->elem);
 	ft_clear_elems(&data->elem, &free);
