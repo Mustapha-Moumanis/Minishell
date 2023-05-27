@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:47:06 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/26 19:26:55 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/27 12:28:15 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	append_line(t_data *data, char *str, char *value, int is)
 	tmp = ft_strtrim(str, "\n");
 	if (!ft_strcmp(tmp, value))
 		return (free(str), free(tmp), 1);
-	if (is == 0)
+	if (is == 0 && ft_strchr(tmp, '$'))
 	{
 		tmp2 = update_line(data, tmp);
 		ft_putstr_fd(tmp2, data->in);

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/26 18:18:33 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:55:26 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ void	get_red(t_data *data, t_elem **lex, enum e_type type, char	*str)
 	else
 	{
 		str = collecting_cmd(data, lex, str);
-		if (type == REDIR_IN)
-			in_file(data, str);
-		else if (type == REDIR_OUT)
-			out_file(data, str);
-		else if (type == DREDIR_OUT)
-			dout_file(data, str);
+		if (data->file_error != 1)
+		{
+			if (type == REDIR_IN)
+				in_file(data, str);
+			else if (type == REDIR_OUT)
+				out_file(data, str);
+			else if (type == DREDIR_OUT)
+				dout_file(data, str);
+		}
 	}
 	free(str);
 }

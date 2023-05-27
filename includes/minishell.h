@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/26 19:27:56 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:34:59 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ enum e_type
 	HERE_DOC,
 	DREDIR_OUT,
 	OR,
-	AND,
+	AND
 };
 
 enum e_state
 {
 	IN_DQUOTE,
 	IN_QUOTE,
-	GENERAL,
+	GENERAL
 };
 
 typedef struct s_elem
@@ -175,8 +175,9 @@ void	print_error(t_list *list);
 char	*cat_var(char *str, int nb);
 int		initial_token(t_token *token, char c);
 void	get_env(t_lexer *lexer, t_token *token);
+void	get_and(t_lexer *lexer, t_token *token);
 void	get_word(t_lexer *lexer, t_token *token);
-void	syntax_errors(t_data *data, t_elem	*t, int count);
+void	syntax_errors(t_data *data, t_elem	*t);
 
 // lexer function
 

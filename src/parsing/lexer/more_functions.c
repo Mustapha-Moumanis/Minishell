@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:23:24 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/23 11:23:20 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/27 18:19:15 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	ft_quote(int c)
 
 int	special_char(char c)
 {
-	return (ft_quote(c) || is_red(c) || c == '|' || c == '$' || c == '\\');
+	return (ft_quote(c) || c == '>' || c == '<' || c == '&'
+		|| c == '|' || c == '$' || c == '\\');
 }
 
 char	*cat_var(char *str, int nb)
@@ -41,7 +42,7 @@ char	*cat_var(char *str, int nb)
 	i = 0;
 	if (nb)
 	{
-		if (ft_isdigit(str[0]))
+		if (!special_char(str[0]) && !ft_isalpha(str[i]) && str[i] != '_')
 			i = 1;
 		else
 			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 16:32:17 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/27 16:49:23 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	lexer_next_token(t_lexer *lexer, t_token *token)
 		get_whitespace(lexer, token, c);
 	else if (c == '|')
 		get_pip(lexer, token);
+	else if (c == '&')
+		get_and(lexer, token);
 	else if (c == '$')
 		get_env(lexer, token);
 	else if (c == '<')

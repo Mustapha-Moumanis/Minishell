@@ -6,17 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 05:43:09 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/26 18:58:04 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:35:32 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-void	skeap_space(t_elem **t)
-{
-	while (*t && ((*t)->type == WHITE_SPACE))
-		(*t) = (*t)->next;
-}
 
 int	print_synerror(char *content)
 {
@@ -73,31 +67,44 @@ void	check_quote(t_data *data, t_elem **t)
 	}
 }
 
-void	syntax_errors(t_data *data, t_elem	*t, int count)
+void	first_check(t_data *data, t_elem *t)
 {
-	if (t)
+	int	count;
+
+	count = 0;
+	while (t && data->error == 0)
 	{
-		skeap_space(&t);
-		if (t && t->type == '|')
-			data->error = print_synerror("|");
-		while (t && data->error == 0)
+		if (t->state == GENERAL && t->type == AND)
+			data->error = print_synerror(t->content);
+		if (t->state == GENERAL && t->type == HERE_DOC)
+			count++;
+		t = t->next;
+	}
+	if (count > 16)
+	{
+		ft_putendl_fd("Error: maximum here-document count exceeded", 2);
+		exit(2);
+	}
+}
+
+void	syntax_errors(t_data *data, t_elem	*t)
+{
+	if (!t)
+		return ;
+	skeap_space(&t);
+	first_check(data, data->elem);
+	if (t && t->type == '|')
+		data->error = print_synerror("|");
+	while (t && data->error == 0)
+	{
+		if (t->state == GENERAL)
 		{
-			if (t->state == GENERAL)
-			{
-				if (t && t->type == HERE_DOC)
-					count++;
-				if (is_red(t->type) || t->type == '|' || t->type == OR)
-					check_redirec_pipe(data, &t, t->type);
-				if (t && ft_quote(t->type))
-					check_quote(data, &t);
-			}
-			if (t)
-				t = t->next;
+			if (is_red(t->type) || t->type == '|' || t->type == OR)
+				check_redirec_pipe(data, &t, t->type);
+			if (t && ft_quote(t->type))
+				check_quote(data, &t);
 		}
-		if (count > 16)
-		{
-			ft_putendl_fd("Error: maximum here-document count exceeded", 2);
-			exit(2);
-		}
+		if (t)
+			t = t->next;
 	}
 }

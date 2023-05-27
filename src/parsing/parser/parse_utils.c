@@ -6,11 +6,17 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 10:51:44 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/26 16:04:25 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:46:08 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+void	skeap_space(t_elem **t)
+{
+	while (*t && ((*t)->type == WHITE_SPACE))
+		(*t) = (*t)->next;
+}
 
 char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type)
 {
@@ -78,13 +84,14 @@ char	*parse_cmd(t_data *data, t_elem **lex)
 	cmd = NULL;
 	if ((*lex))
 	{
-		if ((*lex)->type == WORD || (*lex)->type == EXIT_STATUS
-			|| (*lex)->type == ESCAPE)
+		if ((*lex)->type == WORD || (*lex)->type == ESCAPE)
 			cmd = parse_word(lex);
 		else if ((*lex)->type == DQUOTE || (*lex)->type == QOUTE)
 			cmd = parse_qoute(data, lex, (*lex)->type);
 		else if ((*lex)->type == ENV)
 			cmd = parse_env(data, lex);
+		else if ((*lex)->type == EXIT_STATUS)
+			return (ft_itoa(exit_status));
 	}
 	return (cmd);
 }
