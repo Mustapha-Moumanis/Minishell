@@ -28,16 +28,16 @@ all: $(NAME)
 $(NAME) : $(SRCS) $(PFILES) $(EFILES) $(BUILTINS)
 	@make -C libft
 	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) $(EFILES) $(BUILTINS) -o $(NAME)
-	@echo "Done!"
+	@echo "Minishell is ready ✅                                                         "
 
 clean:
 	@make clean -C libft
-	@echo "clean!"
+	@echo "Clean ✅"
 
 fclean:
 	@$(RM) $(NAME)
 	@make fclean -C libft
-	@echo "clean all!"
+	@echo "Cleaning all ✅"
 
 re: fclean all
 

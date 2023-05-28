@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:25:19 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/27 17:41:54 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:44:21 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ char	*parse_line(t_data *data, t_elem *elem, char *str)
 
 	while (elem)
 	{
-		if (elem->type == WORD || elem->type == 37 || elem->type == '\\')
+		if (elem->type == WORD || elem->type == '\\')
 			cmd = parse_word(&elem);
 		else if (elem->type == ENV)
 			cmd = parse_env(data, &elem);
+		else if (elem->type == EXIT_STATUS)
+			cmd = ft_itoa(exit_status);
 		else
 			cmd = ft_strdup(elem->content);
 		tmp = str;
@@ -43,11 +45,19 @@ char	*update_line(t_data *last_data, char *str)
 {
 	t_data	data;
 	char	*line;
+	t_elem	*tmp;
 
 	data = (t_data){0};
 	data.n_env = last_data->n_env;
 	data.input = str;
 	lexer(&data);
+	tmp = data.elem;
+	while (tmp)
+	{
+		if (tmp->type == WORD && tmp->content[0] == '$')
+			tmp->type = ENV;
+		tmp = tmp->next;
+	}
 	line = parse_line(&data, data.elem, ft_strdup(""));
 	ft_clear_elems(&data.elem, &free);
 	return (line);

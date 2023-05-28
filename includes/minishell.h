@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/27 19:34:59 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:44:21 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include "../libft/libft.h"
-
-int	exit_status;
 
 typedef struct s_cmd
 {
@@ -100,6 +98,7 @@ typedef struct s_data
 	t_list			*save_error;
 	struct s_env	*n_env;
 }			t_data;
+int			exit_status;
 
 // Data of execution part :
 
