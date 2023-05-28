@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 22:59:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/25 20:13:46 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/28 19:26:04 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,20 @@ int	init_pipes(int size, int **pe)
 int	sp_builtins(t_exec *val)
 {
 	val->check = val->tmp->full_cmd[0];
-	if (val->check)
-	{
-		str_lowercase(val->check);
-		if (ft_strcmp(val->check, "echo") == 0)
-			return (echo(val), 3);
-		else if (ft_strcmp(val->check, "pwd") == 0)
-			pwd(val);
-		else if (ft_strcmp(val->check, "env") == 0)
-			env(val);
-		else if (!ft_strcmp("./minishell", val->tmp->full_cmd[val->i]))
-		{
-			ft_add_shlvl(val);
-			return (1);
-		}
-		else
-			return (1);
-		return (0);
-	}
-	return (2);
+	if (!val->check)
+		return (2);
+	str_lowercase(val->check);
+	if (ft_strcmp(val->check, "echo") == 0)
+		return (echo(val), 3);
+	else if (ft_strcmp(val->check, "pwd") == 0)
+		pwd(val);
+	else if (ft_strcmp(val->check, "env") == 0)
+		return (env(val), 3);
+	else if (!ft_strcmp("./minishell", val->tmp->full_cmd[val->i]))
+		return (ft_add_shlvl(val), 1);
+	else
+		return (1);
+	return (0);
 }
 
 int	builtins(t_exec *val)
@@ -83,15 +78,15 @@ int	builtins(t_exec *val)
 	if ((ft_strcmp(val->tmp->full_cmd[val->i], "cd") == 0))
 	{
 		val->i++;
-		if (!val->tmp->next || val->tmp->in_file == 0)
+		if (val->size == 1 && val->tmp->in_file >= 0)
 			return (cd(val));
 	}
-	else if (ft_strcmp(val->tmp->full_cmd[val->i], "export") == 0)
-		return (export(val), 3);
 	else if ((ft_strcmp(val->tmp->full_cmd[val->i], "unset") == 0))
 		return (unset(val), 3);
 	else if (ft_strcmp(val->tmp->full_cmd[val->i], "exit") == 0)
 		return (ft_exit(val), 3);
+	else if (ft_strcmp(val->tmp->full_cmd[val->i], "export") == 0)
+		return (export(val), 3);
 	else
 	{
 		i = sp_builtins(val);
@@ -103,25 +98,21 @@ int	builtins(t_exec *val)
 
 void	exuct(t_data *data, t_exec *val)
 {
-	int	check;
-
-	check = 0;
 	val->tmp = data->head;
 	val->size = ft_lstsize_h(val->tmp);
+	if (!val->size)
+		return ;
 	if (val->size == 1)
 	{
-		if (val->tmp->in_file == -1)
-			exit_status = 1;
-		else
-		{
-			if (one_cmd(val) == 2)
-				exit_status = 1;
-		}
+		if (val->tmp->in_file == -1 || val->tmp->out_file == -1)
+			g_exit_status = 1;
+		else if (one_cmd(val) == 2)
+			g_exit_status = 1;
 	}
 	else
 	{
 		if (exc_comande(val) == 2)
-			exit_status = 1;
+			g_exit_status = 1;
 		ft_free_pipes(val->pe, val->size - 1);
 	}
 }

@@ -6,33 +6,17 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 20:26:15 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/27 18:08:38 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-int	ft_lstsize_(t_env *lst)
-{
-	int	i;
-
-	if (!lst)
-		return (0);
-	i = 1;
-	while (lst->next)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
 
 char	**list_to_table_h(t_env **lst)
 {
 	t_env	*tmp;
 	char	*s;
 	char	**cmd;
-	int		len;
 	int		i;
 
 	tmp = *lst;
@@ -42,7 +26,6 @@ char	**list_to_table_h(t_env **lst)
 		return (NULL);
 	while (tmp)
 	{
-		len = ft_strlen(tmp->name) + ft_strlen(tmp->value) + 1;
 		s = ft_strjoin(tmp->name, "=");
 		cmd[++i] = ft_strjoin(s, tmp->value);
 		free(s);
@@ -112,18 +95,16 @@ void	unset(t_exec *val)
 	char		*str;
 
 	val->i++;
-	if (!val->tmp->next || val->tmp->in_file != 0)
+	if (val->size == 1 && val->tmp->in_file >= 0)
 	{
 		while (val->tmp->full_cmd[val->i])
 		{
 			str = val->tmp->full_cmd[val->i];
 			ft_remove_exp(val, str);
-			if (ft_remove_env(val, str))
-			{
-				ft_double_free(val->n_env);
-				val->n_env = list_to_table_h(&val->env);
-			}
+			ft_remove_env(val, str);
 			val->i++;
 		}
+		ft_double_free(val->n_env);
+		val->n_env = list_to_table_h(&val->env);
 	}
 }

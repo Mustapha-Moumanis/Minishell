@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:59:36 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 11:13:04 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/26 18:17:40 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,7 @@ void	print_export(t_exec *val)
 	}
 }
 
-void	add_export(t_exprt **lst, t_exprt *new)
-{
-	if (!(*lst))
-		*lst = new;
-	else
-		ft_lstlast_export(*lst)->next = new;
-}
-
-void	add_env(t_env **lst, t_env *new)
-{
-	if (!(*lst))
-		*lst = new;
-	else
-		ft_lstlast_env(*lst)->next = new;
-}
-
-int	add_value_export(t_exec *val, char *n, char *v)
+void	add_value_env(t_exec *val, char *n, char *v)
 {
 	t_env	*tmp;
 
@@ -60,9 +44,49 @@ int	add_value_export(t_exec *val, char *n, char *v)
 		{
 			tmp->value = v;
 			free(n);
-			return (1);
+			break ;
 		}
 		tmp = tmp->next;
 	}
-	return (0);
+	if (!tmp)
+		add_env(&val->env, new_env(n, v));
+}
+
+void	ft_check_add(t_exec *val, char *n)
+{
+	t_exprt	*tmp;
+
+	tmp = val->export;
+	while (tmp)
+	{
+		if (!strcmp(tmp->name, n))
+		{
+			free(n);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (!tmp)
+		add_export(&val->export, new_export(n, NULL, '\0'));
+}
+
+int	all_iscorect(t_exec *val, char *str)
+{
+	int	j;
+	int	len;
+
+	j = -1;
+	len = ft_strlen(str);
+	if (len == 0)
+		return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	if (ft_isdigit(str[0]))
+		return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	if (str[len - 1] == '+')
+		len -= 1;
+	while (++j < len)
+	{
+		if (!ft_isalnum(str[j]) && str[j] != '_')
+			return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	}
+	return (1);
 }

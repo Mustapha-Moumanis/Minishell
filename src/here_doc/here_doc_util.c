@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:25:19 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/28 18:44:21 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:20:28 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*parse_line(t_data *data, t_elem *elem, char *str)
 		else if (elem->type == ENV)
 			cmd = parse_env(data, &elem);
 		else if (elem->type == EXIT_STATUS)
-			cmd = ft_itoa(exit_status);
+			cmd = ft_itoa(g_exit_status);
 		else
 			cmd = ft_strdup(elem->content);
 		tmp = str;

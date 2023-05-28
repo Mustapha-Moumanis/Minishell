@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:12:30 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 20:03:06 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/28 19:20:28 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,14 @@ int	ft_error(char *str)
 void	wait_procces(void)
 {
 	int	st;
+	int	j;
 
-	while (wait(&st) > 0)
+	g_exit_status = 0;
+	j = 1;
+	while (j > 0)
 	{
+		j = wait(&st);
 		if (WEXITSTATUS(st))
-			exit_status = WEXITSTATUS(st);
+			g_exit_status = WEXITSTATUS(st);
 	}
 }
