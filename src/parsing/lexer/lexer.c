@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/27 16:49:23 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/28 20:39:26 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	lexer_next_token(t_lexer *lexer, t_token *token)
 	else if (c == '&')
 		get_and(lexer, token);
 	else if (c == '$')
-		get_env(lexer, token);
+		get_env(lexer, token, c, lexer->input[lexer->position + 1]);
 	else if (c == '<')
 		get_infile_herdok(lexer, token);
 	else if (c == '>')
@@ -83,8 +83,8 @@ void	lexer(t_data *d)
 			t.type = WORD;
 		if ((state == IN_QUOTE && t.type == QOUTE)
 			|| (state == IN_DQUOTE && t.type == DQUOTE))
-			addback_elem(&d->elem, new_elem(t.value, t.len, t.type, GENERAL));
+			addback_elem(&d->elem, new_elem(t.value, t.type, GENERAL));
 		else
-			addback_elem(&d->elem, new_elem(t.value, t.len, t.type, state));
+			addback_elem(&d->elem, new_elem(t.value, t.type, state));
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 10:51:44 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/28 19:20:28 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/28 18:44:21 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*parse_cmd(t_data *data, t_elem **lex)
 		else if ((*lex)->type == ENV)
 			cmd = parse_env(data, lex);
 		else if ((*lex)->type == EXIT_STATUS)
-			cmd = ft_itoa(g_exit_status);
+			cmd = ft_itoa(exit_status);
 	}
 	return (cmd);
 }

@@ -4,7 +4,7 @@ PFILES = parser.c $(addprefix lexer/, lexer.c lexer_utils_1.c lexer_utils_2.c ft
 
 HFILES = $(addprefix here_doc/, her_doc.c here_doc_util.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c)
 
-EFILES = execution.c utils.c utils_builtins.c utils_exc.c exc_cmds.c signal.c error.c utils_linked_list.c
+EFILES = execution.c utils.c utils_builtins.c utils_exc.c exc_cmds.c signal.c error.c
 
 BUILTINS = echo.c pwd.c env.c cd.c export.c utils_export.c unset.c exit.c
 
@@ -28,7 +28,7 @@ all: $(NAME)
 $(NAME) : $(SRCS) $(PFILES) $(EFILES) $(BUILTINS)
 	@make -C libft
 	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) $(EFILES) $(BUILTINS) -o $(NAME)
-	@echo "Minishell is ready ✅                                                         "
+	@echo "Minishell is ready ✅"
 
 clean:
 	@make clean -C libft

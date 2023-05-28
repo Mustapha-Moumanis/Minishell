@@ -6,46 +6,39 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/28 19:20:28 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/25 19:27:28 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	export_env_add(t_exec *val, t_exprt *tmp, char *n, char *v)
+void	add_value(t_exec *val, char *n)
 {
-	t_env		*t_env;
+	int			j;
+	char		*v;
+	t_exprt		*tmp;
 
-	t_env = val->env;
-	while (tmp || t_env)
+	tmp = val->export;
+	v = value(val->tmp->full_cmd[val->i]);
+	while (tmp)
 	{
 		if (ft_strcmp(n, tmp->name) == 0)
 		{
 			free(tmp->value);
 			tmp->value = v;
 			tmp->sep = '\"';
-			if (!t_env)
-				add_env(&val->env, new_env(n, v));
-			else
-				add_value_env(val, n, v);
-			return ;
+			break ;
 		}
 		tmp = tmp->next;
-		if (t_env)
-			t_env = t_env->next;
 	}
-	add_env(&val->env, new_env(n, v));
-	add_export(&val->export, new_export(n, v, '\"'));
-}
-
-void	add_value(t_exec *val, char *n)
-{
-	char		*v;
-	t_exprt		*tmp;
-
-	tmp = val->export;
-	v = value(val->tmp->full_cmd[val->i]);
-	export_env_add(val, tmp, n, v);
+	j = add_value_export(val, n, v);
+	if (j == 0 && tmp)
+		add_env(&val->env, new_env(n, v));
+	else
+	{
+		add_env(&val->env, new_env(n, v));
+		add_export(&val->export, new_export(n, v, '\"'));
+	}
 }
 
 int	more_value(t_exec *val, char *n)
@@ -63,16 +56,38 @@ int	more_value(t_exec *val, char *n)
 		{
 			v = value(val->tmp->full_cmd[val->i]);
 			str = ft_strjoin(tmp->value, v);
-			free(v);
+			env->value = str;
 			free(tmp->value);
-			add_value_env(val, n, str);
 			tmp->value = str;
+			free(v);
+			free(n);
 			return (1);
 		}
 		tmp = tmp->next;
 		env = env->next;
 	}
 	return (0);
+}
+
+int	all_iscorect(t_exec *val, char *str)
+{
+	int	j;
+	int	len;
+
+	j = -1;
+	len = ft_strlen(str);
+	if (len == 0)
+		return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	if (ft_isdigit(str[0]))
+		return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	if (str[len - 1] == '+')
+		len -= 1;
+	while (++j < len)
+	{
+		if (!ft_isalnum(str[j]) && str[j] != '_')
+			return (free(str), export_error(val->tmp->full_cmd[val->i]));
+	}
+	return (1);
 }
 
 int	export_(t_exec *val)
@@ -83,7 +98,7 @@ int	export_(t_exec *val)
 	n = name(val->tmp->full_cmd[val->i]);
 	if (!all_iscorect(val, n))
 	{
-		g_exit_status = 1;
+		exit_status = 1;
 		return (0);
 	}
 	else if (ft_strchr(val->tmp->full_cmd[val->i], '='))
@@ -91,15 +106,15 @@ int	export_(t_exec *val)
 		if (n[ft_strlen(n) - 1] == '+')
 		{
 			trim = ft_strtrim(n, "+");
-			free(n);
 			if (!more_value(val, trim))
 				add_value(val, trim);
+			free(n);
 		}
 		else
 			add_value(val, n);
 	}
 	else
-		ft_check_add(val, n);
+		add_export(&val->export, new_export(n, NULL, '\0'));
 	return (0);
 }
 
@@ -111,17 +126,17 @@ void	export(t_exec *val)
 	j = -1;
 	if (!val->tmp->full_cmd[val->i])
 		print_export(val);
-	if (val->size == 1 && val->tmp->in_file >= 0)
+	else if (val->tmp->full_cmd[val->i] && !val->tmp->next)
 	{
-		if (val->tmp->full_cmd[val->i])
+		if (val->tmp->in_file == 0)
 		{
 			while (val->tmp->full_cmd[val->i])
 			{
 				export_(val);
 				val->i++;
 			}
+			ft_double_free(val->n_env);
+			val->n_env = list_to_table_h(&val->env);
 		}
-		ft_double_free(val->n_env);
-		val->n_env = list_to_table_h(&val->env);
 	}
 }

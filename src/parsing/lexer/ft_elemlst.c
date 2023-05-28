@@ -6,13 +6,13 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 21:41:45 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 12:20:39 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:58:22 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-t_elem	*new_elem(char *content, int len, enum e_type type, enum e_state state)
+t_elem	*new_elem(char *content, enum e_type type, enum e_state state)
 {
 	t_elem	*node;
 
@@ -20,7 +20,6 @@ t_elem	*new_elem(char *content, int len, enum e_type type, enum e_state state)
 	if (!node)
 		return (NULL);
 	node->content = content;
-	node->len = len;
 	node->type = type;
 	node->state = state;
 	node->next = NULL;

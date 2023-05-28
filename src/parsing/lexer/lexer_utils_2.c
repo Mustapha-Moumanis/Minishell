@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:32:42 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/27 17:36:13 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/28 21:01:53 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,42 @@ void	get_word(t_lexer *lexer, t_token *token)
 	value = cat_var(lexer->input + lexer->position, 0);
 	lexer->position += ft_strlen(value);
 	token->value = value;
-	token->len = ft_strlen(token->value);
 	token->type = WORD;
 }
 
-void	get_env(t_lexer *lexer, t_token *token)
+char	*env_advance(t_token *token, char advance)
 {
-	char	*str;
-	char	c_char;
 	char	*value;
 
-	c_char = lexer->input[lexer->position];
-	str = cat_var(lexer->input + lexer->position + 1, 1);
-	value = ft_strjoin("$", str);
-	if (lexer->input[lexer->position + 1] == '$')
-	{
-		free(value);
+	if (advance == '$')
 		value = ft_strdup("$$");
-		token->type = WORD;
-	}
-	else if (lexer->input[lexer->position + 1] == '?')
+	else
+		value = ft_strdup("$");
+	token->type = WORD;
+	return (value);
+}
+
+void	get_env(t_lexer *lexer, t_token *token, char first, char advance)
+{
+	char	*str;
+	char	*value;
+
+	if (!advance || ft_whitespace(advance) || advance == '$')
+		value = env_advance(token, advance);
+	else if (advance == '?')
 	{
-		free(value);
 		value = ft_strdup("$?");
 		token->type = EXIT_STATUS;
 	}
 	else
-		token->type = c_char;
+	{
+		str = cat_var(lexer->input + lexer->position + 1, 1);
+		value = ft_strjoin("$", str);
+		token->type = first;
+		free(str);
+	}
 	token->value = value;
 	lexer->position += ft_strlen(value);
-	free(str);
 }
 
 void	get_and(t_lexer *lexer, t_token *token)
@@ -71,7 +77,6 @@ int	initial_token(t_token *token, char c)
 	token->value = malloc(2);
 	token->value[0] = c;
 	token->value[1] = '\0';
-	token->len = 1;
 	token->type = c;
 	return (1);
 }

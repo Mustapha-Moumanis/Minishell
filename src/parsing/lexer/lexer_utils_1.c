@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:22:03 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/21 16:33:07 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:55:59 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	get_whitespace(t_lexer *lexer, t_token *token, char c)
 	token->value[0] = c;
 	token->value[1] = '\0';
 	token->type = WHITE_SPACE;
-	token->len = 1;
 	lexer->position += 1;
 }
 
@@ -33,7 +32,6 @@ void	get_pip(t_lexer *lexer, t_token *token)
 	}
 	else
 		token->value = ft_strdup("|");
-	token->len = ft_strlen(token->value);
 	lexer->position += 1;
 }
 
@@ -48,7 +46,6 @@ void	get_infile_herdok(t_lexer *lexer, t_token *token)
 	}
 	else
 		token->value = ft_strdup("<");
-	token->len = ft_strlen(token->value);
 	lexer->position += 1;
 }
 
@@ -63,6 +60,5 @@ void	get_outfile_append(t_lexer *lexer, t_token *token)
 	}
 	else
 		token->value = ft_strdup(">");
-	token->len = ft_strlen(token->value);
 	lexer->position += 1;
 }

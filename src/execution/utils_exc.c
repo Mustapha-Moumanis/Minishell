@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/28 19:09:04 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/25 20:29:09 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	dup_fd(t_exec *val)
 	else
 		dup2(val->pe[val->n_p][0], 0);
 	if (val->tmp->out_file != 1)
-		dup2(val->tmp->out_file, 1);
-	else
 		dup2(val->pe[val->n_p + 1][1], 1);
-	ecx(val, get_path(val->env, "PATH"));
 }
 
 void	ft_add_shlvl(t_exec *val)
@@ -32,11 +29,11 @@ void	ft_add_shlvl(t_exec *val)
 	t_env	*env;
 	int		j;
 
-	tmp = val->export;
+	tmp =  val->export;
 	env = val->env;
 	while (tmp && env)
 	{
-		if (!ft_strcmp(tmp->name, "SHLVL"))
+		if (!ft_strcmp(tmp->name , "SHLVL"))
 		{
 			j = ft_atoi(tmp->value) + 1;
 			free(tmp->value);
@@ -89,9 +86,11 @@ char	*check_cmd(t_exec *val, char *path)
 	{
 		ft_putstr_fd(val->tmp->full_cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
-		return (ft_double_free(s), NULL);
+		ft_double_free(s);
+		return (NULL);
 	}
-	return (ft_double_free(s), str);
+	ft_double_free(s);
+	return (str);
 }
 
 void	ecx(t_exec *val, char *path)

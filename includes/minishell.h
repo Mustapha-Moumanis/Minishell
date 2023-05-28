@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/28 19:20:28 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/28 20:38:47 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ enum e_state
 typedef struct s_elem
 {
 	char			*content;
-	int				len;
 	enum e_type		type;
 	enum e_state	state;
 	struct s_elem	*next;
@@ -98,7 +97,7 @@ typedef struct s_data
 	t_list			*save_error;
 	struct s_env	*n_env;
 }			t_data;
-int			g_exit_status;
+int			exit_status;
 
 // Data of execution part :
 
@@ -173,10 +172,10 @@ void	skeap_space(t_elem	**t);
 void	print_error(t_list *list);
 char	*cat_var(char *str, int nb);
 int		initial_token(t_token *token, char c);
-void	get_env(t_lexer *lexer, t_token *token);
 void	get_and(t_lexer *lexer, t_token *token);
 void	get_word(t_lexer *lexer, t_token *token);
 void	syntax_errors(t_data *data, t_elem	*t);
+void	get_env(t_lexer *lexer, t_token *token, char first, char advance);
 
 // lexer function
 
@@ -192,7 +191,7 @@ t_elem	*ft_last_elem(t_elem *lst);
 void	addback_elem(t_elem **lst, t_elem *new);
 void	ft_delone_elem(t_elem *lst, void (*del)(void *));
 void	ft_clear_elems(t_elem **lst, void (*del)(void *));
-t_elem	*new_elem(char *content, int len, enum e_type type, enum e_state state);
+t_elem	*new_elem(char *content, enum e_type type, enum e_state state);
 
 // cmd function
 
@@ -203,14 +202,14 @@ t_cmd	*ft_new_cmd(int in_file, int out_file, char **full_cmd);
 
 // EXECUTION :
 
-void    exuct(t_data *data, t_exec *val);
+void	exuct(t_data *data, t_exec *val);
 void	ecx(t_exec *val, char *path);
 int		sp_builtins(t_exec *val);
 int		builtins(t_exec *val);
 
 // UTILS EXECUTION :
 void	ft_lenked_list(char **env, t_exec *val);
-void    ft_free_pipes(int **pipe, int size);
+void	ft_free_pipes(int **pipe, int size);
 char	*get_path(t_env *env, char *str);
 int		init_pipes(int size, int **pe);
 char	**list_to_table_h(t_env **lst);
@@ -237,11 +236,9 @@ int		cd(t_exec *val);
 // UTILS BUILTINS :
 
 void	change_path(t_exec *val, char *str, char *value);
-void	add_value_env(t_exec *val, char *n, char *v);
+int		add_value_export(t_exec *val, char *n, char *v);
 t_exprt	*new_export(char *name, char *value, char sep);
 void	add_export(t_exprt **lst, t_exprt *new);
-int		all_iscorect(t_exec *val, char *str);
-void	ft_check_add(t_exec *val, char *n);
 t_env	*new_env(char *name, char *value);
 void	add_env(t_env **lst, t_env *new);
 t_exprt	*ft_lstlast_export(t_exprt *lst);
@@ -249,7 +246,6 @@ t_env	*ft_lstlast_env(t_env *lst);
 t_env	*ft_lstlast_env(t_env *lst);
 void	decrement_path(t_exec *val);
 void	print_export(t_exec *val);
-int		ft_lstsize_(t_env *lst);
 char	*value(char *str);
 char	*name(char *str);
 
