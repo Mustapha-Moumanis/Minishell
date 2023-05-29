@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:32:42 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/29 14:59:27 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/29 21:24:20 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	get_env(t_lexer *lexer, t_token *token, char first, char advance)
 	char	*str;
 	char	*value;
 
-	if (!advance || ft_whitespace(advance) || special_char(advance)
-		|| advance == '$')
+	if (!advance || ft_whitespace(advance)|| advance == '$'
+		|| (special_char(advance) && !ft_quote(advance)))
 		value = env_advance(token, advance);
 	else if (advance == '?')
 	{
