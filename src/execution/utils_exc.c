@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 14:23:54 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:03:01 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*check_cmd(t_exec *val, char *path)
 	while (s[i])
 	{
 		str = ft_strjoin(s[i], cmd);
-		if (access(str, R_OK) == 0)
+		if (access(str, X_OK) == 0)
 			break ;
 		free(str);
 		i++;
@@ -98,7 +98,7 @@ void	ecx(t_exec *val, char *path)
 {
 	char	*str;
 
-	if (access(val->tmp->full_cmd[val->i], R_OK) == 0)
+	if (access(val->tmp->full_cmd[val->i], X_OK) == 0)
 		str = val->tmp->full_cmd[val->i];
 	else
 		str = check_cmd(val, path);
