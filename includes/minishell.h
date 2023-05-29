@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/28 20:38:47 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/29 13:54:12 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ typedef struct s_data
 	t_list			*save_error;
 	struct s_env	*n_env;
 }			t_data;
-int			exit_status;
+
+int			g_exit_status;
 
 // Data of execution part :
 
@@ -236,9 +237,11 @@ int		cd(t_exec *val);
 // UTILS BUILTINS :
 
 void	change_path(t_exec *val, char *str, char *value);
-int		add_value_export(t_exec *val, char *n, char *v);
+void	add_value_env(t_exec *val, char *n, char *v);
 t_exprt	*new_export(char *name, char *value, char sep);
 void	add_export(t_exprt **lst, t_exprt *new);
+int		all_iscorect(t_exec *val, char *str);
+void	ft_check_add(t_exec *val, char *n);
 t_env	*new_env(char *name, char *value);
 void	add_env(t_env **lst, t_env *new);
 t_exprt	*ft_lstlast_export(t_exprt *lst);
@@ -246,6 +249,7 @@ t_env	*ft_lstlast_env(t_env *lst);
 t_env	*ft_lstlast_env(t_env *lst);
 void	decrement_path(t_exec *val);
 void	print_export(t_exec *val);
+int		ft_lstsize_(t_env *lst);
 char	*value(char *str);
 char	*name(char *str);
 

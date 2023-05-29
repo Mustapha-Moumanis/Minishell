@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/28 21:33:39 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/29 13:54:41 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	main(int ac, char **av, char **env)
 	ft_lenked_list(env, &val);
 	val.pos_path = 0;
 	data.n_env = val.env;
-	exit_status = 0;
-
+	g_exit_status = 0;
 	while (1337)
 	{
 		//catch_signal();
@@ -52,6 +51,8 @@ int	main(int ac, char **av, char **env)
 		data.error = 0;
 		if (parser(&data) == 0)
 			exuct(&data, &val);
+		else
+			g_exit_status = 1;
 		ft_cmd_clear(&data.head, &ft_double_free);
 		ft_lstclear(&data.cmd_lst, &free);
 	}

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:32:21 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/24 17:39:31 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/29 13:50:49 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	echo(t_exec *val)
 
 	val->i++;
 	nl = 0;
-	if (val->tmp->full_cmd[val->i])
+	if (val->tmp->full_cmd[val->i] && val->tmp->full_cmd[val->i][0])
 	{
 		if (str_is_n(val->tmp->full_cmd[val->i]))
 		{
@@ -49,8 +49,6 @@ void	echo(t_exec *val)
 		}
 		while (val->tmp->full_cmd[val->i])
 		{
-			if (!ft_strcmp(val->tmp->full_cmd[val->i], "$?"))
-				val->tmp->full_cmd[val->i] = ft_itoa(exit_status);
 			ft_putstr_fd(val->tmp->full_cmd[val->i], val->tmp->out_file);
 			if (val->tmp->full_cmd[val->i + 1])
 				ft_putstr_fd(" ", val->tmp->out_file);
@@ -61,4 +59,5 @@ void	echo(t_exec *val)
 	}
 	else
 		ft_putstr_fd("\n", val->tmp->out_file);
+	g_exit_status = 0;
 }

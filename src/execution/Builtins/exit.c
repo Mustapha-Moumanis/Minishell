@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:29:01 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 19:27:33 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/29 13:50:49 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_erro_exit(char *str, char *arg)
 		ft_putstr_fd(": ", 2);
 	}
 	ft_putendl_fd(str, 2);
-	exit_status = 1;
+	g_exit_status = 1;
 }
 
 int	check_arg_exit(char	*str)
@@ -68,7 +68,7 @@ void	arg_exit(t_exec *val)
 void	ft_exit(t_exec *val)
 {
 	val->i++;
-	if (!val->tmp->next || val->tmp->in_file != 0)
+	if (val->size == 1 && val->tmp->in_file >= 0)
 	{
 		ft_putendl_fd("exit", val->tmp->out_file);
 		if (val->tmp->full_cmd[val->i])
