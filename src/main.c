@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 21:28:50 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/29 22:09:44 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ void	init_parssing_data(t_data *data)
 	data->file_error = 0;
 }
 
+void	exc_sig(int sig)
+{
+	(void)sig;
+	ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	rl_redisplay();
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -43,6 +52,8 @@ int	main(int ac, char **av, char **env)
 	ft_lenked_list(env, &val);
 	val.pos_path = 0;
 	g_exit_status = 0;
+	signal(SIGINT, exc_sig);
+	signal(SIGQUIT, SIG_IGN);
 	while (1337)
 	{
 		//catch_signal();
