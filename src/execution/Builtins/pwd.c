@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 07:19:55 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 16:28:15 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/29 18:27:19 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	pwd(t_exec *val)
 	else
 	{
 		val->pos_path += 1;
-		decrement_path(val);
+		if (val->pos_path == 0)
+			decrement_path(val);
 		ft_putendl_fd(val->last_path, val->tmp->out_file);
 	}
 }

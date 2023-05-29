@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/27 18:08:38 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/29 18:09:35 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_remove_exp(t_exec *val, char *str)
 	if (t_exp && !ft_strcmp(t_exp->name, str))
 	{
 		val->export = val->export->next;
-		free(tmp);
+		free(t_exp);
 		return ;
 	}
 	while (t_exp && t_exp->next)
@@ -68,22 +68,17 @@ int	ft_remove_env(t_exec *val, char *s)
 	t_env	*tmp;
 
 	tm_env = val->env;
+	tmp = tm_env;
 	while (tm_env && tm_env->next)
 	{
-		if (!ft_strcmp(tm_env->name, s) || !ft_strcmp(tm_env->next->name, s))
+		if (!ft_strcmp(tm_env->next->name, s))
 		{
 			tmp = tm_env->next;
-			if (!ft_strcmp(tm_env->name, s))
-			{
-				tmp = tm_env;
-				val->env = val->env->next;
-			}
-			else
-				tm_env->next = tm_env->next->next;
+			tm_env->next = tm_env->next->next;
 			free(tmp->name);
 			free(tmp->value);
 			free(tmp);
-			return (1);
+			break ;
 		}
 		tm_env = tm_env->next;
 	}
