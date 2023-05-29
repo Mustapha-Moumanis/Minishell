@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/25 16:37:59 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/29 15:27:30 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check_home(t_exec *val, char *str)
 	{
 		if (chdir(home) == -1)
 			return (cd_error(home, NULL));
-		return (1);
+		return (2);
 	}
 	return (0);
 }
