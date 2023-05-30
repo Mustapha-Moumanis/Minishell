@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:12:30 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 13:50:49 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 23:17:38 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,14 @@ int	ft_error(char *str)
 {
 	ft_putendl_fd("Error", 2);
 	ft_putstr_fd(str, 2);
+	g_exit_status = 1;
 	return (2);
+}
+
+void	exc_child_sig(int sig)
+{
+	(void)sig;
+	exit(99);
 }
 
 void	wait_procces(void)
@@ -47,7 +54,9 @@ void	wait_procces(void)
 	while (j > 0)
 	{
 		j = wait(&st);
-		if (WEXITSTATUS(st))
+		if (st == 2)
+			g_exit_status = 130;
+		else
 			g_exit_status = WEXITSTATUS(st);
 	}
 }

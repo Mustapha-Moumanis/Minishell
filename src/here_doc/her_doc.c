@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:47:06 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/27 12:28:15 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:29:30 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,30 @@ int	append_line(t_data *data, char *str, char *value, int is)
 	return (free(tmp), 0);
 }
 
-int	her_doc(t_data *data, t_elem **lex)
+void	child_event(t_data *data, char *value, int is)
+{
+	char	*str;
+
+	signal(SIGINT, exc_child_sig);
+	signal(SIGQUIT, SIG_IGN);
+	while (1337)
+	{
+		ft_putstr_fd("> ", 1);
+		str = get_next_line(1);
+		if (!str)
+			exit (0);
+		if (str && str[0] != '\n')
+			if (append_line(data, str, value, is))
+				break ;
+		free(str);
+	}
+	exit (1);
+}
+
+int	her_doc(t_data *data, t_elem **lex, int var)
 {
 	char	*value;
 	char	*path;
-	char	*str;
 	int		fd;
 	int		is;
 
@@ -82,19 +101,20 @@ int	her_doc(t_data *data, t_elem **lex)
 	fd = data->in;
 	value = get_delimiter(lex, &is);
 	path = get_file(data);
-	while (1337)
+	var = fork();
+	if (var == -1)
+		return (ft_error("fork fail\n"));
+	if (var == 0)
+		child_event(data, value, is);
+	wait(&var);
+	if (WEXITSTATUS(var) == 1)
 	{
-		ft_putstr_fd("> ", 1);
-		str = get_next_line(1);
-		if (str && str[0] != '\n')
-			if (append_line(data, str, value, is))
-				break ;
-		free(str);
-	}
-	close(data->in);
-	if (fd != -1)
-		data->in = open(path, O_RDONLY, 0644);
-	else
+		close(data->in);
 		data->in = fd;
+		if (fd != -1)
+			data->in = open(path, O_RDONLY, 0644);
+	}
+	else
+		data->error = 1;
 	return (free(value), free(path), 1);
 }

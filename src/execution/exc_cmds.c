@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exc_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 18:22:53 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 23:20:19 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ int	one_cmd(t_exec *val)
 	j = builtins(val);
 	if (j == 1)
 	{
+		signal(SIGINT, SIG_IGN);
 		fr = fork();
 		if (fr == -1)
 			return (ft_error("fork fail\n"));
 		else if (fr == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			if (val->tmp->in_file != 0)
 				dup2(val->tmp->in_file, 0);
 			if (val->tmp->out_file != 1)
@@ -73,11 +76,14 @@ int	last_cmd(t_exec *val)
 	j = builtins(val);
 	if (j == 1 && val->tmp->in_file != -1 && val->tmp->out_file != -1)
 	{
+		signal(SIGINT, SIG_IGN);
 		val->fork = fork();
 		if (val->fork == -1)
 			return (ft_error("fork fail\n"));
 		if (val->fork == 0)
-		{			
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			dup2(val->tmp->out_file, 1);
 			if (val->tmp->in_file != 0)
 				dup2(val->tmp->in_file, 0);

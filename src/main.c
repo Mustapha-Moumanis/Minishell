@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 18:16:08 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 23:04:12 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,17 @@ void	init_parssing_data(t_data *data)
 
 void	exc_sig(int sig)
 {
-	(void)sig;
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
+	sig = 0;
+	wait(&sig);
+	if (WEXITSTATUS(sig) == 99)
+		ft_putchar_fd('\n', 1);
+	else
+	{
+		ft_putchar_fd('\n', 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -52,10 +58,10 @@ int	main(int ac, char **av, char **env)
 	ft_lenked_list(env, &val);
 	val.pos_path = 0;
 	g_exit_status = 0;
-	signal(SIGINT, exc_sig);
 	signal(SIGQUIT, SIG_IGN);
 	while (1337)
 	{
+		signal(SIGINT, exc_sig);
 		init_parssing_data(&data);
 		data.n_env = val.env;
 		data.error = 0;

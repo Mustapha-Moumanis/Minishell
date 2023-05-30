@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 17:55:12 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 23:32:04 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,9 @@ void	dout_file(t_data *data, char *value);
 
 // HERE DOC
 
-int		her_doc(t_data *data, t_elem **lex);
-char	*update_line(t_data *last_data, char *str);
 char	*get_delimiter(t_elem **lex, int *is);
+char	*update_line(t_data *last_data, char *str);
+int		her_doc(t_data *data, t_elem **lex, int var);
 char	*get_qoute_delimiter(t_elem **lex, enum e_type type);
 
 // more function
@@ -200,6 +200,11 @@ t_cmd	*ft_last_cmd(t_cmd *lst);
 void	ft_cmd_back(t_cmd **lst, t_cmd *new);
 void	ft_cmd_clear(t_cmd **lst, void (*del)(char **));
 t_cmd	*ft_new_cmd(int in_file, int out_file, char **full_cmd);
+
+// signale :
+
+void	exc_sig(int sig);
+void	exc_child_sig(int sig);
 
 // EXECUTION :
 

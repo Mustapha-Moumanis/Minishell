@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/27 17:55:26 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:29:39 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	get_red(t_data *data, t_elem **lex, enum e_type type, char	*str)
 		ft_lstadd_back(&data->cmd_lst, ft_lstnew(str));
 	str = ft_strdup("");
 	(*lex) = (*lex)->next;
-	if (type == HERE_DOC)
-		her_doc(data, lex);
+	if (type == HERE_DOC && data->error != 1)
+		her_doc(data, lex, 0);
 	else
 	{
 		str = collecting_cmd(data, lex, str);
