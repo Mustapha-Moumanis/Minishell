@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:41:07 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 13:50:49 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 18:02:24 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,9 @@ void	export_env_add(t_exec *val, t_exprt *tmp, char *n, char *v)
 	{
 		if (ft_strcmp(n, tmp->name) == 0)
 		{
-			free(tmp->value);
 			tmp->value = v;
 			tmp->sep = '\"';
-			if (!t_env)
-				add_env(&val->env, new_env(n, v));
-			else
-				add_value_env(val, n, v);
+			add_value_env(val, n, v);
 			return ;
 		}
 		tmp = tmp->next;
@@ -51,26 +47,22 @@ void	add_value(t_exec *val, char *n)
 int	more_value(t_exec *val, char *n)
 {
 	t_exprt		*tmp;
-	t_env		*env;
 	char		*str;
 	char		*v;
 
 	tmp = val->export;
-	env = val->env;
-	while (tmp && env)
+	while (tmp)
 	{
-		if (ft_strcmp(tmp->name, n) == 0)
+		if (!ft_strcmp(tmp->name, n))
 		{
 			v = value(val->tmp->full_cmd[val->i]);
-			str = ft_strjoin(tmp->value, v);
+			str = my_strjoin_(tmp->value, v);
 			free(v);
-			free(tmp->value);
 			add_value_env(val, n, str);
 			tmp->value = str;
 			return (1);
 		}
 		tmp = tmp->next;
-		env = env->next;
 	}
 	return (0);
 }

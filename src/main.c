@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 22:09:44 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:16:08 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	while (1337)
 	{
-		//catch_signal();
 		init_parssing_data(&data);
 		data.n_env = val.env;
 		data.error = 0;

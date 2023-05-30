@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:59:36 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/26 18:17:40 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 18:13:38 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,34 @@ void	print_export(t_exec *val)
 	}
 }
 
+char	*my_strjoin_(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*ptr;
+
+	i = 0;
+	if (!s1 && s2)
+		return (ft_strdup(s2));
+	ptr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!ptr)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		ptr[i] = s2[j];
+		i++;
+		j++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
 void	add_value_env(t_exec *val, char *n, char *v)
 {
 	t_env	*tmp;
@@ -40,8 +68,9 @@ void	add_value_env(t_exec *val, char *n, char *v)
 	tmp = val->env;
 	while (tmp)
 	{
-		if (ft_strcmp(n, tmp->name) == 0)
+		if (!ft_strcmp(n, tmp->name))
 		{
+			free(tmp->value);
 			tmp->value = v;
 			free(n);
 			break ;

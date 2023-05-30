@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 13:54:12 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 17:55:12 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ int		builtins(t_exec *val);
 // UTILS EXECUTION :
 void	ft_lenked_list(char **env, t_exec *val);
 void	ft_free_pipes(int **pipe, int size);
+char	*my_strjoin_(char *s1, char *s2);
 char	*get_path(t_env *env, char *str);
 int		init_pipes(int size, int **pe);
 char	**list_to_table_h(t_env **lst);

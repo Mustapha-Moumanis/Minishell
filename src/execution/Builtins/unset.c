@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 18:09:35 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 15:40:57 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**list_to_table_h(t_env **lst)
 
 	tmp = *lst;
 	i = -1;
-	cmd = ft_calloc((ft_lstsize_(*lst) + 1), sizeof(char *));
+	cmd = ft_calloc((ft_lstsize_(*lst) + 1), sizeof(char **));
 	if (!cmd)
 		return (NULL);
 	while (tmp)

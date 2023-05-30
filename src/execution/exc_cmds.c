@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 13:50:49 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/30 18:22:53 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ int	first_cmd(t_exec *val)
 
 int	last_cmd(t_exec *val)
 {
-	int	i;
 	int	j;
 
-	i = 0;
 	j = builtins(val);
 	if (j == 1 && val->tmp->in_file != -1 && val->tmp->out_file != -1)
 	{
@@ -91,6 +89,8 @@ int	last_cmd(t_exec *val)
 	}
 	else if (j == 0)
 		g_exit_status = 0;
+	else
+		g_exit_status = 1;
 	close(val->pe[val->n_p][0]);
 	return (0);
 }
