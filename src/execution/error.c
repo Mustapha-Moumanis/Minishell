@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:12:30 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 23:17:38 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 00:48:21 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	wait_procces(void)
 		j = wait(&st);
 		if (st == 2)
 			g_exit_status = 130;
+		else if (st == 3)
+			g_exit_status = 131;
 		else
 			g_exit_status = WEXITSTATUS(st);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exc_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 23:20:19 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 00:45:36 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	last_cmd(t_exec *val)
 		val->fork = fork();
 		if (val->fork == -1)
 			return (ft_error("fork fail\n"));
-		if (val->fork == 0)
+		if (val->fork == 0 && val->tmp->full_cmd[0])
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
+			// signal(SIGINT, SIG_DFL);
+			// signal(SIGQUIT, SIG_DFL);
 			dup2(val->tmp->out_file, 1);
 			if (val->tmp->in_file != 0)
 				dup2(val->tmp->in_file, 0);
@@ -91,9 +91,9 @@ int	last_cmd(t_exec *val)
 				dup2(val->pe[val->n_p][0], 0);
 			ecx(val, get_path(val->env, "PATH"));
 		}
-		wait_procces();
 	}
-	else if (j == 0)
+	wait_procces();
+	if (j == 0)
 		g_exit_status = 0;
 	else
 		g_exit_status = 1;

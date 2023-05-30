@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 15:27:30 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 00:04:07 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	cd(t_exec *val)
 	val->j = check_home(val, val->tmp->full_cmd[val->i]);
 	if (val->j != 0)
 		return (val->j);
+	//chdir(val->tmp->full_cmd[val->i]);
 	if (getcwd(val->cd_path, 1024))
 	{
 		if (chdir(val->tmp->full_cmd[val->i]) == -1)
