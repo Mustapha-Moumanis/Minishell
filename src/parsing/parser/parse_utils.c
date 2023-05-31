@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 10:51:44 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/29 15:00:28 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:56:17 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*parse_env(t_data *data, t_elem **lex)
 
 	tmp = (*lex)->content;
 	env = data->n_env;
+	data->expanded = 1;
 	while (env)
 	{
 		if (!ft_strcmp(tmp + 1, env->name))

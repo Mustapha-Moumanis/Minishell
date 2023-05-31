@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 16:41:59 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 23:17:18 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_data
 	t_elem			*elem;
 	int				error;
 	int				file_error;
+	int				expanded;
 	t_list			*save_error;
 	struct s_env	*n_env;
 }			t_data;

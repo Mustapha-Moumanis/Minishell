@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:47:06 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/31 16:42:48 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 23:16:19 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	child_event(t_data *data, char *value, int is)
 		ft_putstr_fd("> ", 1);
 		str = get_next_line(1);
 		if (!str)
-			exit (0);
+			exit (1);
 		if (str && str[0] != '\n')
 			if (append_line(data, str, value, is))
 				break ;
