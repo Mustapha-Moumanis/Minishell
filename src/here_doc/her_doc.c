@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:47:06 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/30 23:29:30 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:42:48 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,6 @@ int	her_doc(t_data *data, t_elem **lex, int var)
 			data->in = open(path, O_RDONLY, 0644);
 	}
 	else
-		data->error = 1;
+		data->error = 2;
 	return (free(value), free(path), 1);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 23:04:12 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:45:17 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	ft_double_free(char **s)
 	free(s);
 }
 
-void	init_parssing_data(t_data *data)
+void	init_parssing_data(t_data *data, int ac, char **av)
 {
+	(void)ac;
+	(void)av;
 	data->in = 0;
 	data->out = 1;
 	data->file_error = 0;
@@ -52,8 +54,6 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	t_exec	val;
 
-	(void)ac;
-	(void)av;
 	data = (t_data){0};
 	ft_lenked_list(env, &val);
 	val.pos_path = 0;
@@ -62,13 +62,16 @@ int	main(int ac, char **av, char **env)
 	while (1337)
 	{
 		signal(SIGINT, exc_sig);
-		init_parssing_data(&data);
+		init_parssing_data(&data, ac, av);
 		data.n_env = val.env;
 		data.error = 0;
-		if (parser(&data) == 0)
+		parser(&data);
+		if (data.error == 0)
 			exuct(&data, &val);
-		else
+		else if (data.error == 1)
 			g_exit_status = 258;
+		else if (data.error == 2)
+			g_exit_status = 1;
 		ft_cmd_clear(&data.head, &ft_double_free);
 		ft_lstclear(&data.cmd_lst, &free);
 	}

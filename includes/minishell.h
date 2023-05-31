@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 16:12:34 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 16:41:59 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ char	*parse_cmd(t_data *data, t_elem **lex);
 char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type);
 
 int		parser(t_data *data);
-void	init_parssing_data(t_data *data);
 void	append_exution_struct(t_data *data);
+void	init_parssing_data(t_data *data, int ac, char **av);
 
 void	in_file(t_data *data, char *value);
 void	out_file(t_data *data, char *value);
