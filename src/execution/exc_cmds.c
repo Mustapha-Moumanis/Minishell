@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 00:45:36 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 16:09:13 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 int	one_cmd(t_exec *val)
 {
-	int	fr;
-	int	j;
-
-	fr = 0;
-	j = builtins(val);
-	if (j == 1)
+	val->j = builtins(val);
+	if (val->j == 1)
 	{
 		signal(SIGINT, SIG_IGN);
-		fr = fork();
-		if (fr == -1)
+		val->fork = fork();
+		if (val->fork == -1)
 			return (ft_error("fork fail\n"));
-		else if (fr == 0)
+		else if (val->fork == 0)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
@@ -37,9 +33,9 @@ int	one_cmd(t_exec *val)
 		}
 		wait_procces();
 	}
-	else if (j == 0)
+	else if (val->j == 0)
 		g_exit_status = 0;
-	return (j);
+	return (val->j);
 }
 
 int	first_cmd(t_exec *val)
@@ -71,10 +67,8 @@ int	first_cmd(t_exec *val)
 
 int	last_cmd(t_exec *val)
 {
-	int	j;
-
-	j = builtins(val);
-	if (j == 1 && val->tmp->in_file != -1 && val->tmp->out_file != -1)
+	val->j = builtins(val);
+	if (val->j == 1 && val->tmp->in_file != -1 && val->tmp->out_file != -1)
 	{
 		signal(SIGINT, SIG_IGN);
 		val->fork = fork();
@@ -82,8 +76,8 @@ int	last_cmd(t_exec *val)
 			return (ft_error("fork fail\n"));
 		if (val->fork == 0 && val->tmp->full_cmd[0])
 		{
-			// signal(SIGINT, SIG_DFL);
-			// signal(SIGQUIT, SIG_DFL);
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			dup2(val->tmp->out_file, 1);
 			if (val->tmp->in_file != 0)
 				dup2(val->tmp->in_file, 0);
@@ -93,12 +87,11 @@ int	last_cmd(t_exec *val)
 		}
 	}
 	wait_procces();
-	if (j == 0)
+	if (val->j == 0)
 		g_exit_status = 0;
 	else
 		g_exit_status = 1;
-	close(val->pe[val->n_p][0]);
-	return (0);
+	return (close(val->pe[val->n_p][0]), 0);
 }
 
 int	other_commands(t_exec *val)

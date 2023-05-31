@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 23:55:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 23:56:04 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 16:11:08 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	builtins(t_exec *val)
 {
 	int		i;
 
-	val->onther = 0;
 	val->i = 0;
 	if ((ft_strcmp(val->tmp->full_cmd[val->i], "cd") == 0))
 	{

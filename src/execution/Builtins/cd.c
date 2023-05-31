@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 00:04:07 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 15:24:56 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ void	add_new_path(t_exec *val)
 		val->last_path[i++] = val->tmp->full_cmd[val->i][j];
 }
 
-void	decrement_path(t_exec *val)
-{
-	int	i;
-
-	i = ft_strlen(val->old_path);
-	while (val->old_path[--i])
-	{
-		if (val->old_path[i] == '/')
-			break ;
-		val->old_path[i] = '\0';
-	}
-	val->old_path[i] = '\0';
-}
-
 int	parent_dir(t_exec *val)
 {
 	char	*s;
@@ -47,6 +33,8 @@ int	parent_dir(t_exec *val)
 	add_new_path(val);
 	decrement_path(val);
 	change_path(val, "PWD", val->last_path);
+	if (chdir(val->old_path) == 0)
+		return (getcwd(val->old_path, 1024), 0);
 	if (val->pos_path == 0)
 	{
 		val->pos_path += 1;
@@ -69,23 +57,25 @@ int	check_home(t_exec *val, char *str)
 	return (0);
 }
 
+void	no_path(t_exec *val)
+{
+	change_path(val, "OLDPWD", val->cd_path);
+	getcwd(val->last_path, 1024);
+	getcwd(val->old_path, 1024);
+	change_path(val, "PWD", val->last_path);
+}
+
 int	cd(t_exec *val)
 {
 	val->j = check_home(val, val->tmp->full_cmd[val->i]);
 	if (val->j != 0)
 		return (val->j);
-	//chdir(val->tmp->full_cmd[val->i]);
 	if (getcwd(val->cd_path, 1024))
 	{
 		if (chdir(val->tmp->full_cmd[val->i]) == -1)
 			return (cd_error(val->tmp->full_cmd[val->i], NULL));
 		else
-		{
-			change_path(val, "OLDPWD", val->cd_path);
-			getcwd(val->last_path, 1024);
-			getcwd(val->old_path, 1024);
-			change_path(val, "PWD", val->last_path);
-		}
+			no_path(val);
 	}
 	else if (chdir(val->old_path) == 0)
 	{

@@ -6,11 +6,25 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 07:19:55 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 18:27:19 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 15:15:21 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+void	decrement_path(t_exec *val)
+{
+	int	i;
+
+	i = ft_strlen(val->old_path);
+	while (val->old_path[--i])
+	{
+		if (val->old_path[i] == '/')
+			break ;
+		val->old_path[i] = '\0';
+	}
+	val->old_path[i] = '\0';
+}
 
 void	change_path(t_exec *val, char *str, char *value)
 {

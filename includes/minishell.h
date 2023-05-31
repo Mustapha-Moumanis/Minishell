@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 23:32:04 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:12:34 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_data
 
 int			g_exit_status;
 
-// Data of execution part :
+// Data for execution part :
 
 typedef struct s_env
 {
@@ -121,7 +121,6 @@ typedef struct s_exec
 {
 	int			i;
 	int			j;
-	int			status_exit;
 	int			size;
 	int			n_p;
 	int			fork;
@@ -130,9 +129,7 @@ typedef struct s_exec
 	char		cd_path[1024];
 	char		last_path[1024];
 	char		old_path[1024];
-	int			len_path;
 	int			pos_path;
-	int			onther;
 	char		**n_env;
 	t_cmd		*tmp;
 	t_env		*env;
@@ -206,7 +203,7 @@ t_cmd	*ft_new_cmd(int in_file, int out_file, char **full_cmd);
 void	exc_sig(int sig);
 void	exc_child_sig(int sig);
 
-// EXECUTION :
+// EXECUTION : --------------------------
 
 void	exuct(t_data *data, t_exec *val);
 void	ecx(t_exec *val, char *path);
