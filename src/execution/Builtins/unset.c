@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 15:40:57 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 17:41:32 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,22 @@ int	ft_remove_env(t_exec *val, char *s)
 	t_env	*tmp;
 
 	tm_env = val->env;
-	tmp = tm_env;
 	while (tm_env && tm_env->next)
 	{
-		if (!ft_strcmp(tm_env->next->name, s))
+		if (!ft_strcmp(tm_env->name, s) || !ft_strcmp(tm_env->next->name, s))
 		{
 			tmp = tm_env->next;
-			tm_env->next = tm_env->next->next;
+			if (!ft_strcmp(tm_env->name, s))
+			{
+				tmp = tm_env;
+				val->env = val->env->next;
+			}
+			else
+				tm_env->next = tm_env->next->next;
 			free(tmp->name);
 			free(tmp->value);
 			free(tmp);
-			break ;
+			return (1);
 		}
 		tm_env = tm_env->next;
 	}

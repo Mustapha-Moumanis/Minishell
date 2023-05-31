@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:32:21 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 13:50:49 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 18:54:46 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@ int	str_is_n(char *str)
 	return (1);
 }
 
-void	n_line(char **str, t_exec *n)
-{
-	while (str[n->i] && str_is_n(str[n->i]))
-		n->i++;
-}
-
 void	echo(t_exec *val)
 {
 	int	nl;
@@ -44,7 +38,7 @@ void	echo(t_exec *val)
 	{
 		if (str_is_n(val->tmp->full_cmd[val->i]))
 		{
-			n_line(val->tmp->full_cmd, val);
+			val->i++;
 			nl = 1;
 		}
 		while (val->tmp->full_cmd[val->i])
