@@ -3,58 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:56:13 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 18:13:31 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:47:01 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*name(char *str)
-{
-	char	*name;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = -1;
-	while (str[i] && str[i] != '=')
-		i++;
-	name = malloc(i + 1);
-	if (!name)
-		return (NULL);
-	while (++j < i)
-		name[j] = str[j];
-	name[j] = '\0';
-	return (name);
-}
-
-char	*value(char *str)
-{
-	char	*value;
-	int		i;
-	int		j;
-	int		f;
-
-	i = 0;
-	j = 0;
-	while (str[j] != '=')
-		j++;
-	f = j + 1;
-	while (str[j++])
-		i++;
-	j = f;
-	value = malloc(i + 1);
-	if (!value)
-		return (NULL);
-	f = -1;
-	while (++f < i)
-		value[f] = str[j++];
-	value[f] = '\0';
-	return (value);
-}
 
 void	ft_lenked_list(char **env, t_exec *val)
 {
@@ -73,6 +29,38 @@ void	ft_lenked_list(char **env, t_exec *val)
 		add_export(&val->export, new_export(n, v, '\"'));
 	}
 	val->n_env = list_to_table_h(&val->env);
+}
+
+void	wait_procces(int pid)
+{
+	int	st;
+	int	i;
+
+	i = 0;
+	waitpid(pid, &st, 0);
+	if (WEXITSTATUS(st))
+		g_exit_status = WEXITSTATUS(st);
+	if (WIFSIGNALED(st))
+		g_exit_status = st + 128;
+	if (g_exit_status == 131)
+		printf("Quit: 3\n");
+	while (wait(&st) > i)
+		i = 0;
+}
+
+void	ft_close(t_cmd **val)
+{
+	t_cmd	*tmp;
+
+	tmp = *val;
+	while (tmp)
+	{
+		if (tmp->in_file > 2)
+			close(tmp->in_file);
+		if (tmp->out_file > 2)
+			close(tmp->out_file);
+		tmp = tmp->next;
+	}
 }
 
 int	ft_strcmp(char *s1, char *s2)

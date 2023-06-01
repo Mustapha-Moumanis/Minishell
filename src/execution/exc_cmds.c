@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exc_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 00:34:11 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:25:21 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	one_cmd(t_exec *val)
 				dup2(val->tmp->out_file, 1);
 			ecx(val, get_path(val->env, "PATH"));
 		}
-		wait_procces();
+		wait_procces(val->fork);
 	}
 	if (val->j == 0)
 		g_exit_status = 0;
@@ -86,7 +86,7 @@ int	last_cmd(t_exec *val)
 			ecx(val, get_path(val->env, "PATH"));
 		}
 	}
-	wait_procces();
+	wait_procces(val->fork);
 	if (val->j == 0)
 		g_exit_status = 0;
 	if (val->tmp->in_file == -1 || val->tmp->out_file == -1)

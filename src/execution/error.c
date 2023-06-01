@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:12:30 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 00:39:07 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:46:47 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 int	export_error(char *str)
 {
 	ft_putstr_fd("bash: export: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": not a valid identifier\n", 2);
+	return (0);
+}
+
+int	unset_error(char *str)
+{
+	ft_putstr_fd("bash: unset: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": not a valid identifier\n", 2);
 	return (0);
@@ -44,17 +52,4 @@ void	exc_child_sig(int sig)
 {
 	(void)sig;
 	exit(99);
-}
-
-void	wait_procces(void)
-{
-	int	st;
-
-	while (wait(&st) > 0)
-	{
-		if (WEXITSTATUS(st))
-			g_exit_status = WEXITSTATUS(st);
-		if (WIFSIGNALED(st))
-			g_exit_status = st + 128;
-	}
 }

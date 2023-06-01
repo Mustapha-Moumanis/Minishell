@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 00:51:28 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:25:10 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,9 +223,9 @@ void	ft_add_shlvl(t_exec *val);
 void	str_lowercase(char *str);
 int		ft_lstsize_h(t_cmd *lst);
 int		exc_comande(t_exec *val);
+void	wait_procces(int pid);
 int		one_cmd(t_exec *val);
 void	dup_fd(t_exec *val);
-void	wait_procces(void);
 
 //  BUILTINS :
 
@@ -258,6 +258,7 @@ char	*value(char *str);
 char	*name(char *str);
 
 // error :
+int		unset_error(char *str);
 int		export_error(char *str);
 int		cd_error(char *obt, char *s);
 int		ft_error(char *str);

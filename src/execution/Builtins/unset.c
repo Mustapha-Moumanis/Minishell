@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 21:02:22 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:49:30 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,27 @@ int	ft_remove_env(t_exec *val, char *s)
 	return (0);
 }
 
+int	unset_iscorect(t_exec *val, char *str)
+{
+	int	j;
+	int	len;
+
+	j = -1;
+	len = ft_strlen(str);
+	if (len == 0)
+		return (unset_error(val->tmp->full_cmd[val->i]));
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (unset_error(val->tmp->full_cmd[val->i]));
+	if (str[len - 1] == '+')
+		len -= 1;
+	while (++j < len)
+	{
+		if (!ft_isalnum(str[j]) && str[j] != '_')
+			return (unset_error(val->tmp->full_cmd[val->i]));
+	}
+	return (1);
+}
+
 void	unset(t_exec *val)
 {
 	char		*str;
@@ -99,17 +120,14 @@ void	unset(t_exec *val)
 	{
 		while (val->tmp->full_cmd[val->i])
 		{
-			str = ft_strdup(val->tmp->full_cmd[val->i]);
-			if (!all_iscorect(val, str))
-			{
+			if (!unset_iscorect(val, val->tmp->full_cmd[val->i]))
 				g_exit_status = 1;
-				val->i++;
-			}
 			else
-				free(str);
-			str = val->tmp->full_cmd[val->i];
-			ft_remove_exp(val, str);
-			ft_remove_env(val, str);
+			{
+				str = val->tmp->full_cmd[val->i];
+				ft_remove_exp(val, str);
+				ft_remove_env(val, str);
+			}
 			val->i++;
 		}
 		ft_double_free(val->n_env);

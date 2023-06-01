@@ -3,28 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   utils_linked_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:39:39 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 00:51:37 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:47:06 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_close(t_cmd **val)
+char	*name(char *str)
 {
-	t_cmd	*tmp;
+	char	*name;
+	int		i;
+	int		j;
 
-	tmp = *val;
-	while (tmp)
-	{
-		if (tmp->in_file > 2)
-			close(tmp->in_file);
-		if (tmp->out_file > 2)
-			close(tmp->out_file);
-		tmp = tmp->next;
-	}
+	i = 0;
+	j = -1;
+	while (str[i] && str[i] != '=')
+		i++;
+	name = malloc(i + 1);
+	if (!name)
+		return (NULL);
+	while (++j < i)
+		name[j] = str[j];
+	name[j] = '\0';
+	return (name);
+}
+
+char	*value(char *str)
+{
+	char	*value;
+	int		i;
+	int		j;
+	int		f;
+
+	i = 0;
+	j = 0;
+	while (str[j] != '=')
+		j++;
+	f = j + 1;
+	while (str[j++])
+		i++;
+	j = f;
+	value = malloc(i + 1);
+	if (!value)
+		return (NULL);
+	f = -1;
+	while (++f < i)
+		value[f] = str[j++];
+	value[f] = '\0';
+	return (value);
 }
 
 int	ft_lstsize_(t_env *lst)
