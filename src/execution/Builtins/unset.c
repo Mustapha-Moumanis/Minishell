@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:40:40 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 17:41:32 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:02:22 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,14 @@ void	unset(t_exec *val)
 	{
 		while (val->tmp->full_cmd[val->i])
 		{
+			str = ft_strdup(val->tmp->full_cmd[val->i]);
+			if (!all_iscorect(val, str))
+			{
+				g_exit_status = 1;
+				val->i++;
+			}
+			else
+				free(str);
 			str = val->tmp->full_cmd[val->i];
 			ft_remove_exp(val, str);
 			ft_remove_env(val, str);

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 17:07:46 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 00:34:11 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	one_cmd(t_exec *val)
 		}
 		wait_procces();
 	}
-	else if (val->j == 0)
+	if (val->j == 0)
 		g_exit_status = 0;
 	return (val->j);
 }
@@ -89,7 +89,7 @@ int	last_cmd(t_exec *val)
 	wait_procces();
 	if (val->j == 0)
 		g_exit_status = 0;
-	else
+	if (val->tmp->in_file == -1 || val->tmp->out_file == -1)
 		g_exit_status = 1;
 	return (close(val->pe[val->n_p][0]), 0);
 }

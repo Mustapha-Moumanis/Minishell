@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 23:17:18 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/01 00:51:28 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,6 @@ int		exc_comande(t_exec *val);
 int		one_cmd(t_exec *val);
 void	dup_fd(t_exec *val);
 void	wait_procces(void);
-void	catch_signal(void);
 
 //  BUILTINS :
 
@@ -254,6 +253,7 @@ t_env	*ft_lstlast_env(t_env *lst);
 void	decrement_path(t_exec *val);
 void	print_export(t_exec *val);
 int		ft_lstsize_(t_env *lst);
+void	ft_close(t_cmd **val);
 char	*value(char *str);
 char	*name(char *str);
 

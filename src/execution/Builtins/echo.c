@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:32:21 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 18:54:46 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 20:21:27 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	echo(t_exec *val)
 	nl = 0;
 	if (val->tmp->full_cmd[val->i] && val->tmp->full_cmd[val->i][0])
 	{
-		if (str_is_n(val->tmp->full_cmd[val->i]))
+		while (str_is_n(val->tmp->full_cmd[val->i]))
 		{
-			val->i++;
 			nl = 1;
+			val->i++;
 		}
 		while (val->tmp->full_cmd[val->i])
 		{

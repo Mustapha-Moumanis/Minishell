@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:59:36 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/30 18:13:38 by shilal           ###   ########.fr       */
+/*   Updated: 2023/05/31 20:54:16 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	all_iscorect(t_exec *val, char *str)
 	len = ft_strlen(str);
 	if (len == 0)
 		return (free(str), export_error(val->tmp->full_cmd[val->i]));
-	if (ft_isdigit(str[0]))
+	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (free(str), export_error(val->tmp->full_cmd[val->i]));
 	if (str[len - 1] == '+')
 		len -= 1;

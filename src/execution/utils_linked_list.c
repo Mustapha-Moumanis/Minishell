@@ -6,11 +6,26 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:39:39 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/26 18:21:04 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 00:51:37 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ft_close(t_cmd **val)
+{
+	t_cmd	*tmp;
+
+	tmp = *val;
+	while (tmp)
+	{
+		if (tmp->in_file > 2)
+			close(tmp->in_file);
+		if (tmp->out_file > 2)
+			close(tmp->out_file);
+		tmp = tmp->next;
+	}
+}
 
 int	ft_lstsize_(t_env *lst)
 {

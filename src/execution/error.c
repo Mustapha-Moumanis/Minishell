@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:12:30 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 17:09:39 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 00:39:07 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,12 @@ void	exc_child_sig(int sig)
 void	wait_procces(void)
 {
 	int	st;
-	int	j;
 
-	g_exit_status = 0;
-	j = 1;
-	while (j > 0)
+	while (wait(&st) > 0)
 	{
-		j = wait(&st);
-		if (st == 2)
-			g_exit_status = 130;
-		else if (st == 3)
-			g_exit_status = 131;
-		else
+		if (WEXITSTATUS(st))
 			g_exit_status = WEXITSTATUS(st);
+		if (WIFSIGNALED(st))
+			g_exit_status = st + 128;
 	}
 }
