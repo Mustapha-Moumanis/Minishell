@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 20:49:32 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 18:24:13 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	check_home(t_exec *val, char *str)
 	char	*home;
 
 	home = get_path(val->env, "HOME");
+	printf("%s\n", home);
 	if (!str || !ft_strcmp(str, "~"))
 	{
 		if (chdir(home) == -1)
@@ -57,8 +58,9 @@ int	check_home(t_exec *val, char *str)
 	return (0);
 }
 
-void	no_path(t_exec *val)
+void	path(t_exec *val)
 {
+	val->pos_path = 0;
 	change_path(val, "OLDPWD", val->cd_path);
 	getcwd(val->last_path, 1024);
 	getcwd(val->old_path, 1024);
@@ -75,7 +77,7 @@ int	cd(t_exec *val)
 		if (chdir(val->tmp->full_cmd[val->i]) == -1)
 			return (cd_error(val->tmp->full_cmd[val->i], NULL));
 		else
-			no_path(val);
+			path(val);
 	}
 	else if (chdir(val->old_path) == 0)
 	{

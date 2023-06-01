@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 00:36:28 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 19:17:24 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,22 +101,23 @@ void	ecx(t_exec *val, char *path)
 	str = NULL;
 	if (access(val->tmp->full_cmd[val->i], X_OK) == 0)
 		str = val->tmp->full_cmd[val->i];
+	else if (!path)
+	{
+		excution_error(val->tmp->full_cmd[val->i]);
+		exit (127);
+	}
 	else
 	{
 		if (ft_strchr(val->tmp->full_cmd[val->i], '/'))
 		{
-			ft_putstr_fd(val->tmp->full_cmd[val->i], 2);
-			ft_putendl_fd(": No such file or directory", 2);
+			excution_error(val->tmp->full_cmd[val->i]);
 			exit (126);
 		}
 		str = check_cmd(val, path);
+		if (!str)
+			exit (127);
 	}
-	if (!str)
-		exit (127);
-	else
-	{
-		execve(str, val->tmp->full_cmd, val->n_env);
-		ft_putendl_fd(strerror(errno), 2);
-		exit(128);
-	}
+	execve(str, val->tmp->full_cmd, val->n_env);
+	ft_putendl_fd(strerror(errno), 2);
+	exit(128);
 }

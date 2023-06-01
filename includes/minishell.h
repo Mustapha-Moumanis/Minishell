@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 17:25:10 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:53:24 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char	*parse_env(t_data *data, t_elem **lex);
 char	*parse_cmd(t_data *data, t_elem **lex);
 char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type);
 
-int		parser(t_data *data);
+int		parser(t_data *data, t_exec *val);
 void	append_exution_struct(t_data *data);
 void	init_parssing_data(t_data *data, int ac, char **av);
 
@@ -258,9 +258,10 @@ char	*value(char *str);
 char	*name(char *str);
 
 // error :
-int		unset_error(char *str);
-int		export_error(char *str);
 int		cd_error(char *obt, char *s);
+void	excution_error(char *str);
+int		export_error(char *str);
+int		unset_error(char *str);
 int		ft_error(char *str);
 
 #endif

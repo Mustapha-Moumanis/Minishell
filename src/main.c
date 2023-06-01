@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:31:41 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 00:55:47 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 19:16:14 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int ac, char **av, char **env)
 
 	data = (t_data){0};
 	ft_lenked_list(env, &val);
-	val.pos_path = 0;
+	ft_add_shlvl(&val);
 	g_exit_status = 0;
 	signal(SIGQUIT, SIG_IGN);
 	while (1337)
@@ -65,7 +65,7 @@ int	main(int ac, char **av, char **env)
 		init_parssing_data(&data, ac, av);
 		data.n_env = val.env;
 		data.error = 0;
-		parser(&data);
+		parser(&data, &val);
 		if (data.error == 0)
 			exuct(&data, &val);
 		else if (data.error == 1)

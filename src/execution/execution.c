@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 23:55:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 16:50:37 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 19:15:45 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int	sp_builtins(t_exec *val)
 		pwd(val);
 	else if (ft_strcmp(val->check, "env") == 0)
 		return (env(val), 3);
-	else if (!ft_strcmp("./minishell", val->tmp->full_cmd[val->i]))
-		return (ft_add_shlvl(val), 1);
 	else
 		return (1);
 	return (0);

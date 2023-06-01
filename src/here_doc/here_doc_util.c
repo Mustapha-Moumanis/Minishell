@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:25:19 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/29 15:00:40 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:34:24 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	exc_child_sig(int sig)
+{
+	(void)sig;
+	exit(99);
+}
 
 char	*parse_line(t_data *data, t_elem *elem, char *str)
 {

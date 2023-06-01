@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 07:19:55 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/31 21:02:44 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 18:18:05 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	pwd(t_exec *val)
 {
 	if (getcwd(val->cd_path, 1024))
 	{
+		val->pos_path = 0;
 		change_path(val, "PWD", val->cd_path);
 		ft_putendl_fd(val->cd_path, val->tmp->out_file);
 	}

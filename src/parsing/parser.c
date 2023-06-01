@@ -3,20 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:21:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/31 19:40:26 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/01 19:18:50 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	parser(t_data *data)
+void	ft_decremant_shlvl(t_exec *val)
+{
+	t_exprt	*tmp;
+	char	*str;
+	t_env	*env;
+	int		j;
+
+	tmp = val->export;
+	env = val->env;
+	while (tmp && env)
+	{
+		if (!ft_strcmp(tmp->name, "SHLVL"))
+		{
+			j = ft_atoi(tmp->value) - 1;
+			free(tmp->value);
+			str = ft_strdup(ft_itoa(j));
+			tmp->value = str;
+			env->value = str;
+			break ;
+		}
+		tmp = tmp->next;
+		env = env->next;
+	}
+	ft_double_free(val->n_env);
+	val->n_env = list_to_table_h(&val->env);
+}
+
+int	parser(t_data *data, t_exec *val)
 {
 	data->input = readline("minishell : ");
 	if (!data->input)
 	{
+		ft_decremant_shlvl(val);
 		rl_clear_history();
 		printf("exit\n");
 		exit(0);

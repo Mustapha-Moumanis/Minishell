@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:12:30 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 17:59:38 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/01 18:39:38 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	ft_error(char *str)
 	return (2);
 }
 
-void	exc_child_sig(int sig)
+void	excution_error(char *str)
 {
-	(void)sig;
-	exit(99);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": No such file or directory", 2);
 }
