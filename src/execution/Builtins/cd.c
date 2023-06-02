@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 15:38:58 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/02 20:12:45 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ int	parent_dir(t_exec *val)
 	return (cd_error("cannot access parent directories", s));
 }
 
+void	path(t_exec *val)
+{
+	val->pos_path = 0;
+	change_path(val, "OLDPWD", val->cd_path);
+	getcwd(val->last_path, 1024);
+	getcwd(val->old_path, 1024);
+	change_path(val, "PWD", val->last_path);
+}
+
 int	check_home(t_exec *val, char *str)
 {
 	char	*home;
@@ -57,18 +66,10 @@ int	check_home(t_exec *val, char *str)
 		}
 		if (chdir(home) == -1)
 			return (cd_error(home, NULL));
+		path(val);
 		return (3);
 	}
 	return (0);
-}
-
-void	path(t_exec *val)
-{
-	val->pos_path = 0;
-	change_path(val, "OLDPWD", val->cd_path);
-	getcwd(val->last_path, 1024);
-	getcwd(val->old_path, 1024);
-	change_path(val, "PWD", val->last_path);
 }
 
 int	cd(t_exec *val)

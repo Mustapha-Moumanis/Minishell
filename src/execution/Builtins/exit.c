@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:29:01 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 13:59:36 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/02 18:55:45 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ void	ft_erro_exit(char *str, char *arg)
 
 int	check_arg_exit(char	*str)
 {
+	int	nb;
 	int	i;
 
 	i = -1;
-	if (str[0] == '-')
+	nb = ft_atoi(str);
+	if (ft_strlen(str) > 2 && (nb == -1 || nb == 0))
+		return (0);
+	if (str[0] == '-' || str[0] == '+')
 		i++;
 	while (str[++i])
 	{
@@ -45,6 +49,8 @@ void	arg_exit(t_exec *val)
 	int		nb;
 
 	s = val->tmp->full_cmd[val->i];
+	if (!ft_strcmp(s, "-9223372036854775808"))
+		exit (0);
 	if (check_arg_exit(s))
 	{
 		if (val->tmp->full_cmd[val->i + 1])
