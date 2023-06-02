@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 18:24:13 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/02 15:38:58 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ int	check_home(t_exec *val, char *str)
 	char	*home;
 
 	home = get_path(val->env, "HOME");
-	printf("%s\n", home);
 	if (!str || !ft_strcmp(str, "~"))
 	{
+		if (!home)
+		{
+			ft_putendl_fd("cd: HOME not set", 2);
+			return (2);
+		}
 		if (chdir(home) == -1)
 			return (cd_error(home, NULL));
 		return (3);

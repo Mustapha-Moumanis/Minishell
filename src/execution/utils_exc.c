@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 19:17:24 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/02 15:47:32 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_add_shlvl(t_exec *val)
 		{
 			j = ft_atoi(tmp->value) + 1;
 			free(tmp->value);
-			str = ft_strdup(ft_itoa(j));
+			str = ft_itoa(j);
 			tmp->value = str;
 			env->value = str;
 			break ;

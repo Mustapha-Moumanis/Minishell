@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:21:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/01 22:00:21 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:48:49 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_decremant_shlvl(t_exec *val)
 		{
 			j = ft_atoi(tmp->value) - 1;
 			free(tmp->value);
-			str = ft_strdup(ft_itoa(j));
+			str = ft_itoa(j);
 			tmp->value = str;
 			env->value = str;
 			break ;
