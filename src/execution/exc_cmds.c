@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 17:59:44 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/02 16:52:13 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,11 @@ int	exc_comande(t_exec *val)
 		{
 			if (other_commands(val) != 2)
 			{
-				if (last_cmd(val) != 2)
-					return (0);
+				if (val->tmp->in_file != -1 && val->tmp->out_file != -1)
+				{
+					if (last_cmd(val) != 2)
+						return (0);
+				}
 			}
 		}
 		return (2);
