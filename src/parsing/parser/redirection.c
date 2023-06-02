@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:32:50 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/31 20:13:01 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:38:13 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	save_error(t_data *data, char *val, char *tmp, int nb)
 
 	if (nb == 1 && data->expanded == 1)
 	{
-		e1 = "Error : ambiguous redirect";
+		e1 = ft_strjoin(data->expnd, ": ambiguous redirect");
 		ft_lstadd_back(&data->save_error, ft_lstnew(ft_strdup(e1)));
 		data->expanded = 0;
 	}
 	else if (nb == 1 && data->expanded == 0)
 	{
-		e1 = ": No such file or directory";
+		e1 = ft_strdup(": No such file or directory");
 		ft_lstadd_back(&data->save_error, ft_lstnew(ft_strdup(e1)));
 	}
 	else
@@ -45,8 +45,8 @@ void	save_error(t_data *data, char *val, char *tmp, int nb)
 		e1 = ft_strjoin(tmp, strerror(errno));
 		free(tmp);
 		ft_lstadd_back(&data->save_error, ft_lstnew(ft_strdup(e1)));
-		free(e1);
 	}
+	free(e1);
 	data->file_error = 1;
 }
 
@@ -77,7 +77,7 @@ void	out_file(t_data *data, char *value)
 		if (value[0] == 0)
 		{
 			save_error(data, NULL, NULL, 1);
-			data->in = -1;
+			data->out = -1;
 		}
 		else
 		{
@@ -97,7 +97,7 @@ void	dout_file(t_data *data, char *value)
 		if (value[0] == 0)
 		{
 			save_error(data, NULL, NULL, 1);
-			data->in = -1;
+			data->out = -1;
 		}
 		else
 		{

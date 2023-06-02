@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/31 21:05:20 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:37:29 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*change_content(t_data *data)
 	return (str);
 }
 
-char	*collecting_cmd(t_data *data, t_elem **lex, char *str)
+char	*collecting_cmd(t_data *data, t_elem **lex, char *str, enum e_type t)
 {
 	char	*cmd;
 	char	*tmp;
@@ -30,6 +30,12 @@ char	*collecting_cmd(t_data *data, t_elem **lex, char *str)
 	skeap_space(lex);
 	while (*lex && !ft_whitespace((*lex)->type) && (*lex)->type != '|')
 	{
+		if (is_red(t) && (*lex)->type == ENV)
+		{
+			if (data->expnd)
+				free(data->expnd);
+			data->expnd = ft_strdup((*lex)->content);
+		}
 		cmd = parse_cmd(data, lex);
 		tmp = str;
 		str = ft_strjoin(tmp, cmd);
@@ -53,7 +59,7 @@ void	get_red(t_data *data, t_elem **lex, enum e_type type, char	*str)
 		her_doc(data, lex, 0);
 	else
 	{
-		str = collecting_cmd(data, lex, str);
+		str = collecting_cmd(data, lex, str, type);
 		if (data->file_error != 1)
 		{
 			if (type == REDIR_IN)
@@ -81,7 +87,7 @@ void	simple_cmd(t_data *data, t_elem **lex)
 			if (!str && !ft_whitespace((*lex)->type))
 				str = ft_strdup("");
 			if (!(ft_whitespace((*lex)->type) && (*lex)->state == GENERAL))
-				str = collecting_cmd(data, lex, str);
+				str = collecting_cmd(data, lex, str, -1);
 			if ((str && (!(*lex) || ft_whitespace((*lex)->type)))
 				|| (*lex)->type == '|')
 			{
