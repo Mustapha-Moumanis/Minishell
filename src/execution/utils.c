@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:56:13 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/01 18:00:02 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 20:35:19 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ void	wait_procces(int pid)
 	if (WEXITSTATUS(st))
 		g_exit_status = WEXITSTATUS(st);
 	if (WIFSIGNALED(st))
+	{
 		g_exit_status = st + 128;
-	if (g_exit_status == 131)
-		printf("Quit: 3\n");
+		if (g_exit_status == 131)
+			printf("Quit: 3\n");
+	}
 	while (wait(&st) > i)
 		i = 0;
 }

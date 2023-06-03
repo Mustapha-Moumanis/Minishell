@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 15:47:32 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 20:23:14 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,6 @@ void	dup_fd(t_exec *val)
 	ecx(val, get_path(val->env, "PATH"));
 }
 
-void	ft_add_shlvl(t_exec *val)
-{
-	t_exprt	*tmp;
-	char	*str;
-	t_env	*env;
-	int		j;
-
-	tmp = val->export;
-	env = val->env;
-	while (tmp && env)
-	{
-		if (!ft_strcmp(tmp->name, "SHLVL"))
-		{
-			j = ft_atoi(tmp->value) + 1;
-			free(tmp->value);
-			str = ft_itoa(j);
-			tmp->value = str;
-			env->value = str;
-			break ;
-		}
-		tmp = tmp->next;
-		env = env->next;
-	}
-	ft_double_free(val->n_env);
-	val->n_env = list_to_table_h(&val->env);
-}
 
 char	*get_path(t_env *env, char *str)
 {

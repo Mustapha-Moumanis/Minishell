@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 07:28:46 by shilal            #+#    #+#             */
-/*   Updated: 2023/05/29 13:50:49 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 20:35:36 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	env(t_exec *val)
 	}
 	else
 	{
-		ft_putstr_fd("cd : ", 2);
+		ft_putstr_fd("env : ", 2);
 		ft_putstr_fd(val->tmp->full_cmd[val->i], 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		g_exit_status = 1;
