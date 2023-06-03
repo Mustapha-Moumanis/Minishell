@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/28 20:39:26 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 23:04:42 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	lexer(t_data *d)
 	{
 		lexer_next_token(&lexer, &t);
 		state = change_state(state, t.type);
-		if (state == IN_QUOTE && t.type == ENV)
+		if (state == IN_QUOTE && (t.type == ENV || t.type == EXIT_STATUS))
 			t.type = WORD;
 		if ((state == IN_QUOTE && t.type == QOUTE)
 			|| (state == IN_DQUOTE && t.type == DQUOTE))

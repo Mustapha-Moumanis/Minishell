@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:59:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/02 16:37:29 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 23:05:53 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*collecting_cmd(t_data *data, t_elem **lex, char *str, enum e_type t)
 		tmp = str;
 		str = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if ((*lex)->type != ENV)
+		if ((*lex)->type != ENV && (*lex)->type != EXIT_STATUS)
 			free(cmd);
 		if (str && (*lex)->next && is_red((*lex)->next->type))
 			break ;

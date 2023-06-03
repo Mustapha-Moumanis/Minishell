@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:25:19 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/03 16:13:20 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 22:28:57 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,14 @@ char	*parse_line(t_data *data, t_elem *elem, char *str)
 	{
 		if (elem->type == WORD || elem->type == '\\')
 			cmd = parse_word(&elem);
-		else if (elem->type == ENV)
+		else if (elem->type == ENV || elem->type == EXIT_STATUS)
 			cmd = parse_env(data, &elem);
-		else if (elem->type == EXIT_STATUS)
-			cmd = ft_itoa(g_exit_status);
 		else
 			cmd = ft_strdup(elem->content);
 		tmp = str;
 		str = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (cmd && elem->type != ENV)
+		if (cmd && elem->type != ENV && elem->type != EXIT_STATUS)
 			free(cmd);
 		cmd = NULL;
 		elem = elem->next;
@@ -56,6 +54,8 @@ char	*update_line(t_data *last_data, char *str)
 	{
 		if (tmp->type == WORD && tmp->content[0] == '$')
 			tmp->type = ENV;
+		if (!ft_strcmp(tmp->content, "$?"))
+			tmp->type = EXIT_STATUS;
 		tmp = tmp->next;
 	}
 	line = parse_line(&data, data.elem, ft_strdup(""));
@@ -114,7 +114,7 @@ char	*get_delimiter(t_elem **lex, char *tmp, char *tmp2, int *is)
 			free(tmp2);
 			*is = 1;
 		}
-		else if ((*lex)->type == '$' && check_advence(lex))
+		else if ((*lex)->type == '$' && (*lex)->next && check_advence(lex))
 			str = ft_strjoin(tmp, "");
 		else
 			str = ft_strjoin(tmp, (*lex)->content);

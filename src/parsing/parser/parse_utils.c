@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 10:51:44 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/31 19:56:17 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 23:05:40 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type)
 			(*lex) = (*lex)->next;
 		else if ((*lex)->type != type)
 		{
-			if ((*lex)->type == ENV)
+			if ((*lex)->type == ENV || (*lex)->type == EXIT_STATUS)
 				parse_env(data, lex);
 			tmp = s;
 			s = ft_strjoin(tmp, (*lex)->content);
@@ -63,19 +63,23 @@ char	*parse_env(t_data *data, t_elem **lex)
 	tmp = (*lex)->content;
 	env = data->n_env;
 	data->expanded = 1;
-	while (env)
+	if ((*lex)->type == EXIT_STATUS)
+		(*lex)->content = ft_itoa(g_exit_status);
+	else
 	{
-		if (!ft_strcmp(tmp + 1, env->name))
+		while (env)
 		{
-			(*lex)->content = ft_strdup(env->value);
-			break ;
+			if (!ft_strcmp(tmp + 1, env->name))
+			{
+				(*lex)->content = ft_strdup(env->value);
+				break ;
+			}
+			env = env->next;
 		}
-		env = env->next;
+		if (!env)
+			(*lex)->content = ft_strdup("");
 	}
-	if (!env)
-		(*lex)->content = ft_strdup("");
-	free(tmp);
-	return ((*lex)->content);
+	return (free(tmp), (*lex)->content);
 }
 
 char	*parse_cmd(t_data *data, t_elem **lex)
@@ -89,10 +93,8 @@ char	*parse_cmd(t_data *data, t_elem **lex)
 			cmd = parse_word(lex);
 		else if ((*lex)->type == DQUOTE || (*lex)->type == QOUTE)
 			cmd = parse_qoute(data, lex, (*lex)->type);
-		else if ((*lex)->type == ENV)
+		else if ((*lex)->type == ENV || (*lex)->type == EXIT_STATUS)
 			cmd = parse_env(data, lex);
-		else if ((*lex)->type == EXIT_STATUS)
-			cmd = ft_itoa(g_exit_status);
 	}
 	return (cmd);
 }
