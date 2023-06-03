@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 23:55:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 19:18:08 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 02:52:08 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,19 @@ int	init_pipes(int size, int **pe)
 
 int	sp_builtins(t_exec *val)
 {
-	char	*str;
-
 	if (!val->tmp->full_cmd[0])
 		return (2);
-	str = ft_strdup(val->tmp->full_cmd[0]);
-	val->check = str;
+	val->check = ft_strdup(val->tmp->full_cmd[0]);
 	str_lowercase(val->check);
 	if (ft_strcmp(val->check, "echo") == 0)
-		return (echo(val), free(str), 3);
+		return (echo(val), free(val->check), 3);
 	else if (ft_strcmp(val->check, "pwd") == 0)
 		pwd(val);
 	else if (ft_strcmp(val->check, "env") == 0)
-		return (env(val), free(str), 3);
+		return (env(val), free(val->check), 3);
 	else
-		return (free(str), 1);
+		return (free(val->check), 1);
+	free(val->check);
 	return (0);
 }
 
