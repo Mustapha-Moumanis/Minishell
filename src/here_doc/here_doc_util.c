@@ -6,17 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:25:19 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/01 21:59:56 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:13:20 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	exc_child_sig(int sig)
-{
-	(void)sig;
-	exit(99);
-}
 
 char	*parse_line(t_data *data, t_elem *elem, char *str)
 {
@@ -96,11 +90,17 @@ char	*get_qoute_delimiter(t_elem **lex, enum e_type type)
 	return (s);
 }
 
-char	*get_delimiter(t_elem **lex, int *is)
+int	check_advence(t_elem **lex)
+{
+	enum e_type	type;
+
+	type = (*lex)->next->type;
+	return ((*lex)->next && (type == DQUOTE || type == QOUTE));
+}
+
+char	*get_delimiter(t_elem **lex, char *tmp, char *tmp2, int *is)
 {
 	char	*str;
-	char	*tmp;
-	char	*tmp2;
 
 	skeap_space(lex);
 	str = ft_strdup("");
@@ -114,6 +114,8 @@ char	*get_delimiter(t_elem **lex, int *is)
 			free(tmp2);
 			*is = 1;
 		}
+		else if ((*lex)->type == '$' && check_advence(lex))
+			str = ft_strjoin(tmp, "");
 		else
 			str = ft_strjoin(tmp, (*lex)->content);
 		free(tmp);

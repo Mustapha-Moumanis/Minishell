@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:47:06 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/31 23:16:19 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:07:56 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	child_event(t_data *data, char *value, int is)
 		str = get_next_line(1);
 		if (!str)
 			exit (1);
-		if (str && str[0] != '\n')
+		else
 			if (append_line(data, str, value, is))
 				break ;
 		free(str);
@@ -99,7 +99,7 @@ int	her_doc(t_data *data, t_elem **lex, int var)
 
 	is = 0;
 	fd = data->in;
-	value = get_delimiter(lex, &is);
+	value = get_delimiter(lex, NULL, NULL, &is);
 	path = get_file(data);
 	var = fork();
 	if (var == -1)

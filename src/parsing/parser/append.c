@@ -6,11 +6,17 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:04:49 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/31 16:42:23 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:04:23 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+void	exc_child_sig(int sig)
+{
+	(void)sig;
+	exit(99);
+}
 
 char	**to_table(t_list **lst)
 {

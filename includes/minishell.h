@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 16:36:12 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:07:25 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,10 @@ void	dout_file(t_data *data, char *value);
 
 // HERE DOC
 
-char	*get_delimiter(t_elem **lex, int *is);
 char	*update_line(t_data *last_data, char *str);
 int		her_doc(t_data *data, t_elem **lex, int var);
 char	*get_qoute_delimiter(t_elem **lex, enum e_type type);
+char	*get_delimiter(t_elem **lex, char *tmp, char *tmp2, int *is);
 
 // more function
 
