@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/03 20:37:48 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 23:23:31 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <sys/types.h>
+# include <dirent.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdlib.h>
@@ -213,11 +215,11 @@ int		sp_builtins(t_exec *val);
 int		builtins(t_exec *val);
 
 // UTILS EXECUTION :
+int		init_pipes(int size, int **pe, t_exec *val);
 void	ft_lenked_list(char **env, t_exec *val);
 void	ft_free_pipes(int **pipe, int size);
 char	*my_strjoin_(char *s1, char *s2);
 char	*get_path(t_env *env, char *str);
-int		init_pipes(int size, int **pe);
 char	**list_to_table_h(t_env **lst);
 int		ft_strcmp(char *s1, char *s2);
 void	ft_add_shlvl(t_exec *val);
@@ -259,10 +261,10 @@ char	*value(char *str);
 char	*name(char *str);
 
 // error :
+int		ft_error(char *str, t_exec *val);
 int		cd_error(char *obt, char *s);
 void	excution_error(char *str);
 int		export_error(char *str);
 int		unset_error(char *str);
-int		ft_error(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:26 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 16:52:13 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 22:35:46 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	one_cmd(t_exec *val)
 		signal(SIGINT, SIG_IGN);
 		val->fork = fork();
 		if (val->fork == -1)
-			return (ft_error("fork fail\n"));
+			return (ft_error("fork fail\n", val));
 		else if (val->fork == 0)
 		{
 			signal(SIGINT, SIG_DFL);
@@ -49,7 +49,7 @@ int	first_cmd(t_exec *val)
 	{
 		val->fork = fork();
 		if (val->fork == -1)
-			return (ft_error("fork fail\n"));
+			return (ft_error("fork fail\n", val));
 		else if (val->fork == 0)
 		{
 			dup2(val->tmp->in_file, 0);
@@ -73,7 +73,7 @@ int	last_cmd(t_exec *val)
 		signal(SIGINT, SIG_IGN);
 		val->fork = fork();
 		if (val->fork == -1)
-			return (ft_error("fork fail\n"));
+			return (ft_error("fork fail\n", val));
 		if (val->fork == 0 && val->tmp->full_cmd[0])
 		{
 			signal(SIGINT, SIG_DFL);
@@ -107,7 +107,7 @@ int	other_commands(t_exec *val)
 		{
 			val->fork = fork();
 			if (val->fork == -1)
-				return (ft_error("fork fail\n"));
+				return (ft_error("fork fail\n", val));
 			else if (val->fork == 0)
 				dup_fd(val);
 		}
@@ -127,7 +127,7 @@ int	exc_comande(t_exec *val)
 	if (!val->pe)
 		return (free(val->pe), 2);
 	val->n_p = 0;
-	if (init_pipes(val->size - 1, val->pe) == 2)
+	if (init_pipes(val->size - 1, val->pe, val) == 2)
 		return (free(val->pe), 2);
 	else
 	{

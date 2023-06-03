@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:29:01 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 18:55:45 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 21:44:12 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,21 @@ int	check_arg_exit(char	*str)
 	return (1);
 }
 
-void	arg_exit(t_exec *val)
+int	arg_exit(t_exec *val)
 {
 	char	*s;
 	int		nb;
 
 	s = val->tmp->full_cmd[val->i];
-	if (!ft_strcmp(s, "-9223372036854775808"))
-		exit (0);
 	if (check_arg_exit(s))
 	{
 		if (val->tmp->full_cmd[val->i + 1])
 			ft_erro_exit("too many arguments", "");
 		else
 		{
+			decrement_path(val);
+			if (!ft_strcmp(s, "-9223372036854775808"))
+				exit (0);
 			nb = ft_atoi(s);
 			if (nb >= 0 && nb <= 255)
 				exit(nb);
@@ -65,21 +66,29 @@ void	arg_exit(t_exec *val)
 		}
 	}
 	else
-	{
-		ft_erro_exit("numeric argument required", s);
-		exit(255);
-	}
+		return (1);
+	return (0);
 }
 
 void	ft_exit(t_exec *val)
 {
+	char	*s;
+
 	val->i++;
+	s = val->tmp->full_cmd[val->i];
 	if (val->size == 1 && val->tmp->in_file >= 0)
 	{
 		ft_putendl_fd("exit", val->tmp->out_file);
-		if (!val->tmp->full_cmd[val->i])
+		if (!s)
 			exit(g_exit_status);
 		else
-			arg_exit(val);
+		{
+			if (arg_exit(val) == 1)
+			{
+				ft_erro_exit("numeric argument required", s);
+				decrement_path(val);
+				exit(255);
+			}
+		}
 	}
 }

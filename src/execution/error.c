@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:12:30 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 23:33:14 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 22:37:08 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,17 @@ int	cd_error(char *obt, char *s)
 	return (2);
 }
 
-int	ft_error(char *str)
+int	ft_error(char *str, t_exec *val)
 {
 	ft_putendl_fd("Error", 2);
 	ft_putstr_fd(str, 2);
 	g_exit_status = 1;
 	if (!ft_strcmp("fork fail\n", str) || !ft_strcmp("pipe fail\n", str))
+	{
+		if (val)
+			decrement_path(val);
 		exit(g_exit_status);
+	}
 	return (2);
 }
 

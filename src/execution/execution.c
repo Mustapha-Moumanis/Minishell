@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 23:55:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/03 20:36:56 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 22:37:29 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_free_pipes(int **pipe, int size)
 	free(pipe);
 }
 
-int	init_pipes(int size, int **pe)
+int	init_pipes(int size, int **pe, t_exec *val)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ int	init_pipes(int size, int **pe)
 		{
 			while (--i >= 0)
 				free(pe[i]);
-			return (ft_error("malloc fail\n"));
+			return (ft_error("malloc fail\n", val));
 		}
 		i++;
 	}
@@ -44,7 +44,7 @@ int	init_pipes(int size, int **pe)
 	while (i < size)
 	{
 		if (pipe(pe[i]) == -1)
-			return (ft_error("pipe fail\n"));
+			return (ft_error("pipe fail\n", val));
 		i++;
 	}
 	return (0);

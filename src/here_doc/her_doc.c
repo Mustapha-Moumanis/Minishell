@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   her_doc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:47:06 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/03 16:07:56 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/03 23:24:08 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	her_doc(t_data *data, t_elem **lex, int var)
 	path = get_file(data);
 	var = fork();
 	if (var == -1)
-		return (ft_error("fork fail\n"));
+		return (ft_error("fork fail\n", NULL));
 	if (var == 0)
 		child_event(data, value, is);
 	wait(&var);

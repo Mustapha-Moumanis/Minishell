@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/03 20:23:14 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/03 22:24:15 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ void	dup_fd(t_exec *val)
 	ecx(val, get_path(val->env, "PATH"));
 }
 
+void	check_if_dir(t_exec *val)
+{
+	DIR	*s;
+
+	s = opendir(val->tmp->full_cmd[val->i]);
+	if (s)
+	{
+		ft_putstr_fd(val->tmp->full_cmd[val->i], 2);
+		ft_putendl_fd(": is a directory", 2);
+		exit (126);
+	}
+}
 
 char	*get_path(t_env *env, char *str)
 {
@@ -91,6 +103,7 @@ void	ecx(t_exec *val, char *path)
 		if (!str)
 			exit (127);
 	}
+	check_if_dir(val);
 	execve(str, val->tmp->full_cmd, val->n_env);
 	ft_putendl_fd(strerror(errno), 2);
 	exit(128);
