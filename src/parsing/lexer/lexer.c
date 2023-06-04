@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:25 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/03 23:04:42 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:31:12 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ enum e_state	change_state(enum e_state state, enum e_type type)
 {
 	if (state == GENERAL)
 	{
-		if (type == QOUTE)
+		if (type == QUOTE)
 			state = IN_QUOTE;
 		else if (type == DQUOTE)
 			state = IN_DQUOTE;
 	}
-	else if (state == IN_QUOTE && type == QOUTE)
+	else if (state == IN_QUOTE && type == QUOTE)
 		state = GENERAL;
 	else if (state == IN_DQUOTE && type == DQUOTE)
 		state = GENERAL;
@@ -81,7 +81,7 @@ void	lexer(t_data *d)
 		state = change_state(state, t.type);
 		if (state == IN_QUOTE && (t.type == ENV || t.type == EXIT_STATUS))
 			t.type = WORD;
-		if ((state == IN_QUOTE && t.type == QOUTE)
+		if ((state == IN_QUOTE && t.type == QUOTE)
 			|| (state == IN_DQUOTE && t.type == DQUOTE))
 			addback_elem(&d->elem, new_elem(t.value, t.type, GENERAL));
 		else

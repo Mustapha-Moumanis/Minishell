@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 05:43:09 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/05/27 17:35:32 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:30:24 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	check_quote(t_data *data, t_elem **t)
 		skeap_space(t);
 		if ((*t))
 		{
-			if ((*t)->state == GENERAL && (*t)->type == QOUTE)
+			if ((*t)->state == GENERAL && (*t)->type == QUOTE)
 				q++;
 			else if ((*t)->state == GENERAL && (*t)->type == DQUOTE)
 				dq++;

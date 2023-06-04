@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:25:19 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/03 22:28:57 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:30:24 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*update_line(t_data *last_data, char *str)
 	return (line);
 }
 
-char	*get_qoute_delimiter(t_elem **lex, enum e_type type)
+char	*get_quote_delimiter(t_elem **lex, enum e_type type)
 {
 	char	*s;
 	char	*tmp;
@@ -95,7 +95,7 @@ int	check_advence(t_elem **lex)
 	enum e_type	type;
 
 	type = (*lex)->next->type;
-	return ((*lex)->next && (type == DQUOTE || type == QOUTE));
+	return ((*lex)->next && (type == DQUOTE || type == QUOTE));
 }
 
 char	*get_delimiter(t_elem **lex, char *tmp, char *tmp2, int *is)
@@ -107,9 +107,9 @@ char	*get_delimiter(t_elem **lex, char *tmp, char *tmp2, int *is)
 	while (*lex && !ft_whitespace((*lex)->type) && (*lex)->type != '|')
 	{
 		tmp = str;
-		if ((*lex)->type == DQUOTE || (*lex)->type == QOUTE)
+		if ((*lex)->type == DQUOTE || (*lex)->type == QUOTE)
 		{
-			tmp2 = get_qoute_delimiter(lex, (*lex)->type);
+			tmp2 = get_quote_delimiter(lex, (*lex)->type);
 			str = ft_strjoin(tmp, tmp2);
 			free(tmp2);
 			*is = 1;

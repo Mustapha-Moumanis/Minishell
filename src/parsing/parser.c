@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:21:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/03 16:05:01 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:28:53 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ void	ft_decremant_shlvl(t_exec *val)
 	val->n_env = list_to_table_h(&val->env);
 }
 
+void	let_change(t_data *data)
+{
+	t_elem	*tmp;
+
+	tmp = data->elem;
+	while (tmp)
+	{
+		if (tmp->next && tmp->state != GENERAL && tmp->type == '$'
+			&& (tmp->next->type == DQUOTE || tmp->next->type == QUOTE))
+			tmp->type = WORD;
+		tmp = tmp->next;
+	}
+}
+
 int	parser(t_data *data, t_exec *val)
 {
 	data->input = readline("minishell : ");
@@ -52,6 +66,7 @@ int	parser(t_data *data, t_exec *val)
 	if (ft_strlen(data->input) > 0)
 		add_history(data->input);
 	lexer(data);
+	let_change(data);
 	syntax_errors(data, data->elem);
 	if (data->error == 0)
 		parsing(data, data->elem);

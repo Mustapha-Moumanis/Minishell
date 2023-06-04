@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 00:52:47 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/03 23:23:31 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/04 14:31:12 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ enum e_type
 	WORD = -1,
 	WHITE_SPACE = ' ',
 	NEW_LINE = '\n',
-	QOUTE = '\'',
+	QUOTE = '\'',
 	DQUOTE = '\"',
 	ESCAPE = '\\',
 	ENV = '$',
@@ -146,7 +146,7 @@ char	*parse_word(t_elem **lex);
 int		parsing(t_data *data, t_elem *lex);
 char	*parse_env(t_data *data, t_elem **lex);
 char	*parse_cmd(t_data *data, t_elem **lex);
-char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type);
+char	*parse_quote(t_data *data, t_elem **lex, enum e_type type);
 
 int		parser(t_data *data, t_exec *val);
 void	append_exution_struct(t_data *data);
@@ -160,7 +160,7 @@ void	dout_file(t_data *data, char *value);
 
 char	*update_line(t_data *last_data, char *str);
 int		her_doc(t_data *data, t_elem **lex, int var);
-char	*get_qoute_delimiter(t_elem **lex, enum e_type type);
+char	*get_quote_delimiter(t_elem **lex, enum e_type type);
 char	*get_delimiter(t_elem **lex, char *tmp, char *tmp2, int *is);
 
 // more function

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 10:51:44 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/03 23:05:40 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:30:24 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	skeap_space(t_elem **t)
 		(*t) = (*t)->next;
 }
 
-char	*parse_qoute(t_data *data, t_elem **lex, enum e_type type)
+char	*parse_quote(t_data *data, t_elem **lex, enum e_type type)
 {
 	char	*s;
 	char	*tmp;
@@ -91,8 +91,8 @@ char	*parse_cmd(t_data *data, t_elem **lex)
 	{
 		if ((*lex)->type == WORD || (*lex)->type == ESCAPE)
 			cmd = parse_word(lex);
-		else if ((*lex)->type == DQUOTE || (*lex)->type == QOUTE)
-			cmd = parse_qoute(data, lex, (*lex)->type);
+		else if ((*lex)->type == DQUOTE || (*lex)->type == QUOTE)
+			cmd = parse_quote(data, lex, (*lex)->type);
 		else if ((*lex)->type == ENV || (*lex)->type == EXIT_STATUS)
 			cmd = parse_env(data, lex);
 	}
