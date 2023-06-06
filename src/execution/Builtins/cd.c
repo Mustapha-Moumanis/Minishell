@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:42:51 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/02 20:12:45 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/04 18:24:01 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	check_home(t_exec *val, char *str)
 	char	*home;
 
 	home = get_path(val->env, "HOME");
+	getcwd(val->cd_path, 1024);
 	if (!str || !ft_strcmp(str, "~"))
 	{
 		if (!home)

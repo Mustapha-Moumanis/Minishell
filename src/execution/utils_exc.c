@@ -6,7 +6,7 @@
 /*   By: shilal <shilal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 08:32:59 by shilal            #+#    #+#             */
-/*   Updated: 2023/06/03 22:24:15 by shilal           ###   ########.fr       */
+/*   Updated: 2023/06/04 20:07:33 by shilal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	check_if_dir(t_exec *val)
 	{
 		ft_putstr_fd(val->tmp->full_cmd[val->i], 2);
 		ft_putendl_fd(": is a directory", 2);
+		closedir(s);
 		exit (126);
 	}
 }

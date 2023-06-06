@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:21:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/06/04 14:28:53 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:50:45 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	let_change(t_data *data)
 	tmp = data->elem;
 	while (tmp)
 	{
-		if (tmp->next && tmp->state != GENERAL && tmp->type == '$'
+		if (tmp->next && tmp->state != GENERAL && !ft_strcmp(tmp->content, "$")
 			&& (tmp->next->type == DQUOTE || tmp->next->type == QUOTE))
 			tmp->type = WORD;
 		tmp = tmp->next;
