@@ -22,12 +22,14 @@ The **lexer**, also known as **tokenization**, is responsible for converting a s
 Let's explore how we can achieve this :
 - we create to store our lexer.
 1 - The code you provided defines a structure named s_lexer, which is used to store information about the input line and keep track of the last position accessed when working with the lexer.
-`typedef struct s_lexer
+`
+typedef struct s_lexer
 {
 	char	*input;
 	int		len;
 	int		position;
-}			t_lexer;`
+}			t_lexer;
+`
 **input**: which is used to store the input line. It points to the first character of the input.
 **len**: It holds the total number of characters in the input.
 **position**: This integer that indicates the current position in the input line. It stores the index of the last character accessed.
