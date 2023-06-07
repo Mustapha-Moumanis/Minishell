@@ -103,8 +103,7 @@ echo "$USER" $$'$PATH' > file | cat  << limiter > file | cat < file >> out_file
 Using the lexer, you can initialize this linked list by parsing the input and extracting relevant information to populate the list. The lexer breaks down the input into tokens, allowing you to identify different components of the command, such as input/output files and the full command itself.
 > Command list
 
-![parsing_part](./pic/parsing_part.png)
-![parsing_part](https://github.com/Mustapha-Moumanis/minishell_md/assets/86886160/028f0659-a762-45ef-a26b-a4d597245824)
+![cmd_list](./pic/cmd_list.png)
 
 * Command struct
 
@@ -124,9 +123,9 @@ typedef struct s_cmd
 
 > Example :
 
-![example](https://github.com/Mustapha-Moumanis/minishell_md/assets/86886160/7a2f303f-9ddd-4fbf-9b0c-2cbd1ba694a1)
+![example](./pic/example.png)
 
 ## Execution :
 
-![comming_soon](https://github.com/Mustapha-Moumanis/minishell_md/assets/86886160/05215d54-5226-498b-ab47-32bb2f137b30)
+![comming_soon](./pic/example.png)
 
