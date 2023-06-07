@@ -85,7 +85,8 @@ enum e_state
 ```shell
 echo "$USER" $$'$PATH' > file | cat  << limiter > file | cat < file >> out_file
 ```
-![lexer_exemple](https://github.com/Mustapha-Moumanis/minishell/assets/86886160/f8ed4ef1-8668-4125-ab53-e6545e6f5c36)
+![lexer_exemple](./pic/lexer_exemple.png)
+
 ## Syntax errors :
 1. redirection followed by pipe <br>
 	`< |`, `> |`, `>> |`, `<< |`, and this one `| |` pipe afte pipe <br>
@@ -102,6 +103,7 @@ echo "$USER" $$'$PATH' > file | cat  << limiter > file | cat < file >> out_file
 Using the lexer, you can initialize this linked list by parsing the input and extracting relevant information to populate the list. The lexer breaks down the input into tokens, allowing you to identify different components of the command, such as input/output files and the full command itself.
 > Command list
 
+![parsing_part](./pic/parsing_part.png)
 ![parsing_part](https://github.com/Mustapha-Moumanis/minishell_md/assets/86886160/028f0659-a762-45ef-a26b-a4d597245824)
 
 * Command struct
