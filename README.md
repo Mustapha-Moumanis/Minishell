@@ -73,5 +73,18 @@ typedef struct s_elem
 };
 ```
 **state**: we choose to add this information, the content state, if it's inside/outside (double/single) quotes.
-
+```
+enum e_state
+{
+	IN_DQUOTE,
+	IN_QUOTE,
+	GENERAL
+};
+```
+## Example :
+|content|col2|col3|
+|-------|----|----|
+|row	|    |    |
+|row2	|    |    |
+|row3	|    |    |
 
