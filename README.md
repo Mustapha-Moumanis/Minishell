@@ -81,17 +81,20 @@ enum e_state
 	GENERAL
 };
 ```
-## Example :
-|content|type|state|
-|-------|----|----|
-|'echo'|WORD|GENERAL|
-|' '|WHITE_SPACE|GENERAL|
-|'"'|DQUOTE|GENERAL|
-|'$USER'|ENV|IN_DQUOTE|
-|'"'|DQUOTE|GENERAL|
-|'|'|PIPE_LINE|GENERAL|
-|'''|DQUOTE|GENERAL|
-|'$PATH'|WORD|IN_QUOTE|
-|'''|DQUOTE|GENERAL|
-|\|\||OR|GENERAL|
+## Example of how a line is tokenized :
+```
+echo "$USER" $$'$PATH' > file | cat  << limiter > file | cat < file >> out_file
+```
+![lexer_exemple](https://github.com/Mustapha-Moumanis/minishell/assets/86886160/f8ed4ef1-8668-4125-ab53-e6545e6f5c36)
+## Syntax errors :
+1 redirection followed by pipe
+	`< |`, `> |`, `>> |`, `<< |`, and this one `| |` pipe afte pipe
+	`syntax error near unexpected token \`|'`
+2 redirection following another redirection
+	`echo < >>`, `echo > >>`, `echo >> >>`, `echo << >>`
+	`syntax error near unexpected token \`>>'`
+	msg : depends on the 2nd redirection token
+3 redirection without any string afterwards
+	`echo <` , `echo >`, `echo >>` , `echo <<`, `echo |`
+	`syntax error near unexpected token newline'`
 
