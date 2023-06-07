@@ -1,4 +1,4 @@
-![minishell part](https://github.com/Mustapha-Moumanis/minishell/assets/86886160/e634f444-b03b-43a5-958e-e1250c742512)
+![minishell part](https://github.com/Mustapha-Moumanis/minishell/pic/minishell_part)
 # Project Summary :
 This project offers a step-by-step guide to creating your own bash shell, providing valuable insights and information based on our experience. Get ready to embark on the journey of building your very own simple shell.
 ## Installation :
