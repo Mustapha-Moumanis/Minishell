@@ -82,9 +82,9 @@ enum e_state
 };
 ```
 ## Example :
-|content|col2|col3|
+|content|type|state|
 |-------|----|----|
-|row	|    |    |
-|row2	|    |    |
-|row3	|    |    |
+|'echo'|WORD|GENERAL|
+|' '|WHITE_SPACE|GENERAL|
+|'"'|DQUOTE|GENERAL|
 
