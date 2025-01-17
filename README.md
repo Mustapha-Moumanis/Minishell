@@ -125,7 +125,3 @@ typedef struct s_cmd
 
 ![example](./pic/example.png)
 
-## Execution :
-
-![comming_soon](./pic/coming_soon.gif)
-
