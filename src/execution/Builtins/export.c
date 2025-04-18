@@ -97,10 +97,7 @@ int	export_(t_exec *val)
 
 void	export(t_exec *val)
 {
-	int		j;
-
 	val->i++;
-	j = -1;
 	if (!val->tmp->full_cmd[val->i])
 		print_export(val);
 	if (val->size == 1 && val->tmp->in_file >= 0)

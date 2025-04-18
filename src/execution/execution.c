@@ -103,14 +103,14 @@ void	exuct(t_data *data, t_exec *val)
 	if (val->size == 1)
 	{
 		if (val->tmp->in_file == -1 || val->tmp->out_file == -1)
-			g_exit_status = 1;
+			MY_EXIT_STATUS = 1;
 		else if (one_cmd(val) == 2)
-			g_exit_status = 1;
+			MY_EXIT_STATUS = 1;
 	}
 	else
 	{
 		if (exc_comande(val) == 2)
-			g_exit_status = 1;
+			MY_EXIT_STATUS = 1;
 		ft_free_pipes(val->pe, val->size - 1);
 	}
 }

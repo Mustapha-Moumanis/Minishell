@@ -58,5 +58,5 @@ void	echo(t_exec *val)
 	}
 	else
 		ft_putstr_fd("\n", val->tmp->out_file);
-	g_exit_status = 0;
+	MY_EXIT_STATUS = 0;
 }

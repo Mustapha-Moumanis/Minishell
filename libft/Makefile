@@ -27,8 +27,8 @@ $(NAME): $(OBJS) $(BOBJS)
 	@ranlib $(NAME)
 
 %.o: %.c
-	@printf "cc -Wall -Wextra -Werror -c %s -o %s\r" $< $@
-	@cc -Wall -Wextra -Werror -c $< -o $@
+	@printf "gcc -Wall -Wextra -Werror -c %s -o %s\r" $< $@
+	@gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:
 	@rm -f $(OBJS) $(BOBJS)

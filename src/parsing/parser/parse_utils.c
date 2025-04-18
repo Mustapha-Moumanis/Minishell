@@ -64,7 +64,7 @@ char	*parse_env(t_data *data, t_elem **lex)
 	env = data->n_env;
 	data->expanded = 1;
 	if ((*lex)->type == EXIT_STATUS)
-		(*lex)->content = ft_itoa(g_exit_status);
+		(*lex)->content = ft_itoa(MY_EXIT_STATUS);
 	else
 	{
 		while (env)

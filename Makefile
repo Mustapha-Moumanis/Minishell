@@ -18,16 +18,16 @@ BUILTINS := $(addprefix src/execution/Builtins/, $(BUILTINS))
 
 RM = rm -f
 
-CC = cc
+CC = gcc -Wall -Wextra -Werror
 
-CFLAGS = -Wall -Wextra -Werror -lreadline -I  $(HOME)/.brew/Cellar/readline/8.2.1/include \
-								-L $(HOME)/.brew/Cellar/readline/8.2.1/lib \
-
+READLINE_FLAGS = -I $(HOME)/.brew/Cellar/readline/8.2.13/include \
+                 -L $(HOME)/.brew/Cellar/readline/8.2.13/lib \
+                 -lreadline
 all: $(NAME)
 
 $(NAME) : $(SRCS) $(PFILES) $(EFILES) $(BUILTINS)
 	@make -C libft
-	@$(CC) $(CFLAGS) libft/libft.a $(SRCS) $(PFILES) $(EFILES) $(BUILTINS) -o $(NAME)
+	@$(CC) $(SRCS) $(PFILES) $(EFILES) $(BUILTINS) libft/libft.a $(READLINE_FLAGS) -o $(NAME)
 	@echo "Minishell is ready ✅"
 
 clean:

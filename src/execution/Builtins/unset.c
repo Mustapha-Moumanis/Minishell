@@ -121,7 +121,7 @@ void	unset(t_exec *val)
 		while (val->tmp->full_cmd[val->i])
 		{
 			if (!unset_iscorect(val, val->tmp->full_cmd[val->i]))
-				g_exit_status = 1;
+				MY_EXIT_STATUS = 1;
 			else
 			{
 				str = val->tmp->full_cmd[val->i];

@@ -39,11 +39,11 @@ void	wait_procces(int pid)
 	i = 0;
 	waitpid(pid, &st, 0);
 	if (WEXITSTATUS(st))
-		g_exit_status = WEXITSTATUS(st);
+		MY_EXIT_STATUS = WEXITSTATUS(st);
 	if (WIFSIGNALED(st))
 	{
-		g_exit_status = st + 128;
-		if (g_exit_status == 131)
+		MY_EXIT_STATUS = st + 128;
+		if (MY_EXIT_STATUS == 131)
 			printf("Quit: 3\n");
 	}
 	while (wait(&st) > i)

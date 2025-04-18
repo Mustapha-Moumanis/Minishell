@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+int			g_exit_status = 0;
+
 void	ft_add_shlvl(t_exec *val)
 {
 	t_exprt	*tmp;

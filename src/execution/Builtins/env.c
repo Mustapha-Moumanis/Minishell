@@ -27,13 +27,13 @@ void	env(t_exec *val)
 			ft_putendl_fd(tm->value, val->tmp->out_file);
 			tm = tm->next;
 		}
-		g_exit_status = 0;
+		MY_EXIT_STATUS = 0;
 	}
 	else
 	{
 		ft_putstr_fd("env : ", 2);
 		ft_putstr_fd(val->tmp->full_cmd[val->i], 2);
 		ft_putendl_fd(": No such file or directory", 2);
-		g_exit_status = 1;
+		MY_EXIT_STATUS = 1;
 	}
 }

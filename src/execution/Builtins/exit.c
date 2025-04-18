@@ -21,7 +21,7 @@ void	ft_erro_exit(char *str, char *arg)
 		ft_putstr_fd(": ", 2);
 	}
 	ft_putendl_fd(str, 2);
-	g_exit_status = 1;
+	MY_EXIT_STATUS = 1;
 }
 
 int	check_arg_exit(char	*str)
@@ -80,7 +80,7 @@ void	ft_exit(t_exec *val)
 	{
 		ft_putendl_fd("exit", val->tmp->out_file);
 		if (!s)
-			exit(g_exit_status);
+			exit(MY_EXIT_STATUS);
 		else
 		{
 			if (arg_exit(val) == 1)

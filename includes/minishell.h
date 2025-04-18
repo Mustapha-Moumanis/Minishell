@@ -102,7 +102,12 @@ typedef struct s_data
 	struct s_env	*n_env;
 }			t_data;
 
-int			g_exit_status;
+#ifndef GLOBALS_H
+#define GLOBALS_H
+
+extern int MY_EXIT_STATUS;
+
+#endif
 
 // Data for execution part :
 

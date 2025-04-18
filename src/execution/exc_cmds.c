@@ -34,7 +34,7 @@ int	one_cmd(t_exec *val)
 		wait_procces(val->fork);
 	}
 	if (val->j == 0)
-		g_exit_status = 0;
+		MY_EXIT_STATUS = 0;
 	return (val->j);
 }
 
@@ -88,9 +88,9 @@ int	last_cmd(t_exec *val)
 	}
 	wait_procces(val->fork);
 	if (val->j == 0)
-		g_exit_status = 0;
+		MY_EXIT_STATUS = 0;
 	if (val->tmp->in_file == -1 || val->tmp->out_file == -1)
-		g_exit_status = 1;
+		MY_EXIT_STATUS = 1;
 	return (close(val->pe[val->n_p][0]), 0);
 }
 
@@ -112,7 +112,7 @@ int	other_commands(t_exec *val)
 				dup_fd(val);
 		}
 		else if (j == 0)
-			g_exit_status = 0;
+			MY_EXIT_STATUS = 0;
 		close(val->pe[val->n_p][0]);
 		close(val->pe[val->n_p + 1][1]);
 		val->tmp = val->tmp->next;
